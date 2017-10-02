@@ -11,9 +11,6 @@ router.get('/index2',function(req,res){
 router.get('/index',function(req,res){
   res.render('index');
 });
-router.get('/register',function(req,res){
-  res.render('register');
-});
 
 
 

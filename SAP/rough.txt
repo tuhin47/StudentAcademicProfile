@@ -1,0 +1,15 @@
+<% if(errors){ %>
+  <% for(var i=0;i<errors.length();i++){ %>
+    <div class="alert alert-danger"> <%=errors[i].errors%> </div>
+  <%}%>
+
+<%} %>
+
+<% if (errors !== undefined){ %>
+  <% for (var i=0;i<errors.length;i++){ %>
+  <div class="alert alert-danger">
+    <%=errors[i].msg%>
+  </div>
+
+  <% } %>
+  <% }  %>
