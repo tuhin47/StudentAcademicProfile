@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var mongodb=require('mongodb');
 
+var User = require('../models/user');
+
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.render('register');
@@ -44,8 +47,22 @@ router.post('/signup',function(req,res){
     console.log('YES ERRORS!!!');
 	}else {
     console.log('enter');
+    var newUser = new User({
+      username: username,
+      firstname: firstname,
+      lastname: lastname,
+			email:email,
+			password: password
+		});
 
+    User.createUser(newUser,function(err,user){
+      if (err) throw err;
+      console.log(user);
+    });
 
+    req.flash('success_msg','You are register and can now login');
+
+    res.redirect('login');
 
 
 
