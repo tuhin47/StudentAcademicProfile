@@ -9,12 +9,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-  
+
 <%include partials/basicnav.ejs%>
 
 <div class="container">
   <h2>Login</h2>
-  <form class="form-horizontal" action="/login" method="POST">
+  <form class="form-horizontal" action="/users/login" method="POST">
     <div class="form-group">
       <label class="control-label col-sm-2" for="username">User Name</label>
       <div class="col-sm-4">
@@ -24,7 +24,7 @@
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Password:</label>
       <div class="col-sm-4">
-        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+        <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
       </div>
     </div>
 

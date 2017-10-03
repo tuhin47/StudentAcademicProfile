@@ -50,9 +50,9 @@ app.use(passport.session());
 // Express Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
+      var namespace = param.split('.'),
+      root    = namespace.shift(),
+      formParam = root;
 
     while(namespace.length) {
       formParam += '[' + namespace.shift() + ']';
@@ -86,6 +86,7 @@ next();
 
 app.use('/', index);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
