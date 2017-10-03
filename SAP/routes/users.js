@@ -58,6 +58,7 @@ router.post('/signup',function(req,res){
     User.createUser(newUser,function(err,user){
       if (err) throw err;
       console.log(user);
+      console.log('these datas are uploaded');
     });
 
     req.flash('success_msg','You are register and can now login');
