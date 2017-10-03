@@ -13,3 +13,40 @@
 
   <% } %>
   <% }  %>
+
+  // var MongoClient = mongodb.MongoClient;
+  //
+  //
+  //     var url = 'mongodb://localhost:27017/NodeDemo';
+  //
+  //
+  //     MongoClient.connect(url, function(err, db){
+  //       if (err) {
+  //         console.log('Unable to connect to the Server:', err);
+  //       } else {
+  //         console.log('Connected to Server');
+  //
+  //
+  //         var collection = db.collection('users');
+  //
+  //
+  //         var user1 = {firstname:firstname , lastname:lastname, username:username,
+  //            email: email, password:password};
+  //
+  //         // Insert the student data into the database
+  //         collection.insert([user1], function (err, result){
+  //           console.log('inside insert data');
+  //           if (err) {
+  //             console.log(err);
+  //           } else {
+  //
+  //             // Redirect to the updated student list
+  //             res.redirect('login');
+  //           }
+  //
+  //           // Close the database
+  //           db.close();
+  //         });
+  //
+  //       }
+  //     });
