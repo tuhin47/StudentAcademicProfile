@@ -10,19 +10,18 @@ var User = require('../models/user');
 router.get('/',function(req,res){
   res.render('index');
 });
-router.get('/index',function(req,res){
-  res.render('index2');
+
+router.get('/data',function(req,res){
+  res.render('profiledata');
 });
-router.get('/other',function(req,res){
-  res.render('index');
+router.get('/editdata',function(req,res){
+  res.render('dataedit');
 });
 
 
 // router.get('/result',function(req,res){
 //   res.render('resultdatatable');
 // });
-
-
 
 
 
