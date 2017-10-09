@@ -17,12 +17,17 @@ var db = mongoose.connection;
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var profile = require('./routes/profile');
+
 
 var app = express();
 
-// view engine setup
+
 app.set('views', [path.join(__dirname, 'views'),
-                 path.join(__dirname, 'views/register')]);
+                 path.join(__dirname, 'views/register'),
+                 path.join(__dirname, 'views/startpage')]);
+
+
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -83,9 +88,9 @@ next();
 
 
 
-
 app.use('/', index);
 app.use('/users', users);
+app.use('/profile',profile);
 
 
 // catch 404 and forward to error handler

@@ -108,8 +108,11 @@ passport.deserializeUser(function(id, done) {
 router.post('/login',
   passport.authenticate('local', { failureRedirect:'/users/login',failureFlash: true}),
   function(req, res) {
-    res.redirect('/'+req.user.username);
+    var data = req.user.username;
+    data='/'+data;
+    res.redirect('/profile');
   });
+
 
 router.get('/logout', function(req, res){
 	req.logout();
