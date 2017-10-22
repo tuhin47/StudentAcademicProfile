@@ -1,8 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mongodb=require('mongodb');
+const url =require('url');
 var passport= require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/NodeDemo');
+var db = mongoose.connection;
+
 
 var User = require('../models/user');
 
@@ -105,12 +111,25 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+
+
+
 router.post('/login',
   passport.authenticate('local', { failureRedirect:'/users/login',failureFlash: true}),
   function(req, res) {
-    var data = req.user.username;
-    data='/'+data;
-    res.redirect('/profile');
+    var username = req.user.username;
+    var fullname= req.user.firstname+' '+req.user.lastname;
+    console.log('------------------->>>>'+fullname);
+    console.log('dhuru-------------------------->>>>>>>>'+req.user);
+    res.redirect(url.format({
+       pathname:"/profile",
+       query: {
+          username: username,
+          fullname:fullname
+        }
+     }));
+
+    //res.redirect('/profile?fullname='+fullname);
   });
 
 
