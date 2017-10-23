@@ -119,8 +119,8 @@ router.post('/login',
   function(req, res) {
     var username = req.user.username;
     var fullname= req.user.firstname+' '+req.user.lastname;
-    console.log('------------------->>>>'+fullname);
-    console.log('dhuru-------------------------->>>>>>>>'+req.user);
+    //console.log('------------------->>>>'+fullname);
+    //console.log('dhuru-------------------------->>>>>>>>'+req.user);
     res.redirect(url.format({
        pathname:"/profile",
        query: {
