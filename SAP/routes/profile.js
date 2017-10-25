@@ -32,10 +32,52 @@ function ensureAuthenticated(req, res, next){
 router.get('/data',ensureAuthenticated,function(req,res){
   var fullname=req.user.firstname+' '+req.user.lastname;
   var username=req.user.username;
+  var query={'username':username};
+
+  Profile.findOne( query, function (err, user) {
+    if (err) throw err;
+    if (! user) return res.send(401);
+
+    var profilename=user.profilename;
+    var registration=user.registration;
+    var dept=user.dept;
+    var dob=user.dob;
+    var father=user.father;
+    var mother=user.mother;
+    var gender=user.gender;
+    var maritalstatus=user.maritalstatus;
+    var permanentaddress=user.permanentaddress;
+    var temporaryaddress=user.temporaryaddress;
+    var primaryoccupation=user.primaryoccupation;
+    var secondaryoccupation=user.secondaryoccupation;
+    var phonenumber=user.phonenumber;
+    var email=user.email;
+    var language=user.language;
+    var workexperience=user.workexperience;
+    var overview=user.overview;
+
+    console.log('---------> in data route--------------------------->>>>>');
+    console.log('  ---------profilename->>> '+profilename+' --regi- '+registration+'----dept- '+dept);
+    console.log('  ---------birth->>> '+dob+' -father-- '+father+'--mother--- '+mother);
+    console.log('  --------gender-->>> '+gender+' --marital status- '+maritalstatus+'---permanentaddress-- '+permanentaddress);
+    console.log('  -----temporaryaddress----->>> '+temporaryaddress+'-primaryoccupation-- '+primaryoccupation+'--secondaryoccupation--- '+secondaryoccupation);
+    console.log('  --------phonenumber-->>> '+phonenumber+' -email-- '+email+'---language-- '+language);
+    console.log('  ---------workexperience->>> '+workexperience+' -overview-- '+overview+'--dept--- '+dept);
+
+    res.render('profiledata',
+    {fullname:fullname,profilename:profilename,registration:registration,
+      dept:dept,dob:dob,father:father,mother:mother,gender:gender,
+      maritalstatus:maritalstatus,permanentaddress:permanentaddress,
+      temporaryaddress:temporaryaddress,primaryoccupation:primaryoccupation,
+      phonenumber:phonenumber,email:email,language:language,
+      workexperience:workexperience,overview:overview
+    });
+});
+
 
 
   //console.log('userdata---------------------->>>>>>'+userdata);
-  res.render('profiledata',{fullname:fullname});
+
 });
 
 router.get('/editdata',ensureAuthenticated,function(req,res){
