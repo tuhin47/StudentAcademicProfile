@@ -46,7 +46,7 @@ router.get('/editdata',ensureAuthenticated,function(req,res){
 
 router.post('/editdata',ensureAuthenticated,function(req,res){
   var username=req.user.username;
-
+  console.log('usename in editdata------------------'+username);
   var profilename=req.body.profilename;
   var registration=req.body.registration;
   var dept=req.body.dept;
@@ -78,7 +78,7 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
     console.log('personal data ok');
     var newProfile = new Profile({
       username: username,
-      fullname: fullname,
+      profilename: profilename,
       registration: registration,
       dept:dept,
       dob: dob,
@@ -106,7 +106,7 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
     Profile.findOneAndUpdate(query, {$set:{
 
         username: username,
-        fullname: fullname,
+        profilename: profilename,
         registration: registration,
         dept:dept,
         dob: dob,
@@ -122,7 +122,7 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
         language: language,
         workexperience:workexperience,
         overview:overview
-    }}, {new: true}, function(err, doc){
+    }}, {new: true,upsert:true}, function(err, doc){
     if(err){
         console.log("Something wrong when updating data!");
     }
