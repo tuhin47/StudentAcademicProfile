@@ -124,8 +124,7 @@ router.post('/login',
     res.redirect(url.format({
        pathname:"/profile",
        query: {
-          username: username,
-          fullname:fullname
+          username: username
         }
      }));
 

@@ -7,19 +7,65 @@ var ProfileSchema = mongoose.Schema({
 		type: String,
 		index:true
 	},
-	firstname: {
+	profilename: {
 		type: String
 	},
-	lastname: {
+	registration: {
+		type: String
+	},
+	dept: {
+		type: String
+	},
+	dob: {
+		type: String
+	},
+	father: {
+		type: String
+	},
+	mother: {
+		type: String
+	},
+	gender: {
+		type: String
+	},
+	maritalstatus: {
+		type: String
+	},
+	permanentaddress: {
+		type: String
+	},
+	temporaryaddress: {
+		type: String
+	},
+	primaryoccupation: {
+		type: String
+	},
+	secondaryoccupation: {
+		type: String
+	},
+	phonenumber: {
 		type: String
 	},
 	email: {
 		type: String
 	},
-	password: {
+	language: {
+		type: String
+	},
+	workexperience: {
+		type: String
+	},
+	overview: {
 		type: String
 	}
 
+
 });
 
-var User = module.exports = mongoose.model('User', UserSchema,'users');
+var Profile = module.exports = mongoose.model('Profile', ProfileSchema,'profiles');
+
+
+//profiles will be saving to profiles collection
+// module.exports.findOneAndUpdate = function(query,newProfile, callback){
+// 	        newProfile.save(callback);
+// };
