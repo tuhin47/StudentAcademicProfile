@@ -4,14 +4,12 @@
   <title>SIGNUP</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <%include partials/basicnav.ejs%>
 
-<div class="container">
+<!-- <div class="container">
   <h2>Sign Up</h2>
 
 
@@ -51,14 +49,14 @@
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Password:</label>
       <div class="col-sm-4">
-        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd" required>
+        <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
       </div>
     </div>
 
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd2">Confirm Password:</label>
       <div class="col-sm-4">
-        <input type="password" class="form-control" id="pwd2" placeholder="confirm password" name="pwd2" required>
+        <input type="password" class="form-control" id="password2" placeholder="confirm password" name="password2" required>
       </div>
     </div>
 
@@ -69,14 +67,63 @@
           <label><input type="checkbox" name="remember"> Remember me</label>
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-success" onclick="return Validate()">Submit</button>
       </div>
     </div>
   </form>
+</div> -->
+
+
+
+
+
+<div id="tf-contact">
+    <div class="container">
+        <div class="section-title">
+            <h3>SignUp for SAP</h3>
+            <p>if Your id, password are right then you will be redirect to Login,else you will be here again</p>
+            <hr>
+        </div>
+
+        <div class="space"></div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <form id="contact" action="/users/signup" method="POST">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="firstname" placeholder="Enter First Name" name="firstname" required >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="lastname" placeholder="Enter Last Name" name="lastname" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="Enter UserName" name="username" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="password" class="form-control" id="password2" placeholder="confirm password" name="password2" required>
+                  </div>
+
+
+                  <button type="submit" onclick="return Validate()" class="btn btn-primary my-btn dark">SignUp</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+
 <script type="text/javascript">
     function Validate() {
         var password = document.getElementById("txtPassword").value;

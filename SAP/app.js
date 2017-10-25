@@ -11,18 +11,27 @@ var passport =require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose= require('mongoose');
+var url=require('url');
 mongoose.connect('mongodb://localhost/NodeDemo');
 var db = mongoose.connection;
 
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var profile = require('./routes/profile');
+
 
 var app = express();
 
-// view engine setup
+
 app.set('views', [path.join(__dirname, 'views'),
-                 path.join(__dirname, 'views/register')]);
+                 path.join(__dirname, 'views/register'),
+                 path.join(__dirname, 'views/startpage'),
+                 path.join(__dirname, 'views/profiledata')
+
+                   ]);
+
+
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -32,6 +41,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/profile', express.static(__dirname + '/public'));
 
 //express session
 
@@ -50,9 +60,9 @@ app.use(passport.session());
 // Express Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
+      var namespace = param.split('.'),
+      root    = namespace.shift(),
+      formParam = root;
 
     while(namespace.length) {
       formParam += '[' + namespace.shift() + ']';
@@ -83,9 +93,10 @@ next();
 
 
 
-
 app.use('/', index);
 app.use('/users', users);
+app.use('/profile',profile);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
