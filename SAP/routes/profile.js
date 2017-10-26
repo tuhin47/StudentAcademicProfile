@@ -9,6 +9,14 @@ var LocalStrategy = require('passport-local').Strategy;
 var Profile = require('../models/profilemodel');
 
 
+function sleep(time, callback) {
+    var stop = new Date().getTime();
+    while(new Date().getTime() < stop + time) {
+        ;
+    }
+    callback();
+}
+
 
 
 router.get('/',ensureAuthenticated,function(req,res){
@@ -173,6 +181,7 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
 });
 
     req.flash('success_msg','You are register and can now login');
+    sleep(100,function(){});
 
     res.redirect('/profile/data');
 
