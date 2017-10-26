@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var mongodb = require('mongodb');
-const url = require('url');
-var passport = require('passport');
+var mongodb=require('mongodb');
+const url =require('url');
+var passport= require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var mongoose = require('mongoose');
@@ -12,7 +12,7 @@ var db = mongoose.connection;
 
 var User = require('../models/user');
 
-var dynamicName = null;
+var dynamicName=null;
 
 
 /* GET users listing. */
@@ -20,62 +20,62 @@ router.get('/', function(req, res, next) {
   res.render('register');
 });
 
-router.get('/login', function(req, res) {
+router.get('/login',function(req,res){
   res.render('login');
 });
 
-router.get('/signup', function(req, res) {
+router.get('/signup',function(req,res){
   res.render('signup');
 });
 
-router.post('/signup', function(req, res) {
+router.post('/signup',function(req,res){
 
-  var firstname = req.body.firstname;
-  var lastname = req.body.lastname;
-  var email = req.body.email;
-  var username = req.body.username;
-  var password = req.body.password;
-  var password2 = req.body.password2;
+    var firstname = req.body.firstname;
+    var lastname= req.body.lastname;
+  	var email = req.body.email;
+  	var username = req.body.username;
+  	var password = req.body.password;
+  	var password2 = req.body.password2;
 
-  // Validation
-  req.checkBody('firstname', 'First Name is required').notEmpty();
-  req.checkBody('lastname', 'Last Name is required').notEmpty();
-  req.checkBody('email', 'Email is required').notEmpty();
-  req.checkBody('email', 'Email is not valid').isEmail();
-  req.checkBody('username', 'Username is required').notEmpty();
-  req.checkBody('password', 'Password is required').notEmpty();
-  req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-  console.log('------>    ' + username + '  ----->     ' + email);
+  	// Validation
+  	req.checkBody('firstname', 'First Name is required').notEmpty();
+    req.checkBody('lastname', 'Last Name is required').notEmpty();
+  	req.checkBody('email', 'Email is required').notEmpty();
+  	req.checkBody('email', 'Email is not valid').isEmail();
+  	req.checkBody('username', 'Username is required').notEmpty();
+  	req.checkBody('password', 'Password is required').notEmpty();
+  	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+  console.log('------>    '+username+'  ----->     '+email);
 
 
-  var errors = req.validationErrors();
+  var errors=req.validationErrors();
 
-  if (errors) {
+  if(errors){
     console.log(errors);
-    res.render('signup', {
-      errors: errors
+		res.render('signup',{
+      errors:errors
     });
     console.log('YES ERRORS!!!');
-  } else {
+	}else {
     console.log('enter');
     var newUser = new User({
       username: username,
       firstname: firstname,
       lastname: lastname,
-      email: email,
-      password: password
-    });
+			email:email,
+			password: password
+		});
 
-    User.createUser(newUser, function(err, user) {
+    User.createUser(newUser,function(err,user){
       if (err) throw err;
       console.log(user);
       console.log('these datas are uploaded');
     });
 
-    req.flash('success_msg', 'You are register and can now login');
+    req.flash('success_msg','You are register and can now login');
 
     res.redirect('login');
-    console.log('Passed');
+      console.log('Passed');
   }
 
   //res.redirect('login');
@@ -84,25 +84,21 @@ router.post('/signup', function(req, res) {
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.getUserByUsername(username, function(err, user) {
-      if (err) throw err;
-      if (!user) {
-        return done(null, false, {
-          message: 'Unknown User'
-        });
-      }
+   User.getUserByUsername(username, function(err, user){
+   	if(err) throw err;
+   	if(!user){
+   		return done(null, false, {message: 'Unknown User'});
+   	}
 
-      User.comparePassword(password, user.password, function(err, isMatch) {
-        if (err) throw err;
-        if (isMatch) {
-          return done(null, user);
-        } else {
-          return done(null, false, {
-            message: 'Invalid password'
-          });
-        }
-      });
-    });
+   	User.comparePassword(password, user.password, function(err, isMatch){
+   		if(err) throw err;
+   		if(isMatch){
+   			return done(null, user);
+   		} else {
+   			return done(null, false, {message: 'Invalid password'});
+   		}
+   	});
+   });
   }));
 
 passport.serializeUser(function(user, done) {
@@ -119,32 +115,29 @@ passport.deserializeUser(function(id, done) {
 
 
 router.post('/login',
-  passport.authenticate('local', {
-    failureRedirect: '/users/login',
-    failureFlash: true
-  }),
+  passport.authenticate('local', { failureRedirect:'/users/login',failureFlash: true}),
   function(req, res) {
     var username = req.user.username;
-    var fullname = req.user.firstname + ' ' + req.user.lastname;
+    var fullname= req.user.firstname+' '+req.user.lastname;
     //console.log('------------------->>>>'+fullname);
     //console.log('dhuru-------------------------->>>>>>>>'+req.user);
     res.redirect(url.format({
-      pathname: "/profile",
-      query: {
-        username: username
-      }
-    }));
+       pathname:"/profile",
+       query: {
+          username: username
+        }
+     }));
 
     //res.redirect('/profile?fullname='+fullname);
   });
 
 
-router.get('/logout', function(req, res) {
-  req.logout();
+router.get('/logout', function(req, res){
+	req.logout();
 
-  req.flash('success_msg', 'You are logged out');
+	req.flash('success_msg', 'You are logged out');
 
-  res.redirect('/users/login');
+	res.redirect('/users/login');
 });
 
 
