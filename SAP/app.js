@@ -2,19 +2,18 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var session= require('express-session');
-var expressValidator=require('express-validator');
+var session = require('express-session');
+var expressValidator = require('express-validator');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
-var passport =require('passport');
+var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
-var mongoose= require('mongoose');
-var url=require('url');
+var mongoose = require('mongoose');
+var url = require('url');
 mongoose.connect('mongodb://localhost/NodeDemo');
 var db = mongoose.connection;
-
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -25,11 +24,11 @@ var app = express();
 
 
 app.set('views', [path.join(__dirname, 'views'),
-                 path.join(__dirname, 'views/register'),
-                 path.join(__dirname, 'views/startpage'),
-                 path.join(__dirname, 'views/profiledata')
+  path.join(__dirname, 'views/register'),
+  path.join(__dirname, 'views/startpage'),
+  path.join(__dirname, 'views/profiledata')
 
-                   ]);
+]);
 
 
 app.set('view engine', 'ejs');
@@ -38,7 +37,9 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/profile', express.static(__dirname + '/public'));
@@ -46,9 +47,9 @@ app.use('/profile', express.static(__dirname + '/public'));
 //express session
 
 app.use(session({
-  secret:'secret',
-  saveUninitialized:true,
-  resave:true
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true
 }));
 
 // Passport initializer
@@ -60,17 +61,17 @@ app.use(passport.session());
 // Express Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.'),
-      root    = namespace.shift(),
+    var namespace = param.split('.'),
+      root = namespace.shift(),
       formParam = root;
 
-    while(namespace.length) {
+    while (namespace.length) {
       formParam += '[' + namespace.shift() + ']';
     }
     return {
-      param : formParam,
-      msg   : msg,
-      value : value
+      param: formParam,
+      msg: msg,
+      value: value
     };
   }
 }));
@@ -81,12 +82,12 @@ app.use(flash());
 
 // this is our global variables
 
-app.use(function(req,res,next){
+app.use(function(req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
-next();
+  next();
 
 });
 
@@ -95,7 +96,7 @@ next();
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/profile',profile);
+app.use('/profile', profile);
 
 
 // catch 404 and forward to error handler

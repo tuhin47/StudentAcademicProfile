@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>SIGNUP</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
-<body>
-<%include partials/basicnav.ejs%>
 
-<!-- <div class="container">
+<body>
+  <%include partials/basicnav.ejs%>
+
+    <!-- <div class="container">
   <h2>Sign Up</h2>
 
 
@@ -80,62 +82,63 @@
 
 
 
-<div id="tf-contact">
-    <div class="container">
+    <div id="tf-contact">
+      <div class="container">
         <div class="section-title">
-            <h3>SignUp for SAP</h3>
-            <p>if Your id, password are right then you will be redirect to Login,else you will be here again</p>
-            <hr>
+          <h3>SignUp for SAP</h3>
+          <p>if Your id, password are right then you will be redirect to Login,else you will be here again</p>
+          <hr>
         </div>
 
         <div class="space"></div>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <form id="contact" action="/users/signup" method="POST">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="firstname" placeholder="Enter First Name" name="firstname" required >
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="lastname" placeholder="Enter Last Name" name="lastname" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="username" placeholder="Enter UserName" name="username" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
-                  </div>
+          <div class="col-md-6 col-md-offset-3">
+            <form id="contact" action="/users/signup" method="POST">
+              <div class="form-group">
+                <input type="text" class="form-control" id="firstname" placeholder="Enter First Name" name="firstname" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="lastname" placeholder="Enter Last Name" name="lastname" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="username" placeholder="Enter UserName" name="username" required>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+              </div>
 
-                  <div class="form-group">
-                    <input type="password" class="form-control" id="password2" placeholder="confirm password" name="password2" required>
-                  </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="password2" placeholder="confirm password" name="password2" required>
+              </div>
 
 
-                  <button type="submit" onclick="return Validate()" class="btn btn-primary my-btn dark">SignUp</button>
-                </form>
-            </div>
+              <button type="submit" onclick="return Validate()" class="btn btn-primary my-btn dark">SignUp</button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
 
 
 
-<script type="text/javascript">
-    function Validate() {
+    <script type="text/javascript">
+      function Validate() {
         var password = document.getElementById("txtPassword").value;
         var confirmPassword = document.getElementById("txtConfirmPassword").value;
         if (password != confirmPassword) {
-            alert("Passwords do not match.");
-            return false;
+          alert("Passwords do not match.");
+          return false;
         }
         return true;
-    }
-</script>
+      }
+    </script>
 
 
 </body>
+
 </html>

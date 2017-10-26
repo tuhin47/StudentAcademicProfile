@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (grunt) {
+module.exports = function(grunt) {
   // load all grunt tasks
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -34,7 +34,7 @@ module.exports = function (grunt) {
       //production compresses version
       production: {
         options: {
-          //Wether to compress or not          
+          //Wether to compress or not
           compress: true
         },
         files: {
