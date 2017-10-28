@@ -21,6 +21,7 @@ var db = mongoose.connection;
 var index = require('./routes/index');
 var users = require('./routes/users');
 var profile = require('./routes/profile');
+var results = require('./routes/results');
 
 
 var app = express();
@@ -29,7 +30,8 @@ var app = express();
 app.set('views', [path.join(__dirname, 'views'),
                  path.join(__dirname, 'views/register'),
                  path.join(__dirname, 'views/startpage'),
-                 path.join(__dirname, 'views/profiledata')
+                 path.join(__dirname, 'views/profiledata'),
+                 path.join(__dirname, 'views/results')
 
                    ]);
 
@@ -44,6 +46,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/profile', express.static(__dirname + '/public'));
+app.use('/results', express.static(__dirname + '/public'));
 
 //express session
 
@@ -98,7 +101,7 @@ next();
 app.use('/', index);
 app.use('/users', users);
 app.use('/profile',profile);
-
+app.use('/results',results);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

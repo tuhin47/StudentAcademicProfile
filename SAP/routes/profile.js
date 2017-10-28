@@ -12,7 +12,6 @@ var Profile = require('../models/profilemodel');
 function sleep(time, callback) {
     var stop = new Date().getTime();
     while(new Date().getTime() < stop + time) {
-        ;
     }
     callback();
 }
@@ -44,25 +43,69 @@ router.get('/data',ensureAuthenticated,function(req,res){
 
   Profile.findOne( query, function (err, user) {
     if (err) throw err;
-    if (! user) return res.send(401);
+    var profilename;
+    var registration;
+    var dept;
+    var dob;
+    var father;
+    var mother;
+    var gender;
+    var maritalstatus;
+    var permanentaddress;
+    var temporaryaddress;
+    var primaryoccupation;
+    var secondaryoccupation;
+    var phonenumber;
+    var email;
+    var language;
+    var workexperience;
+    var overview;
 
-    var profilename=user.profilename;
-    var registration=user.registration;
-    var dept=user.dept;
-    var dob=user.dob;
-    var father=user.father;
-    var mother=user.mother;
-    var gender=user.gender;
-    var maritalstatus=user.maritalstatus;
-    var permanentaddress=user.permanentaddress;
-    var temporaryaddress=user.temporaryaddress;
-    var primaryoccupation=user.primaryoccupation;
-    var secondaryoccupation=user.secondaryoccupation;
-    var phonenumber=user.phonenumber;
-    var email=user.email;
-    var language=user.language;
-    var workexperience=user.workexperience;
-    var overview=user.overview;
+    if(user){
+       profilename=user.profilename;
+       registration=user.registration;
+       dept=user.dept;
+       dob=user.dob;
+       father=user.father;
+       mother=user.mother;
+       gender=user.gender;
+       maritalstatus=user.maritalstatus;
+       permanentaddress=user.permanentaddress;
+       temporaryaddress=user.temporaryaddress;
+       primaryoccupation=user.primaryoccupation;
+       secondaryoccupation=user.secondaryoccupation;
+       phonenumber=user.phonenumber;
+       email=user.email;
+       language=user.language;
+       workexperience=user.workexperience;
+       overview=user.overview;
+
+    }
+
+
+
+    else if (! user) {
+       profilename=fullname;
+       registration=null;
+       dept=null;
+       dob=null;
+       father=null;
+       mother=null;
+       gender=null;
+       maritalstatus=null;
+       permanentaddress=null;
+       temporaryaddress=null;
+       primaryoccupation=null;
+       secondaryoccupation=null;
+       phonenumber=null;
+       email=null;
+       language=null;
+       workexperience=null;
+       overview=null;
+
+    }
+
+
 
     console.log('---------> in data route--------------------------->>>>>');
     console.log('  ---------profilename->>> '+profilename+' --regi- '+registration+'----dept- '+dept);
@@ -181,7 +224,7 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
 });
 
     req.flash('success_msg','You are register and can now login');
-    sleep(100,function(){});
+    sleep(300,function(){});
 
     res.redirect('/profile/data');
 
