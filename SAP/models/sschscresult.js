@@ -13,7 +13,7 @@ var SSCResultSchema = mongoose.Schema({
 	board: {
 		type: String
 	},
-  passingyear: {
+  passedyear: {
     type: String
   },
 	institution: {

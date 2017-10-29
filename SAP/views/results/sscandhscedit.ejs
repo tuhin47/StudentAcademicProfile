@@ -74,19 +74,24 @@
                     SSC
                   </label>
 
+                  <label class="radio-inline" for="Gender-1">
+                    <input type="radio" name="examtype" id="Gender-1" value="JSC">
+                    JSC
+                  </label>
+
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="control-label col-sm-6" for="email">Board</label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control" id="email" placeholder="Enter Board Name">
+                  <input type="text" name="board" class="form-control" id="email" placeholder="Enter Board Name">
                 </div>
               </div>
               <div class="form-group">
                   <label class="control-label col-sm-6">PassedYear</label>
                   <div class="col-sm-6 selectContainer">
-                      <select class="form-control" name="passingyear">
+                      <select class="form-control" name="passedyear">
                         <%for(var i=1970;i<=2070;i++){%>
                           <option value=<%=i%>><%=i%></option>
                           <%}%>

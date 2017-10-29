@@ -4,19 +4,110 @@ var mongodb=require('mongodb');
 var passport= require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var User = require('../models/user');
-
+var SSCResult = require('../models/sschscresult');
 
 router.get('/sscandhsc',function(req,res){
-  console.log('----------------------------->>>>>>>>>> inside results/sscandhsc');
+var usename=req.user.username;
+
+
+SSCResult.find({username:username},function (err, results) {
   var fullname =req.user.firstname+' '+req.user.lastname;
+  if (err) return console.error(err);
+
+  console.log(results);
+  console.log('----------------------------->>>>>>>>>> inside results/sscandhsc');
+
+
 console.log('full name-->'+fullname);
-  res.render('sscandhsc',{fullname:fullname});
+  res.render('sscandhsc',{fullname:fullname,results});
+  console.log('ok huh');
+});
+
+console.log('ok huh');
+
+// SSCResult.find( query, function (err, user) {
+//   if (err) throw err;
+//   var examtype;
+//   var board;
+//   var passedyear;
+//   var institution;
+//   var gpa;
+//
+//   if(user){
+//
+//      examtype=req.body.examtype;
+//      board=req.body.board;
+//      passedyear=req.body.passedyear;
+//      institution=req.body.institution;
+//      gpa=req.body.gpa;
+//
+//   }
+//   else if (! user) {
+//
+//     examtype=null;
+//     board=null;
+//     passedyear=null;
+//     institution=null;
+//     gpa=null;
+//
+//   }
+
+
+
+
+
 });
 
 router.post('/sscandhsc',function(req,res){
-  var passingyear=req.body.passingyear;
-  console.log('--------------    '+passingyear+'------------------------------->');
-  
+
+
+  var username=req.user.username;
+  var examtype=req.body.examtype;
+  var board=req.body.board;
+  var passedyear=req.body.passedyear;
+  var institution=req.body.institution;
+  var gpa=req.body.gpa;
+
+  console.log('--------------    '+username+'------------------------------->');
+  console.log('--------------    '+examtype+'------------------------------->');
+console.log('--------------    '+board+'------------------------------->');
+console.log('--------------    '+passedyear+'------------------------------->');
+console.log('--------------    '+institution+'------------------------------->');
+console.log('--------------    '+gpa+'------------------------------->');
+
+var newSSCResult = new SSCResult({
+  username: username,
+  examtype:examtype,
+  board:board,
+  passedyear:passedyear,
+  institution:institution,
+  gpa:gpa
+
+});
+
+
+
+var query={'username':username,'examtype':examtype};
+
+SSCResult.findOneAndUpdate(query, {$set:{
+
+    username: username,
+    examtype:examtype,
+    board:board,
+    passedyear:passedyear,
+    institution:institution,
+    gpa:gpa
+
+}}, {new: true,upsert:true}, function(err, doc){
+if(err){
+    console.log("Something wrong when updating data!");
+}
+
+console.log(doc);
+});
+
+//sleep(300,function(){});
+res.redirect('/results/sscandhsc')
 
 });
 

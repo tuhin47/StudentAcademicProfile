@@ -63,10 +63,10 @@
 
             </div>
 
-              <div class="col-sm-offset-1">
+              <div class="col-sm-10 col-sm-offset-1">
 
 
-              <table class="table">
+              <table class="table" >
                 <thead class="thead-inverse">
                   <tr>
                     <th>Exam Type</th>
@@ -77,21 +77,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-
-
+                  <% for(var i=0; i < results.length; i++) { %>
+                 <tr>
+                   <td><%= results[i].examtype %></td>
+                   <td><%= results[i].board %></td>
+                   <td><%= results[i].passedyear %></td>
+                   <td><%= results[i].institution %></td>
+                   <td><%= results[i].gpa %></td>
+                 </tr>
+              <% } %>
                 </tbody>
               </table>
             </div>
