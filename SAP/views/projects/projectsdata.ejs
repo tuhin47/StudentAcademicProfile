@@ -57,14 +57,39 @@
 
             </div>
 
-            <div class="container">
-              <h2>Academic Performance</h2>
-              <a href="/projects/projectsdataedit"><button type="button" class="btn btn-primary">Edit Result</button></a>
-
+            <div class="panel-body">
+              <h2>All Projects</h2>
+              <a href="/projects/projectsdataedit"><button type="button" class="btn btn-primary">New Project</button></a>
             </div>
 
               <div class="col-sm-10 col-sm-offset-1">
-                
+                <table class="display table table-bordered table-stripe" >
+
+
+                  <thead class="thead-inverse">
+                    <tr>
+                      <th>Serial</th>
+                      <th>Project Ttile</th>
+                      <th>Description</th>
+                      <th>Edit data</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% for(var i=0;i<results.length;i++){ %>
+                    <tr>
+                      <td><%=i+1%></td>
+                      <td><%= results[i].projecttitle %></td>
+                      <td><%= results[i].projectdetails %></td>
+                      <td class="text-center">
+                        <a class="btn btn-xs btn-success btn-edit" href="#">Edit</a>
+                        <a class="btn btn-xs btn-warning btn-edit" href="#">Delete</a>
+                      </td>
+                    </tr>
+
+                    <%}%>
+                  </tbody>
+                </table>
             </div>
 
           </div><!--- row -->
