@@ -25,34 +25,6 @@ console.log('full name-->'+fullname);
 
 console.log('ok huh');
 
-// SSCResult.find( query, function (err, user) {
-//   if (err) throw err;
-//   var examtype;
-//   var board;
-//   var passedyear;
-//   var institution;
-//   var gpa;
-//
-//   if(user){
-//
-//      examtype=req.body.examtype;
-//      board=req.body.board;
-//      passedyear=req.body.passedyear;
-//      institution=req.body.institution;
-//      gpa=req.body.gpa;
-//
-//   }
-//   else if (! user) {
-//
-//     examtype=null;
-//     board=null;
-//     passedyear=null;
-//     institution=null;
-//     gpa=null;
-//
-//   }
-
-
 
 
 
@@ -107,7 +79,7 @@ console.log(doc);
 });
 
 //sleep(300,function(){});
-res.redirect('/results/sscandhsc')
+res.redirect('/results/sscandhsc');
 
 });
 
