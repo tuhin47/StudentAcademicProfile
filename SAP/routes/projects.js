@@ -77,36 +77,26 @@ router.post('/projectsdataedit', function(req, res) {
 });
 
 
-router.post('/dataedit/:data?', function(req, res) {
+router.get('/data/edit/:id', function(req, res){
+  var id=req.params.id;
   var username = req.user.username;
-  var fullname = req.user.firstname + ' ' + req.user.lastname;
-  var projecttitle = req.body.projecttitle;
-  var projectdetails = req.body.projectdetails
+  console.log('------>>'+id);
 
+  Projects.find({
+    username: username,_id:id
+  }, function(err, results) {
+    var fullname = req.user.firstname + ' ' + req.user.lastname;
+    if (err) return console.error(err);
 
-  var query = {
-    'username': username,
-    'projecttitle': projecttitle
-  };
+    console.log(results);
+    console.log('----------------------------->>>>>>>>>> inside results/projectsdataupdate');
 
-  Projects.findOneAndUpdate(query, {
-    $set: {
-
-      username: username,
-      projecttitle: projecttitle,
-      projectdetails: projectdetails
-
-    }
-  }, {
-    new: true,
-    upsert: true
-  }, function(err, doc) {
-    if (err) {
-      console.log("Something wrong when updating data!");
-    }
-
+    console.log('full name--its here>' + fullname);
+    res.render('projectsdataupdate',{fullname:fullname,results});
+    console.log('ok huh');
   });
-  res.redirect('/projects/projectsdata');
+
+
 
 
 });
