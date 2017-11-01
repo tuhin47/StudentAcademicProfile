@@ -9,7 +9,7 @@ var Publications = require('../models/publication');
 router.get('/publicationsdata', function(req, res) {
   var username = req.user.username;
 
-  console.log('--------------------->>>>  inside projectsdata');
+  console.log('--------------------->>>>  inside publicationsdata');
   Publications.find({
     username: username
   }, function(err, results) {
@@ -19,7 +19,6 @@ router.get('/publicationsdata', function(req, res) {
     console.log(results);
     console.log('----------------------------->>>>>>>>>> inside results/publicationsdata');
 
-    console.log('full name--its here>' + fullname);
     res.render('publicationsdata', {
       fullname: fullname,
       results
@@ -44,7 +43,7 @@ router.post('/publicationsdataedit', function(req, res) {
   var username = req.user.username;
   var fullname = req.user.firstname + ' ' + req.user.lastname;
   var publicationtitle=req.body.publicationtitle;
-  var publicationdetails=req.body.publicationtitle;
+  var publicationdetails=req.body.publicationdetails;
   var publicationplace=req.body.publicationplace;
   var publicationurl=req.body.publicationurl;
 
@@ -65,7 +64,7 @@ router.post('/publicationsdataedit', function(req, res) {
 
       username:username,
       publicationtitle:publicationtitle,
-      publicationdetails:publicationtitle,
+      publicationdetails:publicationdetails,
       publicationplace:publicationplace,
       publicationurl:publicationurl
     }
