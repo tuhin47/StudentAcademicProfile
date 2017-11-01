@@ -23,6 +23,7 @@ var users = require('./routes/users');
 var profile = require('./routes/profile');
 var results = require('./routes/results');
 var projects = require('./routes/projects');
+var publications = require('./routes/publications');
 
 
 var app = express();
@@ -33,7 +34,8 @@ app.set('views', [path.join(__dirname, 'views'),
                  path.join(__dirname, 'views/startpage'),
                  path.join(__dirname, 'views/profiledata'),
                  path.join(__dirname, 'views/results'),
-                 path.join(__dirname, 'views/projects')
+                 path.join(__dirname, 'views/projects'),
+                 path.join(__dirname, 'views/publications')
 
                    ]);
 
@@ -49,9 +51,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/profile', express.static(__dirname + '/public'));
 app.use('/results', express.static(__dirname + '/public'));
+
 app.use('/projects', express.static(__dirname + '/public'));
 app.use('/projects/data/edit', express.static(__dirname + '/public'));
 app.use('/projects/data/delete', express.static(__dirname + '/public'));
+
+//publications static data
+app.use('/publications', express.static(__dirname + '/public'));
+app.use('/publications/data/edit', express.static(__dirname + '/public'));
+app.use('/publications/data/delete', express.static(__dirname + '/public'));
 
 
 //express session
@@ -109,6 +117,7 @@ app.use('/users', users);
 app.use('/profile',profile);
 app.use('/results',results);
 app.use('/projects',projects);
+app.use('/publications',publications);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

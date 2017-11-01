@@ -50,45 +50,70 @@
       </aside>
 
       <div class="content-wrapper">
-        <div class="container">
-          <div class="row" >
-
-            <div class="container">
-              <h2>Edit Result</h2>
-
-            </div>
-            <div class="col-md-8">
 
 
-            <form class="form-horizontal col-md-10" method="POST" action="/projects/projectsdataedit">
+        <div class="panel-body">
+          <div class="col-sm-offset-0">
+            <h1>Publications</h1>
+            <a href="/publications/publicationsdataedit"><button type="button" class="btn btn-primary">New Publications</button></a>
+          </div>
 
-              <div class="form-group">
-                <label class="control-label col-sm-6" for="email">Project Title</label>
-                <div class="col-sm-6">
-                  <input type="text" name="projecttitle" class="form-control" placeholder="Project Title">
-                </div>
-              </div>
+          <div class="col-sm-offset-1">
+
+            <%for(var i=0; i<results.length; i++){%>
+          <section>
+
+            <form class="form-horizontal">
 
               <div class="form-group">
-                <label class="col-sm-6 control-label" >Project Details</label>
-                <div class="col-md-6">
-                  <textarea class="form-control" rows="10"  placeholder="Enter Details" name="projectdetails"></textarea>
+                <h2><%=results[i].publicationtitle%></h2>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Publication Details:</label>
+                <div class="col-sm-10">
+                  <p><%=results[i].publicationdetails%>
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Publication Place:</label>
+                <div class="col-sm-10">
+                  <p><%=results[i].publicationplace%>
+
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Publication URL</label>
+                <div class="col-sm-10">
+                  <p id="logo">
+                    <a href="<%=results[i].publicationurl%>"><%=results[i].publicationurl%></a>
+                  </p>
                 </div>
               </div>
 
 
-              <div class="form-group ">
-                <div class="col-sm-offset-6 col-sm-10">
-                  <button type="submit" class="btn btn-success">Submit</button>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="email"></label>
+                <div class="col-sm-10">
+                  <a class="btn btn-xs btn-success btn-edit" href="/publications/data/edit/<%=results[i]._id%>">Edit</a>
+                  <a class="btn btn-xs btn-warning btn-edit" href="/publications/delete/edit/<%=results[i]._id%>">Delete</a>
                 </div>
               </div>
+
             </form>
 
-</div>
 
-          </div><!--- row -->
 
-        </div> <!--- container -->
+          </section>
+
+          <%}%>
+        </div> <!---col sm offset------>
+
+        </div> <!-- panel-body -->
 
       </div> <!--- content0wrapper -->
 

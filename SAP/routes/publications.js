@@ -4,23 +4,23 @@ var mongodb = require('mongodb');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var User = require('../models/user');
-var Projects = require('../models/project');
+var Publications = require('../models/publication');
 
-router.get('/projectsdata', function(req, res) {
+router.get('/publicationsdata', function(req, res) {
   var username = req.user.username;
 
   console.log('--------------------->>>>  inside projectsdata');
-  Projects.find({
+  Publications.find({
     username: username
   }, function(err, results) {
     var fullname = req.user.firstname + ' ' + req.user.lastname;
     if (err) return console.error(err);
 
     console.log(results);
-    console.log('----------------------------->>>>>>>>>> inside results/projectsdata');
+    console.log('----------------------------->>>>>>>>>> inside results/publicationsdata');
 
     console.log('full name--its here>' + fullname);
-    res.render('projectsdata', {
+    res.render('publicationsdata', {
       fullname: fullname,
       results
     });
@@ -30,35 +30,44 @@ router.get('/projectsdata', function(req, res) {
 
 });
 
-router.get('/projectsdataedit', function(req, res) {
+router.get('/publicationsdataedit', function(req, res) {
   var username = req.user.username;
   var fullname = req.user.firstname + ' ' + req.user.lastname;
-  console.log('--------------------->>>>  inside projectsdataedit');
-  res.render('projectsdataedit', {
+  console.log('--------------------->>>>  inside publicationsdataedit');
+  res.render('publicationsdataedit', {
     fullname: fullname
   });
 });
 
 
-router.post('/projectsdataedit', function(req, res) {
+router.post('/publicationsdataedit', function(req, res) {
   var username = req.user.username;
   var fullname = req.user.firstname + ' ' + req.user.lastname;
-  var projecttitle = req.body.projecttitle;
-  var projectdetails = req.body.projectdetails;
+  var publicationtitle=req.body.publicationtitle;
+  var publicationdetails=req.body.publicationtitle;
+  var publicationplace=req.body.publicationplace;
+  var publicationurl=req.body.publicationurl;
+
+  console.log('------>'+publicationurl);
+  console.log('------>'+publicationplace);
+  console.log('------>'+publicationdetails);
+  console.log('------>'+publicationtitle);
+
 
 
   var query = {
     'username': username,
-    'projecttitle': projecttitle
+    'publicationtitle': publicationtitle
   };
 
-  Projects.findOneAndUpdate(query, {
+  Publications.findOneAndUpdate(query, {
     $set: {
 
-      username: username,
-      projecttitle: projecttitle,
-      projectdetails: projectdetails
-
+      username:username,
+      publicationtitle:publicationtitle,
+      publicationdetails:publicationtitle,
+      publicationplace:publicationplace,
+      publicationurl:publicationurl
     }
   }, {
     new: true,
@@ -69,7 +78,7 @@ router.post('/projectsdataedit', function(req, res) {
     }
 
   });
-  res.redirect('/projects/projectsdata');
+  res.redirect('/publications/publicationsdata');
 
 
 });
@@ -80,7 +89,7 @@ router.get('/data/edit/:id', function(req, res) {
   var username = req.user.username;
   console.log('------>>' + id);
 
-  Projects.find({
+  Publications.find({
     username: username,
     _id: id
   }, function(err, results) {
@@ -91,7 +100,7 @@ router.get('/data/edit/:id', function(req, res) {
     console.log('----------------------------->>>>>>>>>> inside results/projectsdataupdate');
 
     console.log('full name--its here>' + fullname);
-    res.render('projectsdataupdate', {
+    res.render('publicationsdataupdate', {
       fullname: fullname,
       results
     });
@@ -106,15 +115,16 @@ router.get('/data/edit/:id', function(req, res) {
 router.get('/data/delete/:id', function(req, res) {
   var id = req.params.id;
   var username = req.user.username;
+  console.log('----------------------delete-------publications------------------------>');
   console.log('------>>' + id);
 
-  Projects.remove({
+  Publications.remove({
     username: username,
     _id: id
   }, function(err) {
     var fullname = req.user.firstname + ' ' + req.user.lastname;
 
-    res.redirect('/projects/projectsdata');
+    res.redirect('/publications/publicationsdata');
     console.log('ok huh');
   });
 
