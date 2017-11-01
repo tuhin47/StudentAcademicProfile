@@ -51,6 +51,7 @@ app.use('/profile', express.static(__dirname + '/public'));
 app.use('/results', express.static(__dirname + '/public'));
 app.use('/projects', express.static(__dirname + '/public'));
 app.use('/projects/data/edit', express.static(__dirname + '/public'));
+app.use('/projects/data/delete', express.static(__dirname + '/public'));
 
 
 //express session
