@@ -13,12 +13,10 @@
     "web",
     "admin"
   ],
-  "authors": [
-    {
-      "name": "Abdullah Almsaeed",
-      "email": "support@almsaeedstudio.com"
-    }
-  ],
+  "authors": [{
+    "name": "Abdullah Almsaeed",
+    "email": "support@almsaeedstudio.com"
+  }],
   "license": "MIT",
   "support": {
     "issues": "https://github.com/almasaeed2010/AdminLTE/issues"
