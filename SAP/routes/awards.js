@@ -7,8 +7,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var Awards = require('../models/award');
 
 
-
-
 router.get('/awardsdata', function(req, res) {
   var username = req.user.username;
 
