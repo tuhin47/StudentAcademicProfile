@@ -50,25 +50,29 @@
       </aside>
 
       <div class="content-wrapper">
-        <div class="container">
-
-            <div class="col-md-10 col-sm-offset-1">
 
 
-            <div class="panel-body">
-              <h2>All Projects</h2>
-              <a href="/projects/projectsdataedit"><button type="button" class="btn btn-primary">New Project</button></a>
+        <div class="panel-body">
+
+          <div class="col-md-11 col-sm-offset-1">
 
 
+
+              <h2>All Awards</h2>
+              <br>
+              <a href="/awards/awardsdataedit"><button type="button" class="btn btn-primary">Add New</button></a>
+            </div>
+
+              <div class="col-sm-10 col-sm-offset-1">
                 <table class="display table table-bordered table-stripe" >
 
 
                   <thead class="thead-inverse">
                     <tr>
                       <th>Serial</th>
-                      <th>Project Ttile</th>
-                      <th>Description</th>
-                      <th>Edit data</th>
+                      <th>Awards Title</th>
+                      <th>Position and Details</th>
+                      <th>Edit/Delete</th>
                     </tr>
                   </thead>
 
@@ -76,21 +80,21 @@
                     <% for(var i=0;i<results.length;i++){ %>
                     <tr>
                       <td><%=i+1%></td>
-                      <td><%= results[i].projecttitle %></td>
-                      <td><%= results[i].projectdetails %></td>
+                      <td><%= results[i].awardtitle %></td>
+                      <td><%= results[i].awarddetails %></td>
                       <td class="text-center">
-                        <a class="btn btn-xs btn-success btn-edit" href="/projects/data/edit/<%= results[i]._id %>">Edit</a>
-                        <a class="btn btn-xs btn-warning btn-edit" href="/projects/data/delete/<%= results[i]._id %>">Delete</a>
+                        <a class="btn btn-xs btn-success btn-edit" href="/awards/data/edit/<%= results[i]._id %>">Edit</a>
+                        <a class="btn btn-xs btn-warning btn-edit" href="/awards/data/delete/<%= results[i]._id %>">Delete</a>
                       </td>
                     </tr>
 
                     <%}%>
                   </tbody>
                 </table>
-                </div>
-          </div><!---offset-->
+            </div>
 
-        </div> <!--- container -->
+
+        </div> <!-- panel-body -->
 
       </div> <!--- content0wrapper -->
 

@@ -51,44 +51,42 @@
 
       <div class="content-wrapper">
         <div class="container">
+          <div class="row" >
 
-            <div class="col-md-10 col-sm-offset-1">
+            <div class="container">
+              <h2>Edit Awards</h2>
 
-
-            <div class="panel-body">
-              <h2>All Projects</h2>
-              <a href="/projects/projectsdataedit"><button type="button" class="btn btn-primary">New Project</button></a>
-
-
-                <table class="display table table-bordered table-stripe" >
+            </div>
+            <div class="col-md-8">
 
 
-                  <thead class="thead-inverse">
-                    <tr>
-                      <th>Serial</th>
-                      <th>Project Ttile</th>
-                      <th>Description</th>
-                      <th>Edit data</th>
-                    </tr>
-                  </thead>
+            <form class="form-horizontal col-md-10" method="POST" action="/awards/awardsdataedit">
 
-                  <tbody>
-                    <% for(var i=0;i<results.length;i++){ %>
-                    <tr>
-                      <td><%=i+1%></td>
-                      <td><%= results[i].projecttitle %></td>
-                      <td><%= results[i].projectdetails %></td>
-                      <td class="text-center">
-                        <a class="btn btn-xs btn-success btn-edit" href="/projects/data/edit/<%= results[i]._id %>">Edit</a>
-                        <a class="btn btn-xs btn-warning btn-edit" href="/projects/data/delete/<%= results[i]._id %>">Delete</a>
-                      </td>
-                    </tr>
-
-                    <%}%>
-                  </tbody>
-                </table>
+              <div class="form-group">
+                <label class="control-label col-sm-6" >Award Title</label>
+                <div class="col-sm-6">
+                  <input type="text" name="awardtitle" class="form-control"  >
                 </div>
-          </div><!---offset-->
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-6 control-label" >Award Details</label>
+                <div class="col-md-6">
+                  <textarea class="form-control" rows="10"  name="awarddetails"></textarea>
+                </div>
+              </div>
+
+
+              <div class="form-group ">
+                <div class="col-sm-offset-6 col-sm-10">
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+              </div>
+            </form>
+
+</div>
+
+          </div><!--- row -->
 
         </div> <!--- container -->
 
