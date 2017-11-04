@@ -4,80 +4,99 @@ var mongodb = require('mongodb');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var User = require('../models/user');
-var Awards = require('../models/graduation');
+var Graduations = require('../models/graduation');
 
 //alif alamin
 
 
 
-// router.get('/awardsdata', function(req, res) {
-//   var username = req.user.username;
+router.get('/graduationsdata', function(req, res) {
+  var username = req.user.username;
+
+
+
+  console.log('--------------------->>>>  inside awardsdata');
+  //
+  var query1={'username':username};
+
+   Graduations.find({
+     query1
+  }, function(err, results) {
+    var fullname = req.user.firstname + ' ' + req.user.lastname;
+    if (err) return console.error(err);
+
+    console.log(results);
+    console.log('----------------------------->>>>>>>>>> inside results/graduationsdata');
+
+    console.log('full name--its here>' + fullname);
+    res.render('graduationsdata', {
+      fullname: fullname,
+      results
+    });
+  //   console.log('ok huh');
+  });
+
+
+});
+
+router.get('/graduationsdataedit', function(req, res) {
+  var username = req.user.username;
+  var fullname = req.user.firstname + ' ' + req.user.lastname;
+  console.log('--------------------->>>>  inside gradutionsdataedit');
+
+
+  res.render('graduationsdataedit', {
+    fullname: fullname
+  });
+});
+
 //
-//   console.log('--------------------->>>>  inside awardsdata');
-//   Awards.find({
-//     username: username
-//   }, function(err, results) {
-//     var fullname = req.user.firstname + ' ' + req.user.lastname;
-//     if (err) return console.error(err);
-//
-//     console.log(results);
-//     console.log('----------------------------->>>>>>>>>> inside results/projectsdata');
-//
-//     console.log('full name--its here>' + fullname);
-//     res.render('awardsdata', {
-//       fullname: fullname,
-//       results
-//     });
-//     console.log('ok huh');
-//   });
-//
-//
-// });
-//
-// router.get('/awardsdataedit', function(req, res) {
-//   var username = req.user.username;
-//   var fullname = req.user.firstname + ' ' + req.user.lastname;
-//   console.log('--------------------->>>>  inside projectsdataedit');
-//   res.render('awardsdataedit', {
-//     fullname: fullname
-//   });
-// });
-//
-//
-// router.post('/awardsdataedit', function(req, res) {
-//   var username = req.user.username;
-//   var fullname = req.user.firstname + ' ' + req.user.lastname;
-//   var awardtitle = req.body.awardtitle;
-//   var awarddetails = req.body.awarddetails;
-//
-//
-//   var query = {
-//     'username': username,
-//     'awardtitle': awardtitle
-//   };
-//
-//   Awards.findOneAndUpdate(query, {
-//     $set: {
-//
-//       username: username,
-//       awardtitle: awardtitle,
-//       awarddetails: awarddetails
-//
-//     }
-//   }, {
-//     new: true,
-//     upsert: true
-//   }, function(err, doc) {
-//     if (err) {
-//       console.log("Something wrong when updating data!");
-//     }
-//
-//   });
-//   res.redirect('/awards/awardsdata');
-//
-//
-// });
-//
+
+router.post('/graduationsdataedit', function(req, res) {
+  var username = req.user.username;
+  var fullname = req.user.firstname + ' ' + req.user.lastname;
+  var coursecode=req.body.coursecode;
+  var coursetitle=req.body.coursetitle;
+  var semester=req.body.semester;
+  var coursecredit=req.body.coursecredit;
+  var grade=req.body.grade;
+
+
+  console.log('---------------Resuslts---------------');
+  console.log('---------------'+coursecode +'---------------');
+  console.log('---------------'+coursetitle +'---------------');
+  console.log('---------------'+coursecredit +'---------------');
+  console.log('---------------'+semester +'---------------');
+  console.log('---------------'+grade +'---------------');
+
+
+  // var query = {
+  //   'username': username,
+  //   'awardtitle': awardtitle
+  // };
+  //
+  // Awards.findOneAndUpdate(query, {
+  //   $set: {
+  //
+  //     username: username,
+  //     awardtitle: awardtitle,
+  //     awarddetails: awarddetails
+  //
+  //   }
+  // }, {
+  //   new: true,
+  //   upsert: true
+  // }, function(err, doc) {
+  //   if (err) {
+  //     console.log("Something wrong when updating data!");
+  //   }
+  //
+  // });
+  // res.redirect('/awards/awardsdata');
+
+
+});
+
 //
 // router.get('/data/edit/:id', function(req, res) {
 //   var id = req.params.id;

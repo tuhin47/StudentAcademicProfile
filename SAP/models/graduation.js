@@ -19,7 +19,10 @@ var GraduationSchema = mongoose.Schema({
   coursecredit: {
     type: String
   },
-  result: {
+	gradepoint:{
+		type:String
+	},
+  grade: {
     type: String
   }
 
