@@ -4,13 +4,13 @@ var mongodb = require('mongodb');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var User = require('../models/user');
-var Projects = require('../models/project');
+var Awards = require('../models/award');
 
-router.get('/projectsdata', function(req, res) {
+router.get('/awardsdata', function(req, res) {
   var username = req.user.username;
 
-  console.log('--------------------->>>>  inside projectsdata');
-  Projects.find({
+  console.log('--------------------->>>>  inside awardsdata');
+  Awards.find({
     username: username
   }, function(err, results) {
     var fullname = req.user.firstname + ' ' + req.user.lastname;
@@ -20,7 +20,7 @@ router.get('/projectsdata', function(req, res) {
     console.log('----------------------------->>>>>>>>>> inside results/projectsdata');
 
     console.log('full name--its here>' + fullname);
-    res.render('projectsdata', {
+    res.render('awardsdata', {
       fullname: fullname,
       results
     });
@@ -30,34 +30,34 @@ router.get('/projectsdata', function(req, res) {
 
 });
 
-router.get('/projectsdataedit', function(req, res) {
+router.get('/awardsdataedit', function(req, res) {
   var username = req.user.username;
   var fullname = req.user.firstname + ' ' + req.user.lastname;
   console.log('--------------------->>>>  inside projectsdataedit');
-  res.render('projectsdataedit', {
+  res.render('awardsdataedit', {
     fullname: fullname
   });
 });
 
 
-router.post('/projectsdataedit', function(req, res) {
+router.post('/awardsdataedit', function(req, res) {
   var username = req.user.username;
   var fullname = req.user.firstname + ' ' + req.user.lastname;
-  var projecttitle = req.body.projecttitle;
-  var projectdetails = req.body.projectdetails;
+  var awardtitle = req.body.awardtitle;
+  var awarddetails = req.body.awarddetails;
 
 
   var query = {
     'username': username,
-    'projecttitle': projecttitle
+    'awardtitle': awardtitle
   };
 
-  Projects.findOneAndUpdate(query, {
+  Awards.findOneAndUpdate(query, {
     $set: {
 
       username: username,
-      projecttitle: projecttitle,
-      projectdetails: projectdetails
+      awardtitle: awardtitle,
+      awarddetails: awarddetails
 
     }
   }, {
@@ -69,7 +69,7 @@ router.post('/projectsdataedit', function(req, res) {
     }
 
   });
-  res.redirect('/projects/projectsdata');
+  res.redirect('/awards/awardsdata');
 
 
 });
@@ -80,7 +80,7 @@ router.get('/data/edit/:id', function(req, res) {
   var username = req.user.username;
   console.log('------>>' + id);
 
-  Projects.find({
+  Awards.find({
     username: username,
     _id: id
   }, function(err, results) {
@@ -91,7 +91,7 @@ router.get('/data/edit/:id', function(req, res) {
     console.log('----------------------------->>>>>>>>>> inside results/projectsdataupdate');
 
     console.log('full name--its here>' + fullname);
-    res.render('projectsdataupdate', {
+    res.render('awardsdataupdate', {
       fullname: fullname,
       results
     });
@@ -108,13 +108,13 @@ router.get('/data/delete/:id', function(req, res) {
   var username = req.user.username;
   console.log('------>>' + id);
 
-  Projects.remove({
+  Awards.remove({
     username: username,
     _id: id
   }, function(err) {
     var fullname = req.user.firstname + ' ' + req.user.lastname;
 
-    res.redirect('/projects/projectsdata');
+    res.redirect('/awards/awardsdata');
     console.log('ok huh');
   });
 
