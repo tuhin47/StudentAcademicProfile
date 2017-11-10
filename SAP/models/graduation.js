@@ -28,7 +28,7 @@ var GraduationSchema = mongoose.Schema({
 
 });
 
-var Graduations = module.exports = mongoose.model('Graduations', GraduationSchema,'gradutions');
+var Graduations = module.exports = mongoose.model('Graduations', GraduationSchema,'graduations');
 
 
 //profiles will be saving to profiles collection

@@ -133,6 +133,8 @@ app.use('/projects',projects);
 app.use('/publications',publications);
 app.use('/awards',awards);
 app.use('/graduations',graduations);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
