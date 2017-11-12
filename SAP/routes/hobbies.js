@@ -98,7 +98,7 @@ router.post('/hobbiesdataedit', function(req, res) {
     }
 
   });
-  res.redirect('/Hobbies/hobbiesdata');
+  res.redirect('/hobbies/hobbiesdata');
 
 
 });

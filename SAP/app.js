@@ -27,6 +27,7 @@ var publications = require('./routes/publications');
 var awards = require('./routes/awards');
 var graduations = require('./routes/graduations');
 var interests = require('./routes/interests');
+var hobbies=require('./routes/hobbies');
 
 
 var app = express();
@@ -41,7 +42,8 @@ app.set('views', [path.join(__dirname, 'views'),
                  path.join(__dirname, 'views/publications'),
                  path.join(__dirname, 'views/awards'),
                  path.join(__dirname, 'views/graduations'),
-                 path.join(__dirname, 'views/interests')
+                 path.join(__dirname, 'views/interests'),
+                 path.join(__dirname, 'views/hobbies')
 
                    ]);
 
@@ -79,6 +81,9 @@ app.use('/interests', express.static(__dirname + '/public'));
 app.use('/interests/data/edit', express.static(__dirname + '/public'));
 app.use('/interests/data/delete', express.static(__dirname + '/public'));
 
+app.use('/hobbies', express.static(__dirname + '/public'));
+app.use('/hobbies/data/edit', express.static(__dirname + '/public'));
+app.use('/hobbies/data/delete', express.static(__dirname + '/public'));
 
 //express session
 
@@ -139,6 +144,7 @@ app.use('/publications',publications);
 app.use('/awards',awards);
 app.use('/graduations',graduations);
 app.use('/interests',interests);
+app.use('/hobbies',hobbies);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
