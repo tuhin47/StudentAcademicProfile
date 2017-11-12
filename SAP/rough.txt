@@ -1,52 +1,61 @@
-<% if(errors){ %>
-  <% for(var i=0;i<errors.length();i++){ %>
-    <div class="alert alert-danger"> <%=errors[i].errors%> </div>
-  <%}%>
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
 
-<%} %>
-
-<% if (errors !== undefined){ %>
-  <% for (var i=0;i<errors.length;i++){ %>
-  <div class="alert alert-danger">
-    <%=errors[i].msg%>
-  </div>
-
-  <% } %>
-  <% }  %>
-
-  // var MongoClient = mongodb.MongoClient;
-  //
-  //
-  //     var url = 'mongodb://localhost:27017/NodeDemo';
-  //
-  //
-  //     MongoClient.connect(url, function(err, db){
-  //       if (err) {
-  //         console.log('Unable to connect to the Server:', err);
-  //       } else {
-  //         console.log('Connected to Server');
-  //
-  //
-  //         var collection = db.collection('users');
-  //
-  //
-  //         var user1 = {firstname:firstname , lastname:lastname, username:username,
-  //            email: email, password:password};
-  //
-  //         // Insert the student data into the database
-  //         collection.insert([user1], function (err, result){
-  //           console.log('inside insert data');
-  //           if (err) {
-  //             console.log(err);
-  //           } else {
-  //
-  //             // Redirect to the updated student list
-  //             res.redirect('login');
-  //           }
-  //
-  //           // Close the database
-  //           db.close();
-  //         });
-  //
-  //       }
-  //     });
+<table class="table">
+  <thead class="thead-default">
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>

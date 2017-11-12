@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongodb=require('mongodb');
-const url =require('url');
+var url =require('url');
 var passport= require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -11,16 +11,23 @@ var db = mongoose.connection;
 
 
 var User = require('../models/user');
-
-var dynamicName=null;
-
+var Profile = require('../models/profilemodel');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  var a=25;
+  var b=65;
+  var c=a*b;
+  console.log('------------------------------>>'+c);
+
   res.render('register');
 });
 
 router.get('/login',function(req,res){
+
+
+
+
   res.render('login');
 });
 
@@ -119,6 +126,8 @@ router.post('/login',
   function(req, res) {
     var username = req.user.username;
     var fullname= req.user.firstname+' '+req.user.lastname;
+
+
     //console.log('------------------->>>>'+fullname);
     //console.log('dhuru-------------------------->>>>>>>>'+req.user);
     res.redirect(url.format({
