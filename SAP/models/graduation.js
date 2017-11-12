@@ -2,27 +2,33 @@ var mongoose = require('mongoose');
 
 
 // Project Schema
-var PublicationSchema = mongoose.Schema({
+var GraduationSchema = mongoose.Schema({
 	username: {
 		type: String,
 		index:true
 	},
-	publicationtitle: {
+	coursecode: {
 		type: String
 	},
-  publicationdetails:{
-    type:String
+  coursetitle: {
+    type: String
   },
-  publicationplace:{
-    type:String
+  semester: {
+    type: String
   },
-  publicationurl: {
+  coursecredit: {
+    type: String
+  },
+	gradepoint:{
+		type:String
+	},
+  grade: {
     type: String
   }
 
 });
 
-var Publications = module.exports = mongoose.model('Publications', PublicationSchema,'publications');
+var Graduations = module.exports = mongoose.model('Graduations', GraduationSchema,'graduations');
 
 
 //profiles will be saving to profiles collection

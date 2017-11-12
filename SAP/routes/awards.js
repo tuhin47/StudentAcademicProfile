@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 var mongodb = require('mongodb');
@@ -6,6 +7,7 @@ var LocalStrategy = require('passport-local').Strategy;
 //var User = require('../models/user');
 var Awards = require('../models/award');
 
+//alif alamin
 router.get('/awardsdata', function(req, res) {
   var username = req.user.username;
 

@@ -13,15 +13,21 @@ var db = mongoose.connection;
 var User = require('../models/user');
 var Profile = require('../models/profilemodel');
 
-
-
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  var a=25;
+  var b=65;
+  var c=a*b;
+  console.log('------------------------------>>'+c);
+
   res.render('register');
 });
 
 router.get('/login',function(req,res){
+
+
+
+
   res.render('login');
 });
 
