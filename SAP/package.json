@@ -29,9 +29,11 @@
     "mongoose": "*",
     "morgan": "~1.9.0",
     "nodemailer": "^4.4.0",
+    "nodemailer-smtp-transport": "^2.7.4",
     "passport": "^0.4.0",
     "passport-http": "*",
     "passport-local": "*",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "xoauth2": "^1.2.0"
   }
 }
