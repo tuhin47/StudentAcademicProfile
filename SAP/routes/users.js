@@ -16,6 +16,7 @@ var url=require('url');
 var nodemailer = require('nodemailer');
 var async = require('async');
 var crypto=require('crypto');
+var bcrypt = require('bcryptjs');
 // var xoauth2 = require('xoauth2');
 // var nodemailersmtptransport=require('nodemailer-smtp-transport');
 //var sleep=require('sleep');
@@ -259,13 +260,17 @@ router.get('/reset/:token', function(req, res) {
       $gt: Date.now()
     }
   }, function(err, user) {
+    console.log('-------------get------>>>>>>>>>>>>>'+user);
     //console.log('--inside reset,token->err,user-->');
     if (!user) {
       req.flash('error', 'Password reset token is invalid or has expired.');
       return res.redirect('/users/forgot');
     }
+
+
+
     res.render('reset', {
-      user: req.user
+      token:req.params.token
     });
   });
 });
@@ -274,22 +279,50 @@ router.post('/reset/:token', function(req, res) {
   console.log('----first-->>reset/post/:token---------------->');
   async.waterfall([
     function(done) {
+      var token=req.params.token;
+      var time=Date.now();
+      console.log('-------------------token: '+token);
+
+      console.log('-------------------time: '+time);
+
       User.findOne({
         resetPasswordToken: req.params.token,
         resetPasswordExpires: {
           $gt: Date.now()
         }
       }, function(err, user) {
+        console.log('----------post--------->>>>>>>>>>>>>'+user);
         if (!user) {
-          console.log('----------------------------------> not user');
+          //console.log('----------------------------------> not user');
           req.flash('error', 'Password reset token is invalid or has expired.');
           return res.redirect('back');
         }
+          req.checkBody('newpassword', 'Password is required').notEmpty();
+          req.checkBody('confirmpassword', 'Passwords do not match').equals(req.body.newpassword);
+          var errors = req.validationErrors();
+          if(errors){
+            req.flash('error', 'Both passwords are not same');
+            return res.redirect('back');
+          }
+
 
         console.log('-------------------------------------------->>> reset passwords');
-        user.password = req.body.password;
+
+        var newpassword=req.body.newpassword;
+        // var password=null;
+        var hash = bcrypt.hashSync(newpassword, 10);
+
+        // bcrypt.hash(newpassword, 10, function(err, hash) {
+        //   // Store hash in database
+        //   password=hash;
+        //   console.log('------------->'+password);
+        //   console.log('------------>'+newpassword);
+        // });
+
+        user.password=hash;
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
+        console.log('------post- new-----------?'+user);
 
         user.save(function(err) {
           req.logIn(user, function(err) {
