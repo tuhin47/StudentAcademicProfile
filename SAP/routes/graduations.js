@@ -271,6 +271,4 @@ router.get('/data/delete/:id', function(req, res) {
 
 });
 
-
-
 module.exports = router;
