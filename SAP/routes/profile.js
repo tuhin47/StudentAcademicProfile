@@ -133,6 +133,11 @@ router.get('/data',ensureAuthenticated,function(req,res){
 
 router.get('/editdata',ensureAuthenticated,function(req,res){
   var fullname =req.user.firstname+' '+req.user.lastname;
+  Profile.findOne({username:req.user.username},function(err,results){
+
+  });
+
+
   res.render('dataedit',{fullname:fullname});
 });
 
