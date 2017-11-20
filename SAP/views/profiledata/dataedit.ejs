@@ -72,7 +72,7 @@
         <i class="fa fa-user">
         </i>
        </div>
-       <input id="Name (Full name)" name="profilename" type="text" value="<%=results[0].profilename%>" class="form-control input-md">
+       <input id="Name (Full name)" name="profilename" type="text" value="<%=profilename%>" class="form-control input-md">
       </div>
 
 
@@ -107,6 +107,25 @@
   </div>
 </div> -->
 
+<div class="form-group">
+  <label class="col-md-4 control-label" >University Name</label>
+  <div class="col-md-4">
+
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fa fa-calculator"></i>
+
+      </div>
+      <input name="university" type="text" value="<%=university%>" class="form-control input-md">
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
 <!-- Text input-->
                 <div class="form-group">
                   <label class="col-md-4 control-label" for="Registration Number">Registration Number</label>
@@ -117,7 +136,7 @@
                         <i class="fa fa-calculator"></i>
 
                       </div>
-                      <input id="Registration Number" name="registration" type="text" value="<%=results[0].registration%>" class="form-control input-md">
+                      <input id="Registration Number" name="registration" type="text" value="<%=registration%>" class="form-control input-md">
                     </div>
 
 
@@ -134,7 +153,7 @@
                         <i class="fa fa-book"></i>
 
                       </div>
-                      <input id="Department" name="dept" type="text" value="<%=results[0].dept%>" class="form-control input-md">
+                      <input id="Department" name="dept" type="text" value="<%=dept%>" class="form-control input-md">
                     </div>
 
 
@@ -152,7 +171,7 @@
      <i class="fa fa-birthday-cake"></i>
 
        </div>
-       <input id="Date Of Birth" name="dob" type="text"  value="<%=results[0].dob%>" class="form-control input-md">
+       <input id="Date Of Birth" name="dob" type="text"  value="<%=dob%>" class="form-control input-md">
       </div>
 
 
@@ -169,7 +188,7 @@
       <i class="fa fa-male" style="font-size: 20px;"></i>
 
        </div>
-      <input id="Father" name="father" type="text" value="<%=results[0].father%>" class="form-control input-md">
+      <input id="Father" name="father" type="text" value="<%=father%>" class="form-control input-md">
 
       </div>
 
@@ -185,7 +204,7 @@
       <i class="fa fa-female" style="font-size: 20px;"></i>
 
        </div>
-  <input id="Mother" name="mother" type="text"  value="<%=results[0].mother%>" class="form-control input-md">
+  <input id="Mother" name="mother" type="text"  value="<%=mother%>" class="form-control input-md">
 
       </div>
 
@@ -254,7 +273,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label col-xs-12" for="Permanent Address">Permanent Address</label>
   <div class="col-md-4 ">
-  <input id="Permanent Address" name="permanentaddress" type="text"value="<%=results[0].permanentaddress%>"    class="form-control input-md ">
+  <input id="Permanent Address" name="permanentaddress" type="text"value="<%=permanentaddress%>"    class="form-control input-md ">
   </div>
 
 </div>
@@ -267,7 +286,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label col-xs-12" for="Temporary Address">Temporary Address</label>
   <div class="col-md-4">
-  <input id="Temporary Address" name="temporaryaddress" type="text" value="<%=results[0].temporaryaddress%>"  class="form-control input-md ">
+  <input id="Temporary Address" name="temporaryaddress" type="text" value="<%=temporaryaddress%>"  class="form-control input-md ">
   </div>
 
 </div>
@@ -284,7 +303,7 @@
      <i class="fa fa-briefcase"></i>
 
        </div>
-      <input id="Primary Occupation" name="primaryoccupation" value="<%=results[0].primaryoccupation%>" type="text"  class="form-control input-md">
+      <input id="Primary Occupation" name="primaryoccupation" value="<%=primaryoccupation%>" type="text"  class="form-control input-md">
       </div>
 
 
@@ -300,7 +319,7 @@
       <i class="fa fa-briefcase"></i>
 
        </div>
-     <input id="Secondary Occupation (if any)" name="secondaryoccupation" value="<%=results[0].secondaryoccupation%>"  type="text"  class="form-control input-md">
+     <input id="Secondary Occupation (if any)" name="secondaryoccupation" value="<%=secondaryoccupation%>"  type="text"  class="form-control input-md">
       </div>
 
 
@@ -319,7 +338,7 @@
      <i class="fa fa-phone"></i>
 
        </div>
-    <input id="Phone number " name="phonenumber" type="text" value="<%=results[0].phonenumber%>" class="form-control input-md">
+    <input id="Phone number " name="phonenumber" type="text" value="<%=phonenumber%>" class="form-control input-md">
 
       </div>
 
@@ -336,7 +355,7 @@
      <i class="fa fa-envelope-o"></i>
 
        </div>
-    <input id="Email Address" name="email" type="text" value="<%=results[0].email%>"  class="form-control input-md">
+    <input id="Email Address" name="email" type="text" value="<%=email%>"  class="form-control input-md">
 
       </div>
 
@@ -419,14 +438,14 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Working Experience (time period)">Work Experience (time period)</label>
+  <label class="col-md-4 control-label" >Work Experience (time period)</label>
   <div class="col-md-4">
   <div class="input-group">
        <div class="input-group-addon">
      <i class="fa fa-clock-o"></i>
 
        </div>
-    <input id="Working Experience (time period)" name="workexperience" type="text" value="<%=results[0].workexperience%>" placeholder="Enter time period " class="form-control input-md">
+    <input  name="workexperience" type="text" value="<%=workexperience%>"  class="form-control input-md">
 
 
       </div>
@@ -438,7 +457,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" >Overview (max 500 words)</label>
   <div class="col-md-4">
-    <textarea class="form-control" rows="10"   name="overview"><%=results[0].overview%></textarea>
+    <textarea class="form-control" rows="10"   name="overview"></textarea>
   </div>
 </div>
 

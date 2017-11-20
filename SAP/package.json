@@ -33,6 +33,7 @@
     "passport": "^0.4.0",
     "passport-http": "*",
     "passport-local": "*",
+    "pdfkit": "^0.8.3",
     "serve-favicon": "~2.4.5",
     "xoauth2": "^1.2.0"
   }
