@@ -72,7 +72,7 @@
         <i class="fa fa-user">
         </i>
        </div>
-       <input id="Name (Full name)" name="profilename" type="text" placeholder="Name (Full name)" class="form-control input-md">
+       <input id="Name (Full name)" name="profilename" type="text" value="<%=profilename%>" class="form-control input-md">
       </div>
 
 
@@ -107,6 +107,25 @@
   </div>
 </div> -->
 
+<div class="form-group">
+  <label class="col-md-4 control-label" >University Name</label>
+  <div class="col-md-4">
+
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fa fa-calculator"></i>
+
+      </div>
+      <input name="university" type="text" value="<%=university%>" class="form-control input-md">
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
 <!-- Text input-->
                 <div class="form-group">
                   <label class="col-md-4 control-label" for="Registration Number">Registration Number</label>
@@ -117,7 +136,7 @@
                         <i class="fa fa-calculator"></i>
 
                       </div>
-                      <input id="Registration Number" name="registration" type="text" placeholder="Registration Number" class="form-control input-md">
+                      <input id="Registration Number" name="registration" type="text" value="<%=registration%>" class="form-control input-md">
                     </div>
 
 
@@ -134,7 +153,7 @@
                         <i class="fa fa-book"></i>
 
                       </div>
-                      <input id="Department" name="dept" type="text" placeholder="Department" class="form-control input-md">
+                      <input id="Department" name="dept" type="text" value="<%=dept%>" class="form-control input-md">
                     </div>
 
 
@@ -152,7 +171,7 @@
      <i class="fa fa-birthday-cake"></i>
 
        </div>
-       <input id="Date Of Birth" name="dob" type="text" placeholder="DD-MM-YYYY" class="form-control input-md">
+       <input id="Date Of Birth" name="dob" type="text"  value="<%=dob%>" class="form-control input-md">
       </div>
 
 
@@ -169,7 +188,7 @@
       <i class="fa fa-male" style="font-size: 20px;"></i>
 
        </div>
-      <input id="Father" name="father" type="text" placeholder="Father's name" class="form-control input-md">
+      <input id="Father" name="father" type="text" value="<%=father%>" class="form-control input-md">
 
       </div>
 
@@ -185,7 +204,7 @@
       <i class="fa fa-female" style="font-size: 20px;"></i>
 
        </div>
-  <input id="Mother" name="mother" type="text" placeholder="Mother's Name" class="form-control input-md">
+  <input id="Mother" name="mother" type="text"  value="<%=mother%>" class="form-control input-md">
 
       </div>
 
@@ -196,6 +215,8 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="Gender">Gender</label>
   <div class="col-md-4">
+
+
     <label class="radio-inline" for="Gender-0">
       <input type="radio" name="gender" id="Gender-0" value="male" checked="checked">
       Male
@@ -252,7 +273,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label col-xs-12" for="Permanent Address">Permanent Address</label>
   <div class="col-md-4 ">
-  <input id="Permanent Address" name="permanentaddress" type="text" placeholder="full address" class="form-control input-md ">
+  <input id="Permanent Address" name="permanentaddress" type="text"value="<%=permanentaddress%>"    class="form-control input-md ">
   </div>
 
 </div>
@@ -265,7 +286,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label col-xs-12" for="Temporary Address">Temporary Address</label>
   <div class="col-md-4">
-  <input id="Temporary Address" name="temporaryaddress" type="text" placeholder="full address" class="form-control input-md ">
+  <input id="Temporary Address" name="temporaryaddress" type="text" value="<%=temporaryaddress%>"  class="form-control input-md ">
   </div>
 
 </div>
@@ -282,7 +303,7 @@
      <i class="fa fa-briefcase"></i>
 
        </div>
-      <input id="Primary Occupation" name="primaryoccupation" type="text" placeholder="Primary Occupation" class="form-control input-md">
+      <input id="Primary Occupation" name="primaryoccupation" value="<%=primaryoccupation%>" type="text"  class="form-control input-md">
       </div>
 
 
@@ -298,7 +319,7 @@
       <i class="fa fa-briefcase"></i>
 
        </div>
-     <input id="Secondary Occupation (if any)" name="secondaryoccupation" type="text" placeholder="input something" class="form-control input-md">
+     <input id="Secondary Occupation (if any)" name="secondaryoccupation" value="<%=secondaryoccupation%>"  type="text"  class="form-control input-md">
       </div>
 
 
@@ -317,7 +338,7 @@
      <i class="fa fa-phone"></i>
 
        </div>
-    <input id="Phone number " name="phonenumber" type="text" placeholder="Primary Phone number " class="form-control input-md">
+    <input id="Phone number " name="phonenumber" type="text" value="<%=phonenumber%>" class="form-control input-md">
 
       </div>
 
@@ -334,7 +355,7 @@
      <i class="fa fa-envelope-o"></i>
 
        </div>
-    <input id="Email Address" name="email" type="text" placeholder="Email Address" class="form-control input-md">
+    <input id="Email Address" name="email" type="text" value="<%=email%>"  class="form-control input-md">
 
       </div>
 
@@ -417,14 +438,14 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Working Experience (time period)">Work Experience (time period)</label>
+  <label class="col-md-4 control-label" >Work Experience (time period)</label>
   <div class="col-md-4">
   <div class="input-group">
        <div class="input-group-addon">
      <i class="fa fa-clock-o"></i>
 
        </div>
-    <input id="Working Experience (time period)" name="workexperience" type="text" placeholder="Enter time period " class="form-control input-md">
+    <input  name="workexperience" type="text" value="<%=workexperience%>"  class="form-control input-md">
 
 
       </div>
@@ -434,9 +455,9 @@
 
 <!-- Textarea -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Overview (max 200 words)">Overview (max 200 words)</label>
+  <label class="col-md-4 control-label" >Overview (max 500 words)</label>
   <div class="col-md-4">
-    <textarea class="form-control" rows="10"  id="Overview (max 200 words)" name="overview">Overview</textarea>
+    <textarea class="form-control" rows="10"   name="overview"></textarea>
   </div>
 </div>
 
