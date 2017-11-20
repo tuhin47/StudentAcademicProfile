@@ -18,6 +18,10 @@ function sleep(time, callback) {
 
 
 
+router.get('/up', function(req, res, next) {
+  res.render('demopic');
+});
+
 router.get('/',ensureAuthenticated,function(req,res){
   console.log('---------------------------------->>>>>>  inside profile');
   var fullname =req.user.firstname+' '+req.user.lastname;
