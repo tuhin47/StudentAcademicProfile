@@ -76,29 +76,52 @@ router.post('/signup', function(req, res) {
     console.log('YES ERRORS!!!');
   } else {
     console.log('enter');
-    var newUser = new User({
-      username: username,
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
-      password: password
+
+    User.find({
+      username: username
+    }, function(err, results) {
+      if (err) return console.error(err);
+
+      console.log(results);
+      if(results.length>0){
+      var usernameproblem='Username is not unique, take a new one';
+      req.flash('error_msg', 'Username is not unique, create a new one');
+      res.render('signup', {
+        usernameproblem:usernameproblem
+      });
+      console.log('ok huh');
+    }
+    else {
+      var newUser = new User({
+        username: username,
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        password: password
+      });
+
+      User.createUser(newUser, function(err, user) {
+        if (err) throw err;
+        console.log(user);
+        console.log('these datas are uploaded');
+      });
+
+      req.flash('success_msg', 'You are register and can now login');
+
+      res.redirect(url.format({
+        pathname: "/profile",
+        query: {
+          username: username
+        }
+      }));
+      console.log('Passed');
+
+    }
     });
 
-    User.createUser(newUser, function(err, user) {
-      if (err) throw err;
-      console.log(user);
-      console.log('these datas are uploaded');
-    });
 
-    req.flash('success_msg', 'You are register and can now login');
 
-    res.redirect(url.format({
-      pathname: "/profile",
-      query: {
-        username: username
-      }
-    }));
-    console.log('Passed');
+
   }
 
   //res.redirect('login');

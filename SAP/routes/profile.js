@@ -133,7 +133,58 @@ router.get('/data',ensureAuthenticated,function(req,res){
 
 router.get('/editdata',ensureAuthenticated,function(req,res){
   var fullname =req.user.firstname+' '+req.user.lastname;
-  res.render('dataedit',{fullname:fullname});
+
+
+  Profile.find({username:req.user.username},function(err,results){
+    if (err) throw err;
+
+    var profilename;
+    var registration;
+    var dept;
+    var dob;
+    var father;
+    var mother;
+    var gender;
+    var maritalstatus;
+    var permanentaddress;
+    var temporaryaddress;
+    var primaryoccupation;
+    var secondaryoccupation;
+    var phonenumber;
+    var email;
+    var language;
+    var workexperience;
+    var overview;
+
+    if (! results) {
+       results.profilename=fullname;
+       results.registration=null;
+       results.dept=null;
+       results.dob=null;
+       results.father=null;
+       results.mother=null;
+       results.gender=null;
+       results.maritalstatus=null;
+       results.permanentaddress=null;
+       results.temporaryaddress=null;
+       results.primaryoccupation=null;
+       results.secondaryoccupation=null;
+       results.phonenumber=null;
+       results.email=null;
+       results.language=null;
+       results.workexperience=null;
+       results.overview=null;
+
+    }
+
+        res.render('dataedit',{fullname:fullname,results});
+
+
+
+  });
+
+
+
 });
 
 
