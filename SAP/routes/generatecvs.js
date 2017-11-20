@@ -34,21 +34,42 @@ var Profile = require('../models/profilemodel');
 var Award = require('../models/award');
 var Graduation = require('../models/graduation');
 var Hobby = require('../models/hobby');
-var interest = require('../models/interest');
+var Interest = require('../models/interest');
 var Project = require('../models/project');
 var Publication = require('../models/publication');
 var SSCResult = require('../models/sschscresult');
 
-var Profiles=[];
-var Awards=[];
-var Garduations=[];
-var Projects=[];
-var Publications=[];
-var SSCResults=[];
+// var Profiles=[];
+// var Awards=[];
+// var Garduations=[];
+// var Projects=[];
+// var Publications=[];
+// var SSCResults=[];
 
 
+function calculate(result) {
+  var cgpa = 0.0;
+  var credit = 0.0;
+  var total = 0.0;
+  for (i = 0; i < result.length; i++) {
+    if (parseFloat(result[i].gradepoint) > 0.0) {
+      var coursecredit = parseFloat(result[i].coursecredit);
+      var gradepoint = parseFloat(result[i].gradepoint);
 
+      console.log('-------coursecredit----->' + coursecredit);
+      console.log('-------coursecredit----->' + gradepoint);
 
+      credit = credit + coursecredit;
+      total = total + gradepoint * coursecredit;
+      console.log(credit);
+      console.log(total);
+    }
+  }
+  if (credit > 0)
+    cgpa = total / credit;
+  return cgpa;
+
+}
 
 
 /* GET users listing. */
@@ -62,47 +83,92 @@ router.get('/', function(req, res, next) {
     fullname: fullname
   });
 });
+
+
+
 router.post('/', function(req, res, next) {
-  var query1={username:req.user.username};
+  var fullname = req.user.firstname + ' ' + req.user.lastname;
+  var filepath = req.body.filepath;
+  var path = filepath + '';
+  var l = path.length;
+  if (path[l - 1] != '/') path = filepath + '/';
+
+
+  var query1 = {
+    username: req.user.username
+  };
   console.log('inside post generatecvs');
-  Profile.find(query1,function(err1,profile){
-    if(err1) throw err1;
+  Profile.find(query1, function(err1, profile) {
+    if (err1) throw err1;
     else {
 
-      Award.find(query1,function(err2,award){
-          if(err2) throw err2;
-          else {
-            
-          }
+      Award.find(query1, function(err2, award) {
+        if (err2) throw err2;
+        else {
+          Graduation.find(query1, function(err3, graduation) {
+            if (err3) throw err3;
+            else {
+              SSCResult.find(query1, function(err4, sschscresult) {
+                if (err4) throw err4;
+                else {
+                  Project.find(query1, function(err5, project) {
+                    if (err5) throw err5;
+                    else {
+                      Publication.find(query1, function(err6, publication) {
+                        if (err6) throw err6;
+                        else {
+                          Interest.find(query1, function(err7, interest) {
+                            if (err7) throw err7;
+                            else {
+                              Hobby.find(query1, function(err8, hobby) {
+                                if (err8) throw err8;
+                                else {
+                                  var cgpa = calculate(graduation);
+                                  console.log('your cgpa-------->' + cgpa);
+
+
+                                  var doc = new PDFDocument();
+
+                                  doc.pipe(fs.createWriteStream(path + '' + fullname + '.pdf'));
+
+                                  doc.font('Times-Roman')
+                                    .fontSize(15)
+                                    .text('' + fullname, 100, 10);
+
+                                  doc.moveTo(0, 100)
+                                    .lineTo(200, 100)
+                                    .stroke();
+
+                                  doc.end();
+
+
+
+                                }
+                              });
+                            }
+                          });
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+            }
+
+          });
+
+        }
 
       });
 
     }
   });
-  //console.log(Profiles);
 
 
 
 
-
-  var fullname = req.user.firstname + ' ' + req.user.lastname;
   console.log('before pipe');
-  var doc = new PDFDocument();
-  var filepath = req.body.filepath;
-  var path = filepath + '';
-  var l = path.length;
 
-  if (path[l - 1] != '/') path = filepath + '/';
-
-  doc.pipe(fs.createWriteStream(path + '' + fullname + '.pdf'));
-
-  doc.font('Times-Roman')
-    .fontSize(25)
-    .text('' + fullname, 300, 10);
-
-  doc.moveTo(0, 100)
-    .lineTo(200, 100)
-    .stroke();
 
 
   // console.log('after pipe');
@@ -130,7 +196,6 @@ router.post('/', function(req, res, next) {
   //    .restore();
 
 
-  doc.end();
 
   console.log('----------->   pdf created');
   res.redirect('/profile');
