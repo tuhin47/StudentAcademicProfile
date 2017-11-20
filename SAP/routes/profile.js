@@ -38,6 +38,7 @@ function ensureAuthenticated(req, res, next){
 		res.redirect('/users/login');
     //return next();
 	}
+
 }
 
 router.get('/data',ensureAuthenticated,function(req,res){
@@ -48,6 +49,7 @@ router.get('/data',ensureAuthenticated,function(req,res){
   Profile.findOne( query, function (err, user) {
     if (err) throw err;
     var profilename;
+    var university;
     var registration;
     var dept;
     var dob;
@@ -67,6 +69,7 @@ router.get('/data',ensureAuthenticated,function(req,res){
 
     if(user){
        profilename=user.profilename;
+       university=user.university;
        registration=user.registration;
        dept=user.dept;
        dob=user.dob;
@@ -90,6 +93,7 @@ router.get('/data',ensureAuthenticated,function(req,res){
 
     else if (! user) {
        profilename=fullname;
+       university=null;
        registration=null;
        dept=null;
        dob=null;
@@ -112,15 +116,15 @@ router.get('/data',ensureAuthenticated,function(req,res){
 
 
     console.log('---------> in data route--------------------------->>>>>');
-    console.log('  ---------profilename->>> '+profilename+' --regi- '+registration+'----dept- '+dept);
+    console.log('  ---------profilename->>> '+profilename+'  --regi- '+registration+'----dept- '+dept);
     console.log('  ---------birth->>> '+dob+' -father-- '+father+'--mother--- '+mother);
     console.log('  --------gender-->>> '+gender+' --marital status- '+maritalstatus+'---permanentaddress-- '+permanentaddress);
     console.log('  -----temporaryaddress----->>> '+temporaryaddress+'-primaryoccupation-- '+primaryoccupation+'--secondaryoccupation--- '+secondaryoccupation);
     console.log('  --------phonenumber-->>> '+phonenumber+' -email-- '+email+'---language-- '+language);
-    console.log('  ---------workexperience->>> '+workexperience+' -overview-- '+overview+'--dept--- '+dept);
+    console.log('  ---------workexperience->>> '+workexperience+' -overview-- '+overview+'--university--- '+university);
 
     res.render('profiledata',
-    {fullname:fullname,profilename:profilename,registration:registration,
+    {fullname:fullname,profilename:profilename,university:university,registration:registration,
       dept:dept,dob:dob,father:father,mother:mother,gender:gender,
       maritalstatus:maritalstatus,permanentaddress:permanentaddress,
       temporaryaddress:temporaryaddress,primaryoccupation:primaryoccupation,
@@ -129,20 +133,17 @@ router.get('/data',ensureAuthenticated,function(req,res){
     });
 });
 
-
-
-  //console.log('userdata---------------------->>>>>>'+userdata);
-
 });
 
 router.get('/editdata',ensureAuthenticated,function(req,res){
   var fullname =req.user.firstname+' '+req.user.lastname;
 
-
-  Profile.find({username:req.user.username},function(err,results){
+  console.log('inside editdata');
+  Profile.findOne({username:req.user.username},function(err,user){
     if (err) throw err;
 
     var profilename;
+    var university;
     var registration;
     var dept;
     var dob;
@@ -160,30 +161,70 @@ router.get('/editdata',ensureAuthenticated,function(req,res){
     var workexperience;
     var overview;
 
-    if (! results) {
-       results.profilename=fullname;
-       results.registration=null;
-       results.dept=null;
-       results.dob=null;
-       results.father=null;
-       results.mother=null;
-       results.gender=null;
-       results.maritalstatus=null;
-       results.permanentaddress=null;
-       results.temporaryaddress=null;
-       results.primaryoccupation=null;
-       results.secondaryoccupation=null;
-       results.phonenumber=null;
-       results.email=null;
-       results.language=null;
-       results.workexperience=null;
-       results.overview=null;
+    if (user) {
+      profilename=user.profilename;
+      university=user.university;
+      registration=user.registration;
+      dept=user.dept;
+      dob=user.dob;
+      father=user.father;
+      mother=user.mother;
+      gender=user.gender;
+      maritalstatus=user.maritalstatus;
+      permanentaddress=user.permanentaddress;
+      temporaryaddress=user.temporaryaddress;
+      primaryoccupation=user.primaryoccupation;
+      secondaryoccupation=user.secondaryoccupation;
+      phonenumber=user.phonenumber;
+      email=user.email;
+      language=user.language;
+      workexperience=user.workexperience;
+      overview=user.overview;
+
+
+
+    }
+    if(! user) {
+      profilename=fullname;
+      university=null;
+      registration=null;
+      dept=null;
+      dob=null;
+      father=null;
+      mother=null;
+      gender=null;
+      maritalstatus=null;
+      permanentaddress=null;
+      temporaryaddress=null;
+      primaryoccupation=null;
+      secondaryoccupation=null;
+      phonenumber=null;
+      email=null;
+      language=null;
+      workexperience=null;
+      overview=null;
 
     }
 
-        res.render('dataedit',{fullname:fullname,results});
+    console.log('---------> in data route--------------------------->>>>>');
+    console.log('  ---------profilename->>> '+profilename+'  --regi- '+registration+'----dept- '+dept);
+    console.log('  ---------birth->>> '+dob+' -father-- '+father+'--mother--- '+mother);
+    console.log('  --------gender-->>> '+gender+' --marital status- '+maritalstatus+'---permanentaddress-- '+permanentaddress);
+    console.log('  -----temporaryaddress----->>> '+temporaryaddress+'-primaryoccupation-- '+primaryoccupation+'--secondaryoccupation--- '+secondaryoccupation);
+    console.log('  --------phonenumber-->>> '+phonenumber+' -email-- '+email+'---language-- '+language);
+    console.log('  ---------workexperience->>> '+workexperience+' -overview-- '+overview+'--university--- '+university);
 
 
+
+        res.render('dataedit',{fullname:fullname,profilename:profilename,
+          university:university,registration:registration,
+          dept:dept,dob:dob,father:father,mother:mother,gender:gender,
+          maritalstatus:maritalstatus,permanentaddress:permanentaddress,
+          temporaryaddress:temporaryaddress,primaryoccupation:primaryoccupation,
+          secondaryoccupation:secondaryoccupation,phonenumber:phonenumber,
+          email:email,language:language,workexperience:workexperience,overview:overview});
+
+          console.log('ok output---------------->');
 
   });
 
@@ -196,6 +237,7 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
   var username=req.user.username;
   console.log('usename in editdata------------------'+username);
   var profilename=req.body.profilename;
+  var university=req.body.university;
   var registration=req.body.registration;
   var dept=req.body.dept;
   var dob=req.body.dob;
@@ -227,6 +269,7 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
     var newProfile = new Profile({
       username: username,
       profilename: profilename,
+      university:university,
       registration: registration,
       dept:dept,
       dob: dob,
@@ -255,6 +298,7 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
 
         username: username,
         profilename: profilename,
+        university:university,
         registration: registration,
         dept:dept,
         dob: dob,
@@ -284,11 +328,6 @@ router.post('/editdata',ensureAuthenticated,function(req,res){
     res.redirect('/profile/data');
 
 });
-
-
-// router.get('/result',function(req,res){
-//   res.render('resultdatatable');
-// });
 
 
 
