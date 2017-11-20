@@ -34,6 +34,7 @@ function ensureAuthenticated(req, res, next){
 		res.redirect('/users/login');
     //return next();
 	}
+
 }
 
 router.get('/data',ensureAuthenticated,function(req,res){
