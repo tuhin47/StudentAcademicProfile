@@ -49,49 +49,65 @@
         <!-- /.sidebar -->
       </aside>
 
+
+
+
       <div class="content-wrapper">
+
 
 
         <div class="panel-body">
 
-          <div class="col-md-11 col-sm-offset-1">
+          <section class="content">
 
+            <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">All Awards</h3>
+                      <br>
+                      <br>
+                      <a href="/awards/awardsdataedit"><button type="button" class="btn btn-primary">Add New</button></a>
+                    </div><!-- /.box-header -->
 
+                    <div class="box-body">
+                      <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Serial</th>
+                            <th>Awards Title</th>
+                            <th>Position and Details</th>
+                            <th>Edit/Delete</th>
+                          </tr>
+                        </thead>
 
-              <h2>All Awards</h2>
-              <br>
-              <a href="/awards/awardsdataedit"><button type="button" class="btn btn-primary">Add New</button></a>
-            </div>
+                        <tbody>
+                          <% for(var i=0;i<results.length;i++){ %>
+                          <tr>
+                            <td><%=i+1%></td>
+                            <td><%= results[i].awardtitle %></td>
+                            <td><%= results[i].awarddetails %></td>
+                            <td class="text-center">
+                              <a class="btn btn-xs btn-success btn-edit" href="/awards/data/edit/<%= results[i]._id %>">Edit</a>
+                              <a class="btn btn-xs btn-warning btn-edit" href="/awards/data/delete/<%= results[i]._id %>">Delete</a>
+                            </td>
+                          </tr>
 
-              <div class="col-sm-10 col-sm-offset-1">
-                <table class="display table table-bordered table-stripe" >
+                          <%}%>
+                        </tbody>
+                        <!-- <tfoot>
+                          <tr>
+                            <th>Rendering engine</th>
+                            <th>Browser</th>
+                            <th>Platform(s)</th>
+                            <th>Engine version</th>
+                            <th>CSS grade</th>
+                          </tr>
+                        </tfoot> -->
+                      </table>
+                    </div><!-- /.box-body -->
+                  </div><!-- /.box -->
 
+          </section>
 
-                  <thead class="thead-inverse">
-                    <tr>
-                      <th>Serial</th>
-                      <th>Awards Title</th>
-                      <th>Position and Details</th>
-                      <th>Edit/Delete</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <% for(var i=0;i<results.length;i++){ %>
-                    <tr>
-                      <td><%=i+1%></td>
-                      <td><%= results[i].awardtitle %></td>
-                      <td><%= results[i].awarddetails %></td>
-                      <td class="text-center">
-                        <a class="btn btn-xs btn-success btn-edit" href="/awards/data/edit/<%= results[i]._id %>">Edit</a>
-                        <a class="btn btn-xs btn-warning btn-edit" href="/awards/data/delete/<%= results[i]._id %>">Delete</a>
-                      </td>
-                    </tr>
-
-                    <%}%>
-                  </tbody>
-                </table>
-            </div>
 
 
         </div> <!-- panel-body -->

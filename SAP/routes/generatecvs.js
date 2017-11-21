@@ -349,34 +349,10 @@ router.post('/', function(req, res, next) {
 
 
 
-  // console.log('after pipe');
-  // doc.font('fonts/PalatinoBold.ttf')
-  //    .fontSize(25)
-  //    .text('Some text with an embedded font!', 100, 100);
-  //
-  // console.log('before addPage');
-  // doc.addPage()
-  //    .fontSize(25)
-  //    .text('Here is some vector graphics...', 100, 100);
-  // console.log('after addPage');
-  //
-  // doc.save()
-  //    .moveTo(100, 150)
-  //    .lineTo(100, 250)
-  //    .lineTo(200, 250)
-  //    .fill("#FF3300");
-  //
-  //
-  // doc.scale(0.6)
-  //    .translate(470, -380)
-  //    .path('M 250,75 L 323,301 131,161 369,161 177,301 z')
-  //    .fill('red', 'even-odd')
-  //    .restore();
-
-
 
   console.log('----------->   pdf created');
-  res.redirect('/profile');
+  req.flash('success_msg','Your CV is created on '+path);
+  res.redirect('/generatecvs');
 
 });
 
