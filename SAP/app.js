@@ -49,7 +49,8 @@ app.set('views', [path.join(__dirname, 'views'),
                  path.join(__dirname, 'views/graduations'),
                  path.join(__dirname, 'views/interests'),
                  path.join(__dirname, 'views/hobbies'),
-                 path.join(__dirname, 'views/generatecvs')
+                 path.join(__dirname, 'views/generatecvs'),
+                 path.join(__dirname, 'views/charts')
                    ]);
 
 
@@ -92,6 +93,7 @@ app.use('/hobbies/data/delete', express.static(__dirname + '/public'));
 
 app.use('/generatecvs', express.static(__dirname + '/public'));
 
+app.use('/photos',require('./routes/photos'));
 //express session
 
 app.use(session({
