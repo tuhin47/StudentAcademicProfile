@@ -285,6 +285,37 @@ router.post('/', function(req, res, next) {
                                   }
 
 
+                                  if (award.length > 0) {
+                                    doc.moveDown(1);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Awards', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    doc.fontSize(localdata);
+
+                                    doc.moveDown(1);
+
+                                    for (i = 0; i < award.length; i++) {
+                                      doc.fontSize(localheader);
+                                      doc.font('Times-Roman').text('' + award[i].awardtitle, {
+                                        align: 'left',
+                                        continued: true
+                                      });
+                                      doc.moveDown(1);
+                                      doc.fontSize(localdata);
+                                      doc.font('Times-Roman').text('--' + award[i].awarddetails, {
+                                        align: 'right'
+                                      });
+                                      doc.moveDown(1);
+                                    }
+
+
+                                  }
+
+
                                   if (interest.length > 0) {
                                     doc.moveDown(1);
                                     doc.fontSize(localheader);
@@ -349,34 +380,10 @@ router.post('/', function(req, res, next) {
 
 
 
-  // console.log('after pipe');
-  // doc.font('fonts/PalatinoBold.ttf')
-  //    .fontSize(25)
-  //    .text('Some text with an embedded font!', 100, 100);
-  //
-  // console.log('before addPage');
-  // doc.addPage()
-  //    .fontSize(25)
-  //    .text('Here is some vector graphics...', 100, 100);
-  // console.log('after addPage');
-  //
-  // doc.save()
-  //    .moveTo(100, 150)
-  //    .lineTo(100, 250)
-  //    .lineTo(200, 250)
-  //    .fill("#FF3300");
-  //
-  //
-  // doc.scale(0.6)
-  //    .translate(470, -380)
-  //    .path('M 250,75 L 323,301 131,161 369,161 177,301 z')
-  //    .fill('red', 'even-odd')
-  //    .restore();
-
-
 
   console.log('----------->   pdf created');
-  res.redirect('/profile');
+  req.flash('success_msg','Your CV is created on '+path);
+  res.redirect('/generatecvs');
 
 });
 
