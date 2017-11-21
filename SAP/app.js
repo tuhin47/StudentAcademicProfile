@@ -92,7 +92,7 @@ app.use('/hobbies/data/delete', express.static(__dirname + '/public'));
 
 app.use('/generatecvs', express.static(__dirname + '/public'));
 
-app.use('/demopic',require('./routes/demopic'));
+app.use('/photos',require('./routes/photos'));
 //express session
 
 app.use(session({
