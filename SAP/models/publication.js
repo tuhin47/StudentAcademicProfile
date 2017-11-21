@@ -10,6 +10,9 @@ var PublicationSchema = mongoose.Schema({
 	publicationtitle: {
 		type: String
 	},
+	publicationshort:{
+		type:String
+	},
   publicationdetails:{
     type:String
   },
