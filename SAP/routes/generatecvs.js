@@ -98,8 +98,6 @@ router.post('/', function(req, res, next) {
   var query1 = {
     username: req.user.username
   };
-  var querySSC={username:req.user.username,examtype:'SSC'};
-  var queryHSC={username:req.user.username,examtype:'HSC'};
   console.log('inside post generatecvs');
   Profile.find(query1, function(err1, profile) {
     if (err1) throw err1;
@@ -111,7 +109,7 @@ router.post('/', function(req, res, next) {
           Graduation.find(query1, function(err3, graduation) {
             if (err3) throw err3;
             else {
-              SSCResult.find(query1, function(err4, sscresult) {
+              SSCResult.find(query1, function(err4, sschscresult) {
                 if (err4) throw err4;
                 else {
                   Project.find(query1, function(err5, project) {
@@ -126,43 +124,53 @@ router.post('/', function(req, res, next) {
                               Hobby.find(query1, function(err8, hobby) {
                                 if (err8) throw err8;
                                 else {
-                                  //var cgpa = calculate(graduation);
-                                  //console.log('your cgpa-------->' + cgpa);
+                                  var cgpa = calculate(graduation);
+                                  console.log('your cgpa-------->' + cgpa);
+
+                                  console.log(sschscresult);
+                                  console.log(hobby);
+                                  console.log(interest);
+                                  console.log(publication);
+                                  console.log(project);
+                                  console.log(award);
 
 
+                                  var nameheader = 18;
+                                  var localheader = 11;
+                                  var localdata = 9;
                                   var doc = new PDFDocument();
 
                                   doc.pipe(fs.createWriteStream(path + '' + fullname + '.pdf'));
                                   var l = fullname.length;
-                                  doc.fontSize(18);
+                                  doc.fontSize(nameheader);
                                   doc.font('Times-Roman')
                                     .text('' + fullname, {
                                       align: 'center'
 
                                     });
 
-                                  doc.fontSize(9);
+                                  doc.fontSize(localdata);
 
                                   doc.font('Times-Roman')
-                                    .text('     Address:        ' + profile[0].temporaryaddress, {
+                                    .text('     Address: ' + profile[0].temporaryaddress+'    Email: ' + profile[0].email+ '    Contact No: ' + profile[0].phonenumber, {
                                       align: 'center',
 
 
                                     });
 
-                                  doc.font('Times-Roman')
-                                    .text('        Email:        ' + profile[0].email, {
-                                      align: 'center'
-
-                                    });
-
-                                  doc.font('Times-Roman')
-                                    .text('Contact No:        ' + profile[0].phonenumber, {
-                                      align: 'center'
-
-                                    });
-                                  doc.moveDown(1);
-                                  doc.fontSize(11);
+                                  // doc.font('Times-Roman')
+                                  //   .text('        Email:        ' + profile[0].email, {
+                                  //     align: 'center'
+                                  //
+                                  //   });
+                                  //
+                                  // doc.font('Times-Roman')
+                                  //   .text('Contact No:        ' + profile[0].phonenumber, {
+                                  //     align: 'center'
+                                  //
+                                  //   });
+                                  doc.moveDown(2);
+                                  doc.fontSize(localheader);
                                   doc.font('Times-Roman')
                                     .text('Personal Profile', {
                                       align: 'left',
@@ -170,79 +178,200 @@ router.post('/', function(req, res, next) {
                                     });
 
                                   var overview = profile[0].overview;
-                                  doc.fontSize(9);
+                                  doc.fontSize(localdata);
                                   doc.font('Times-Roman')
                                     .text('' + overview, {
                                       align: 'left'
 
                                     });
 
+                                  doc.moveDown(1);
+                                  doc.fontSize(localheader);
+                                  doc.font('Times-Roman')
+                                    .text('Education', {
+                                      align: 'left',
+                                      bold: true
+                                    });
+
+                                  doc.fontSize(localdata);
+
+                                  for (var i = 0; i < sschscresult.length; i++) {
+                                    if (sschscresult[i].examtype == 'SSC') {
+
+                                      doc.font('Times-Roman').text('SSC    ' + sschscresult[i].institution + '    ' +
+                                        sschscresult[i].passedyear + '    GPA:' + sschscresult[i].gpa, {
+                                          align: 'center',
+                                        });
+                                    } else if (sschscresult[i].examtype == 'HSC') {
+                                      doc.font('Times-Roman').text('HSC    ' + sschscresult[i].institution + '    ' +
+                                        sschscresult[i].passedyear + '    GPA:' + sschscresult[i].gpa, {
+                                          align: 'center',
+                                        });
+                                    } else if (sschscresult[i].examtype == 'Graduation') {
+                                      doc.font('Times-Roman').text('Graduation    ' + sschscresult[i].institution + '    ' +
+                                        sschscresult[i].passedyear + '    CGPA:' + sschscresult[i].gpa, {
+                                          align: 'center',
+                                        });
+                                    }
+                                  }
+
+
+                                  // projects is here ---------------->>>
+                                  doc.moveDown(1);
+                                  doc.fontSize(localheader);
+                                  doc.font('Times-Roman')
+                                    .text('Projects', {
+                                      align: 'left',
+                                      bold: true
+                                    });
+
+                                  doc.fontSize(localdata);
+                                  // doc.font('Times-Roman').text('        Project Title    ', {
+                                  //   align: 'left',
+                                  //   continued:true
+                                  // });
+                                  // doc.moveDown(1);
+                                  // doc.font('Times-Roman').text('        Project Title    ', {
+                                  //   align: 'right'
+                                  // });
+                                  doc.moveDown(1);
+
+                                  for (i = 0; i < project.length; i++) {
+                                    doc.font('Times-Roman').text(''+project[i].projecttitle, {
+                                      align: 'left',
+                                      continued:true
+                                    });
                                     doc.moveDown(1);
-                                    doc.fontSize(11);
-                                    doc.font('Times-Roman')
-                                      .text('Education', {
-                                        align: 'left',
-                                        bold: true
-                                      });
+                                    doc.font('Times-Roman').text('        -'+project[i].projectdetails, {
+                                      align: 'right'
+                                    });
+                                    doc.moveDown(1);
+                                  }
+
+                                  doc.moveDown(1);
+                                  doc.fontSize(localheader);
+                                  doc.font('Times-Roman')
+                                    .text('Publications', {
+                                      align: 'left',
+                                      bold: true
+                                    });
+
+                                  doc.fontSize(localdata);
+
+                                  doc.moveDown(1);
+
+                                  for (i = 0; i < publication.length; i++) {
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman').text(''+publication[i].publicationtitle, {
+                                      align: 'left',
+                                      continued:true
+                                    });
+                                    doc.moveDown(1);
+                                    doc.fontSize(localdata);
+                                    doc.font('Times-Roman').text(publication[i].publicationplace+'--'+publication[i].publicationshort+'--'+publication[i].publicationurl, {
+                                      align: 'right'
+                                    });
+                                    doc.moveDown(1);
+                                  }
+
+                                  doc.moveDown(1);
+                                  doc.fontSize(localheader);
+                                  doc.font('Times-Roman')
+                                    .text('Interests', {
+                                      align: 'left',
+                                      bold: true
+                                    });
+
+                                  doc.fontSize(localdata);
+
+                                  doc.moveDown(1);
+
+                                  for (i = 0; i <interest.length; i++) {
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman').text(''+interest[i].interestabout, {
+                                      align: 'left',
+                                      continued:true
+                                    });
+                                    doc.moveDown(1);
+                                    doc.fontSize(localdata);
+                                    doc.font('Times-Roman').text('--'+interest[i].interestshortails+'--'+interest[i].interestnurl, {
+                                      align: 'right'
+                                    });
+                                    doc.moveDown(1);
+                                  }
+
+
+
+
+
+
 
                                   // create a PDF from PDFKit, and a table from PDFTable
 
-                                  var table = new PdfTable(doc, {
-                                  });
-
-                                  table.addPlugin(new(require('voilab-pdf-table/plugins/fitcolumn'))({
-                                      column: 'description'
-                                    }))
-                                    // set defaults to your columns
-                                    .setColumnsDefaults({
-                                      headerBorder: 'B',
-                                      align: 'center'
-                                    })
-                                    // add table columns
-                                    .addColumns([{
-                                        id: 'exam',
-                                        header: 'Exam',
-                                        align: 'left'
-                                      },
-                                      {
-                                        id: 'institution',
-                                        header: 'Institution',
-                                        align:'justify'
-                                      },
-                                      {
-                                        id: 'passedyear',
-                                        header: 'Passed Year',
-                                        align:'justify'
-                                      },
-                                      {
-                                        id: 'result',
-                                        header: 'Result',
-                                        align:'right'
-
-                                      }
-                                    ]);
-                                    // add events (here, we draw headers on each new page)
-                                    // .onPageAdded(function(tb) {
-                                    //   tb.addHeader();
-                                    // });
-
-                                  // if no page already exists in your PDF, do not forget to add one
-
-                                  // draw content, by passing data to the addBody method
-
+                                  // var table = new PdfTable(doc, {
+                                  //   bottomMargin: 30
+                                  // });
+                                  //
+                                  // table
+                                  //   // add some plugins (here, a 'fit-to-width' for a column)
+                                  //   .addPlugin(new(require('voilab-pdf-table/plugins/fitcolumn'))({
+                                  //     column: 'description'
+                                  //   }))
+                                  //   // set defaults to your columns
+                                  //   .setColumnsDefaults({
+                                  //     headerBorder: 'B',
+                                  //     align: 'right'
+                                  //   })
+                                  //   // add table columns
+                                  //   .addColumns([{
+                                  //       id: 'description',
+                                  //       header: 'Product',
+                                  //       align: 'left'
+                                  //     },
+                                  //     {
+                                  //       id: 'quantity',
+                                  //       header: 'Quantity',
+                                  //       align: 'left'
+                                  //     },
+                                  //     {
+                                  //       id: 'price',
+                                  //       header: 'Price',
+                                  //       align: 'left'
+                                  //     },
+                                  //     {
+                                  //       id: 'total',
+                                  //       header: 'Total',
+                                  //       align: 'left'
+                                  //       // renderer: function(tb, data) {
+                                  //       //   return 'CHF ' + data.total;
+                                  //       // }
+                                  //     }
+                                  //   ]);
+                                  //   // add events (here, we draw headers on each new page)
+                                  //
+                                  //
+                                  // // if no page already exists in your PDF, do not forget to add one
+                                  //
+                                  // // draw content, by passing data to the addBody method
                                   // table.addBody([{
-                                  //     exam: ''+sscresult[0].examtype,
-                                  //     institution: ''+sscresult[0].institution,
-                                  //     passedyear: ''+sscresult[0].passedyear,
-                                  //     result: ''+sscresult[0].gpa
+                                  //     description: 'Product 1',
+                                  //     quantity: 1,
+                                  //     price: 20.10,
+                                  //     total: 20.10
+                                  //   },
+                                  //   {
+                                  //     description: 'Product 2',
+                                  //     quantity: 4,
+                                  //     price: 4.00,
+                                  //     total: 16.00
+                                  //   },
+                                  //   {
+                                  //     description: 'Product 3',
+                                  //     quantity: 2,
+                                  //     price: 17.85,
+                                  //     total: 35.70
                                   //   }
                                   // ]);
-
-
-
-
-
-
 
 
 

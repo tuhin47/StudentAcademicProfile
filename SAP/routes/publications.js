@@ -43,6 +43,7 @@ router.post('/publicationsdataedit', function(req, res) {
   var username = req.user.username;
   var fullname = req.user.firstname + ' ' + req.user.lastname;
   var publicationtitle=req.body.publicationtitle;
+  var publicationshort=req.body.publicationshort;
   var publicationdetails=req.body.publicationdetails;
   var publicationplace=req.body.publicationplace;
   var publicationurl=req.body.publicationurl;
@@ -51,6 +52,7 @@ router.post('/publicationsdataedit', function(req, res) {
   console.log('------>'+publicationplace);
   console.log('------>'+publicationdetails);
   console.log('------>'+publicationtitle);
+  console.log(publicationshort);
 
 
 
@@ -64,6 +66,7 @@ router.post('/publicationsdataedit', function(req, res) {
 
       username:username,
       publicationtitle:publicationtitle,
+      publicationshort:publicationshort,
       publicationdetails:publicationdetails,
       publicationplace:publicationplace,
       publicationurl:publicationurl
