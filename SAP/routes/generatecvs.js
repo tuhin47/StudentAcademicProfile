@@ -138,250 +138,182 @@ router.post('/', function(req, res, next) {
                                   var nameheader = 18;
                                   var localheader = 11;
                                   var localdata = 9;
+                                  var i = 0;
                                   var doc = new PDFDocument();
 
                                   doc.pipe(fs.createWriteStream(path + '' + fullname + '.pdf'));
-                                  var l = fullname.length;
-                                  doc.fontSize(nameheader);
-                                  doc.font('Times-Roman')
-                                    .text('' + fullname, {
-                                      align: 'center'
+                                  if (profile.length > 0) {
+                                    var l = fullname.length;
+                                    doc.fontSize(nameheader);
+                                    doc.font('Times-Roman')
+                                      .text('' + profile[0].profilename, {
+                                        align: 'center'
 
-                                    });
+                                      });
 
-                                  doc.fontSize(localdata);
+                                    doc.fontSize(localdata);
 
-                                  doc.font('Times-Roman')
-                                    .text('     Address: ' + profile[0].temporaryaddress+'    Email: ' + profile[0].email+ '    Contact No: ' + profile[0].phonenumber, {
-                                      align: 'center',
+                                    doc.font('Times-Roman')
+                                      .text('     Address: ' + profile[0].temporaryaddress + '    Email: ' + profile[0].email + '    Contact No: ' + profile[0].phonenumber, {
+                                        align: 'center',
 
 
-                                    });
+                                      });
 
-                                  // doc.font('Times-Roman')
-                                  //   .text('        Email:        ' + profile[0].email, {
-                                  //     align: 'center'
-                                  //
-                                  //   });
-                                  //
-                                  // doc.font('Times-Roman')
-                                  //   .text('Contact No:        ' + profile[0].phonenumber, {
-                                  //     align: 'center'
-                                  //
-                                  //   });
-                                  doc.moveDown(2);
-                                  doc.fontSize(localheader);
-                                  doc.font('Times-Roman')
-                                    .text('Personal Profile', {
-                                      align: 'left',
-                                      bold: true
-                                    });
 
-                                  var overview = profile[0].overview;
-                                  doc.fontSize(localdata);
-                                  doc.font('Times-Roman')
-                                    .text('' + overview, {
-                                      align: 'left'
 
-                                    });
+                                    doc.moveDown(2);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Personal Profile', {
+                                        align: 'left',
+                                        bold: true
+                                      });
 
-                                  doc.moveDown(1);
-                                  doc.fontSize(localheader);
-                                  doc.font('Times-Roman')
-                                    .text('Education', {
-                                      align: 'left',
-                                      bold: true
-                                    });
+                                    var overview = profile[0].overview;
+                                    doc.fontSize(localdata);
+                                    doc.font('Times-Roman')
+                                      .text('' + overview, {
+                                        align: 'left'
 
-                                  doc.fontSize(localdata);
+                                      });
 
-                                  for (var i = 0; i < sschscresult.length; i++) {
-                                    if (sschscresult[i].examtype == 'SSC') {
 
-                                      doc.font('Times-Roman').text('SSC    ' + sschscresult[i].institution + '    ' +
-                                        sschscresult[i].passedyear + '    GPA:' + sschscresult[i].gpa, {
-                                          align: 'center',
-                                        });
-                                    } else if (sschscresult[i].examtype == 'HSC') {
-                                      doc.font('Times-Roman').text('HSC    ' + sschscresult[i].institution + '    ' +
-                                        sschscresult[i].passedyear + '    GPA:' + sschscresult[i].gpa, {
-                                          align: 'center',
-                                        });
-                                    } else if (sschscresult[i].examtype == 'Graduation') {
-                                      doc.font('Times-Roman').text('Graduation    ' + sschscresult[i].institution + '    ' +
-                                        sschscresult[i].passedyear + '    CGPA:' + sschscresult[i].gpa, {
-                                          align: 'center',
-                                        });
+
+                                  }
+                                  if (sschscresult.length > 0) {
+                                    doc.moveDown(1);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Education', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    doc.fontSize(localdata);
+
+
+
+                                    for (i = 0; i < sschscresult.length; i++) {
+                                      if (sschscresult[i].examtype == 'SSC') {
+
+                                        doc.font('Times-Roman').text('SSC    -' + sschscresult[i].institution + '    -' +
+                                          sschscresult[i].passedyear + '    GPA:-' + sschscresult[i].gpa, {
+                                            align: 'center',
+                                          });
+                                      } else if (sschscresult[i].examtype == 'HSC') {
+                                        doc.font('Times-Roman').text('HSC    -' + sschscresult[i].institution + '    -' +
+                                          sschscresult[i].passedyear + '    GPA:-' + sschscresult[i].gpa, {
+                                            align: 'center',
+                                          });
+                                      } else if (sschscresult[i].examtype == 'Graduation') {
+                                        doc.font('Times-Roman').text('Graduation    -' + sschscresult[i].institution + '    -' +
+                                          sschscresult[i].passedyear + '    CGPA:-' + sschscresult[i].gpa, {
+                                            align: 'center',
+                                          });
+                                      }
                                     }
                                   }
 
 
+
+
+
+
                                   // projects is here ---------------->>>
-                                  doc.moveDown(1);
-                                  doc.fontSize(localheader);
-                                  doc.font('Times-Roman')
-                                    .text('Projects', {
-                                      align: 'left',
-                                      bold: true
-                                    });
 
-                                  doc.fontSize(localdata);
-                                  // doc.font('Times-Roman').text('        Project Title    ', {
-                                  //   align: 'left',
-                                  //   continued:true
-                                  // });
-                                  // doc.moveDown(1);
-                                  // doc.font('Times-Roman').text('        Project Title    ', {
-                                  //   align: 'right'
-                                  // });
-                                  doc.moveDown(1);
-
-                                  for (i = 0; i < project.length; i++) {
-                                    doc.font('Times-Roman').text(''+project[i].projecttitle, {
-                                      align: 'left',
-                                      continued:true
-                                    });
+                                  if (project.length > 0) {
                                     doc.moveDown(1);
-                                    doc.font('Times-Roman').text('        -'+project[i].projectdetails, {
-                                      align: 'right'
-                                    });
-                                    doc.moveDown(1);
-                                  }
-
-                                  doc.moveDown(1);
-                                  doc.fontSize(localheader);
-                                  doc.font('Times-Roman')
-                                    .text('Publications', {
-                                      align: 'left',
-                                      bold: true
-                                    });
-
-                                  doc.fontSize(localdata);
-
-                                  doc.moveDown(1);
-
-                                  for (i = 0; i < publication.length; i++) {
                                     doc.fontSize(localheader);
-                                    doc.font('Times-Roman').text(''+publication[i].publicationtitle, {
-                                      align: 'left',
-                                      continued:true
-                                    });
-                                    doc.moveDown(1);
+                                    doc.font('Times-Roman')
+                                      .text('Projects', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
                                     doc.fontSize(localdata);
-                                    doc.font('Times-Roman').text(publication[i].publicationplace+'--'+publication[i].publicationshort+'--'+publication[i].publicationurl, {
-                                      align: 'right'
-                                    });
+                                    // doc.font('Times-Roman').text('        Project Title    ', {
+                                    //   align: 'left',
+                                    //   continued:true
+                                    // });
+                                    // doc.moveDown(1);
+                                    // doc.font('Times-Roman').text('        Project Title    ', {
+                                    //   align: 'right'
+                                    // });
                                     doc.moveDown(1);
+
+                                    for (i = 0; i < project.length; i++) {
+                                      doc.font('Times-Roman').text('' + project[i].projecttitle, {
+                                        align: 'left',
+                                        continued: true
+                                      });
+                                      doc.moveDown(1);
+                                      doc.font('Times-Roman').text('        -' + project[i].projectdetails, {
+                                        align: 'right'
+                                      });
+                                      doc.moveDown(1);
+                                    }
+
                                   }
 
-                                  doc.moveDown(1);
-                                  doc.fontSize(localheader);
-                                  doc.font('Times-Roman')
-                                    .text('Interests', {
-                                      align: 'left',
-                                      bold: true
-                                    });
-
-                                  doc.fontSize(localdata);
-
-                                  doc.moveDown(1);
-
-                                  for (i = 0; i <interest.length; i++) {
+                                  if (publication.length > 0) {
+                                    doc.moveDown(1);
                                     doc.fontSize(localheader);
-                                    doc.font('Times-Roman').text(''+interest[i].interestabout, {
-                                      align: 'left',
-                                      continued:true
-                                    });
-                                    doc.moveDown(1);
+                                    doc.font('Times-Roman')
+                                      .text('Publications', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
                                     doc.fontSize(localdata);
-                                    doc.font('Times-Roman').text('--'+interest[i].interestshortails+'--'+interest[i].interestnurl, {
-                                      align: 'right'
-                                    });
+
                                     doc.moveDown(1);
+
+                                    for (i = 0; i < publication.length; i++) {
+                                      doc.fontSize(localheader);
+                                      doc.font('Times-Roman').text('' + publication[i].publicationtitle, {
+                                        align: 'left',
+                                        continued: true
+                                      });
+                                      doc.moveDown(1);
+                                      doc.fontSize(localdata);
+                                      doc.font('Times-Roman').text(publication[i].publicationplace + '--' + publication[i].publicationshort + '--' + publication[i].publicationurl, {
+                                        align: 'right'
+                                      });
+                                      doc.moveDown(1);
+                                    }
                                   }
 
 
+                                  if (interest.length > 0) {
+                                    doc.moveDown(1);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Interests', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    doc.fontSize(localdata);
+
+                                    doc.moveDown(1);
+
+                                    for (i = 0; i < interest.length; i++) {
+                                      doc.fontSize(localheader);
+                                      doc.font('Times-Roman').text('' + interest[i].interestabout, {
+                                        align: 'left',
+                                        continued: true
+                                      });
+                                      doc.moveDown(1);
+                                      doc.fontSize(localdata);
+                                      doc.font('Times-Roman').text('--' + interest[i].interestshortails + '--' + interest[i].interestnurl, {
+                                        align: 'right'
+                                      });
+                                      doc.moveDown(1);
+                                    }
 
 
-
-
-
-                                  // create a PDF from PDFKit, and a table from PDFTable
-
-                                  // var table = new PdfTable(doc, {
-                                  //   bottomMargin: 30
-                                  // });
-                                  //
-                                  // table
-                                  //   // add some plugins (here, a 'fit-to-width' for a column)
-                                  //   .addPlugin(new(require('voilab-pdf-table/plugins/fitcolumn'))({
-                                  //     column: 'description'
-                                  //   }))
-                                  //   // set defaults to your columns
-                                  //   .setColumnsDefaults({
-                                  //     headerBorder: 'B',
-                                  //     align: 'right'
-                                  //   })
-                                  //   // add table columns
-                                  //   .addColumns([{
-                                  //       id: 'description',
-                                  //       header: 'Product',
-                                  //       align: 'left'
-                                  //     },
-                                  //     {
-                                  //       id: 'quantity',
-                                  //       header: 'Quantity',
-                                  //       align: 'left'
-                                  //     },
-                                  //     {
-                                  //       id: 'price',
-                                  //       header: 'Price',
-                                  //       align: 'left'
-                                  //     },
-                                  //     {
-                                  //       id: 'total',
-                                  //       header: 'Total',
-                                  //       align: 'left'
-                                  //       // renderer: function(tb, data) {
-                                  //       //   return 'CHF ' + data.total;
-                                  //       // }
-                                  //     }
-                                  //   ]);
-                                  //   // add events (here, we draw headers on each new page)
-                                  //
-                                  //
-                                  // // if no page already exists in your PDF, do not forget to add one
-                                  //
-                                  // // draw content, by passing data to the addBody method
-                                  // table.addBody([{
-                                  //     description: 'Product 1',
-                                  //     quantity: 1,
-                                  //     price: 20.10,
-                                  //     total: 20.10
-                                  //   },
-                                  //   {
-                                  //     description: 'Product 2',
-                                  //     quantity: 4,
-                                  //     price: 4.00,
-                                  //     total: 16.00
-                                  //   },
-                                  //   {
-                                  //     description: 'Product 3',
-                                  //     quantity: 2,
-                                  //     price: 17.85,
-                                  //     total: 35.70
-                                  //   }
-                                  // ]);
-
-
-
-
-                                  // doc.moveTo(0, 100)
-                                  //   .lineTo(200, 100)
-                                  //   .stroke();
-                                  //
-
-
+                                  }
 
 
 
