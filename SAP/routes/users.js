@@ -86,9 +86,7 @@ router.post('/signup', function(req, res) {
       if(results.length>0){
       var usernameproblem='Username is not unique, take a new one';
       req.flash('error_msg', 'Username is not unique, create a new one');
-      res.render('signup', {
-        usernameproblem:usernameproblem
-      });
+      res.redirect('/users/signup');
       console.log('ok huh');
     }
     else {
@@ -108,12 +106,7 @@ router.post('/signup', function(req, res) {
 
       req.flash('success_msg', 'You are register and can now login');
 
-      res.redirect(url.format({
-        pathname: "/profile",
-        query: {
-          username: username
-        }
-      }));
+      res.redirect('/users/login');
       console.log('Passed');
 
     }

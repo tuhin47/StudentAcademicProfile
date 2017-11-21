@@ -285,6 +285,37 @@ router.post('/', function(req, res, next) {
                                   }
 
 
+                                  if (award.length > 0) {
+                                    doc.moveDown(1);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Awards', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    doc.fontSize(localdata);
+
+                                    doc.moveDown(1);
+
+                                    for (i = 0; i < award.length; i++) {
+                                      doc.fontSize(localheader);
+                                      doc.font('Times-Roman').text('' + award[i].awardtitle, {
+                                        align: 'left',
+                                        continued: true
+                                      });
+                                      doc.moveDown(1);
+                                      doc.fontSize(localdata);
+                                      doc.font('Times-Roman').text('--' + award[i].awarddetails, {
+                                        align: 'right'
+                                      });
+                                      doc.moveDown(1);
+                                    }
+
+
+                                  }
+
+
                                   if (interest.length > 0) {
                                     doc.moveDown(1);
                                     doc.fontSize(localheader);
