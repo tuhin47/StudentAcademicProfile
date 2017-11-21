@@ -19,6 +19,7 @@ var crypto = require('crypto');
 var bcrypt = require('bcryptjs');
 var PDFDocument = require('pdfkit');
 var fs = require('fs');
+var PdfTable = require('voilab-pdf-table');
 
 // var xoauth2 = require('xoauth2');
 // var nodemailersmtptransport=require('nodemailer-smtp-transport');
@@ -126,18 +127,195 @@ router.post('/', function(req, res, next) {
                                   var cgpa = calculate(graduation);
                                   console.log('your cgpa-------->' + cgpa);
 
+                                  console.log(sschscresult);
+                                  console.log(hobby);
+                                  console.log(interest);
+                                  console.log(publication);
+                                  console.log(project);
+                                  console.log(award);
 
+
+                                  var nameheader = 18;
+                                  var localheader = 11;
+                                  var localdata = 9;
+                                  var i = 0;
                                   var doc = new PDFDocument();
 
                                   doc.pipe(fs.createWriteStream(path + '' + fullname + '.pdf'));
+                                  if (profile.length > 0) {
+                                    var l = fullname.length;
+                                    doc.fontSize(nameheader);
+                                    doc.font('Times-Roman')
+                                      .text('' + profile[0].profilename, {
+                                        align: 'center'
 
-                                  doc.font('Times-Roman')
-                                    .fontSize(15)
-                                    .text('' + fullname, 100, 10);
+                                      });
 
-                                  doc.moveTo(0, 100)
-                                    .lineTo(200, 100)
-                                    .stroke();
+                                    doc.fontSize(localdata);
+
+                                    doc.font('Times-Roman')
+                                      .text('     Address: ' + profile[0].temporaryaddress + '    Email: ' + profile[0].email + '    Contact No: ' + profile[0].phonenumber, {
+                                        align: 'center',
+
+
+                                      });
+
+
+
+                                    doc.moveDown(2);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Personal Profile', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    var overview = profile[0].overview;
+                                    doc.fontSize(localdata);
+                                    doc.font('Times-Roman')
+                                      .text('' + overview, {
+                                        align: 'left'
+
+                                      });
+
+
+
+                                  }
+                                  if (sschscresult.length > 0) {
+                                    doc.moveDown(1);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Education', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    doc.fontSize(localdata);
+
+
+
+                                    for (i = 0; i < sschscresult.length; i++) {
+                                      if (sschscresult[i].examtype == 'SSC') {
+
+                                        doc.font('Times-Roman').text('SSC    -' + sschscresult[i].institution + '    -' +
+                                          sschscresult[i].passedyear + '    GPA:-' + sschscresult[i].gpa, {
+                                            align: 'center',
+                                          });
+                                      } else if (sschscresult[i].examtype == 'HSC') {
+                                        doc.font('Times-Roman').text('HSC    -' + sschscresult[i].institution + '    -' +
+                                          sschscresult[i].passedyear + '    GPA:-' + sschscresult[i].gpa, {
+                                            align: 'center',
+                                          });
+                                      } else if (sschscresult[i].examtype == 'Graduation') {
+                                        doc.font('Times-Roman').text('Graduation    -' + sschscresult[i].institution + '    -' +
+                                          sschscresult[i].passedyear + '    CGPA:-' + sschscresult[i].gpa, {
+                                            align: 'center',
+                                          });
+                                      }
+                                    }
+                                  }
+
+
+
+
+
+
+                                  // projects is here ---------------->>>
+
+                                  if (project.length > 0) {
+                                    doc.moveDown(1);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Projects', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    doc.fontSize(localdata);
+                                    // doc.font('Times-Roman').text('        Project Title    ', {
+                                    //   align: 'left',
+                                    //   continued:true
+                                    // });
+                                    // doc.moveDown(1);
+                                    // doc.font('Times-Roman').text('        Project Title    ', {
+                                    //   align: 'right'
+                                    // });
+                                    doc.moveDown(1);
+
+                                    for (i = 0; i < project.length; i++) {
+                                      doc.font('Times-Roman').text('' + project[i].projecttitle, {
+                                        align: 'left',
+                                        continued: true
+                                      });
+                                      doc.moveDown(1);
+                                      doc.font('Times-Roman').text('        -' + project[i].projectdetails, {
+                                        align: 'right'
+                                      });
+                                      doc.moveDown(1);
+                                    }
+
+                                  }
+
+                                  if (publication.length > 0) {
+                                    doc.moveDown(1);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Publications', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    doc.fontSize(localdata);
+
+                                    doc.moveDown(1);
+
+                                    for (i = 0; i < publication.length; i++) {
+                                      doc.fontSize(localheader);
+                                      doc.font('Times-Roman').text('' + publication[i].publicationtitle, {
+                                        align: 'left',
+                                        continued: true
+                                      });
+                                      doc.moveDown(1);
+                                      doc.fontSize(localdata);
+                                      doc.font('Times-Roman').text(publication[i].publicationplace + '--' + publication[i].publicationshort + '--' + publication[i].publicationurl, {
+                                        align: 'right'
+                                      });
+                                      doc.moveDown(1);
+                                    }
+                                  }
+
+
+                                  if (interest.length > 0) {
+                                    doc.moveDown(1);
+                                    doc.fontSize(localheader);
+                                    doc.font('Times-Roman')
+                                      .text('Interests', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                    doc.fontSize(localdata);
+
+                                    doc.moveDown(1);
+
+                                    for (i = 0; i < interest.length; i++) {
+                                      doc.fontSize(localheader);
+                                      doc.font('Times-Roman').text('' + interest[i].interestabout, {
+                                        align: 'left',
+                                        continued: true
+                                      });
+                                      doc.moveDown(1);
+                                      doc.fontSize(localdata);
+                                      doc.font('Times-Roman').text('--' + interest[i].interestshortails + '--' + interest[i].interestnurl, {
+                                        align: 'right'
+                                      });
+                                      doc.moveDown(1);
+                                    }
+
+
+                                  }
+
+
 
                                   doc.end();
 
