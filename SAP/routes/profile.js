@@ -15,7 +15,7 @@ var gfs;
 var Grid = require("gridfs-stream");
 Grid.mongo = mongoose.mongo;
 
-var passport= require('passport');
+var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 
@@ -24,10 +24,9 @@ var Profile = require('../models/profilemodel');
 
 
 function sleep(time, callback) {
-    var stop = new Date().getTime();
-    while(new Date().getTime() < stop + time) {
-    }
-    callback();
+  var stop = new Date().getTime();
+  while (new Date().getTime() < stop + time) {}
+  callback();
 }
 
 
@@ -36,31 +35,36 @@ router.get('/up', function(req, res, next) {
   res.render('dataedit');
 });
 
-router.get('/',ensureAuthenticated,function(req,res){
+router.get('/', ensureAuthenticated, function(req, res) {
   console.log('---------------------------------->>>>>>  inside profile');
-  var fullname =req.user.firstname+' '+req.user.lastname;
-  username=req.query.username;
+  var fullname = req.user.firstname + ' ' + req.user.lastname;
+  username = req.query.username;
   //console.log('--------------------->>>'+fullname);
 
-  res.render('index',{fullname:fullname});
+  res.render('index', {
+    fullname: fullname
+  });
 });
-function ensureAuthenticated(req, res, next){
-	if(req.isAuthenticated()){
-		return next();
-	} else {
-		req.flash('error_msg','You are not logged in');
-		res.redirect('/users/login');
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    req.flash('error_msg', 'You are not logged in');
+    res.redirect('/users/login');
     //return next();
-	}
+  }
 
 }
 
-router.get('/data',ensureAuthenticated,function(req,res){
-  var fullname=req.user.firstname+' '+req.user.lastname;
-  var username=req.user.username;
-  var query={'username':username};
+router.get('/data', ensureAuthenticated, function(req, res) {
+  var fullname = req.user.firstname + ' ' + req.user.lastname;
+  var username = req.user.username;
+  var query = {
+    'username': username
+  };
 
-  Profile.findOne( query, function (err, user) {
+  Profile.findOne(query, function(err, user) {
     if (err) throw err;
     var profilename;
     var university;
@@ -81,79 +85,90 @@ router.get('/data',ensureAuthenticated,function(req,res){
     var workexperience;
     var overview;
 
-    if(user){
-       profilename=user.profilename;
-       university=user.university;
-       registration=user.registration;
-       dept=user.dept;
-       dob=user.dob;
-       father=user.father;
-       mother=user.mother;
-       gender=user.gender;
-       maritalstatus=user.maritalstatus;
-       permanentaddress=user.permanentaddress;
-       temporaryaddress=user.temporaryaddress;
-       primaryoccupation=user.primaryoccupation;
-       secondaryoccupation=user.secondaryoccupation;
-       phonenumber=user.phonenumber;
-       email=user.email;
-       language=user.language;
-       workexperience=user.workexperience;
-       overview=user.overview;
+    if (user) {
+      profilename = user.profilename;
+      university = user.university;
+      registration = user.registration;
+      dept = user.dept;
+      dob = user.dob;
+      father = user.father;
+      mother = user.mother;
+      gender = user.gender;
+      maritalstatus = user.maritalstatus;
+      permanentaddress = user.permanentaddress;
+      temporaryaddress = user.temporaryaddress;
+      primaryoccupation = user.primaryoccupation;
+      secondaryoccupation = user.secondaryoccupation;
+      phonenumber = user.phonenumber;
+      email = user.email;
+      language = user.language;
+      workexperience = user.workexperience;
+      overview = user.overview;
 
-    }
-
-
-
-    else if (! user) {
-       profilename=fullname;
-       university=null;
-       registration=null;
-       dept=null;
-       dob=null;
-       father=null;
-       mother=null;
-       gender=null;
-       maritalstatus=null;
-       permanentaddress=null;
-       temporaryaddress=null;
-       primaryoccupation=null;
-       secondaryoccupation=null;
-       phonenumber=null;
-       email=null;
-       language=null;
-       workexperience=null;
-       overview=null;
+    } else if (!user) {
+      profilename = fullname;
+      university = null;
+      registration = null;
+      dept = null;
+      dob = null;
+      father = null;
+      mother = null;
+      gender = null;
+      maritalstatus = null;
+      permanentaddress = null;
+      temporaryaddress = null;
+      primaryoccupation = null;
+      secondaryoccupation = null;
+      phonenumber = null;
+      email = null;
+      language = null;
+      workexperience = null;
+      overview = null;
 
     }
 
 
 
     console.log('---------> in data route--------------------------->>>>>');
-    console.log('  ---------profilename->>> '+profilename+'  --regi- '+registration+'----dept- '+dept);
-    console.log('  ---------birth->>> '+dob+' -father-- '+father+'--mother--- '+mother);
-    console.log('  --------gender-->>> '+gender+' --marital status- '+maritalstatus+'---permanentaddress-- '+permanentaddress);
-    console.log('  -----temporaryaddress----->>> '+temporaryaddress+'-primaryoccupation-- '+primaryoccupation+'--secondaryoccupation--- '+secondaryoccupation);
-    console.log('  --------phonenumber-->>> '+phonenumber+' -email-- '+email+'---language-- '+language);
-    console.log('  ---------workexperience->>> '+workexperience+' -overview-- '+overview+'--university--- '+university);
+    console.log('  ---------profilename->>> ' + profilename + '  --regi- ' + registration + '----dept- ' + dept);
+    console.log('  ---------birth->>> ' + dob + ' -father-- ' + father + '--mother--- ' + mother);
+    console.log('  --------gender-->>> ' + gender + ' --marital status- ' + maritalstatus + '---permanentaddress-- ' + permanentaddress);
+    console.log('  -----temporaryaddress----->>> ' + temporaryaddress + '-primaryoccupation-- ' + primaryoccupation + '--secondaryoccupation--- ' + secondaryoccupation);
+    console.log('  --------phonenumber-->>> ' + phonenumber + ' -email-- ' + email + '---language-- ' + language);
+    console.log('  ---------workexperience->>> ' + workexperience + ' -overview-- ' + overview + '--university--- ' + university);
 
-    res.render('profiledata',
-    {fullname:fullname,profilename:profilename,university:university,registration:registration,
-      dept:dept,dob:dob,father:father,mother:mother,gender:gender,
-      maritalstatus:maritalstatus,permanentaddress:permanentaddress,
-      temporaryaddress:temporaryaddress,primaryoccupation:primaryoccupation,
-      secondaryoccupation:secondaryoccupation,phonenumber:phonenumber,
-      email:email,language:language,workexperience:workexperience,overview:overview
+    res.render('profiledata', {
+      fullname: fullname,
+      profilename: profilename,
+      university: university,
+      registration: registration,
+      dept: dept,
+      dob: dob,
+      father: father,
+      mother: mother,
+      gender: gender,
+      maritalstatus: maritalstatus,
+      permanentaddress: permanentaddress,
+      temporaryaddress: temporaryaddress,
+      primaryoccupation: primaryoccupation,
+      secondaryoccupation: secondaryoccupation,
+      phonenumber: phonenumber,
+      email: email,
+      language: language,
+      workexperience: workexperience,
+      overview: overview
     });
-});
+  });
 
 });
 
-router.get('/editdata',ensureAuthenticated,function(req,res){
-  var fullname =req.user.firstname+' '+req.user.lastname;
+router.get('/editdata', ensureAuthenticated, function(req, res) {
+  var fullname = req.user.firstname + ' ' + req.user.lastname;
 
   console.log('inside editdata');
-  Profile.findOne({username:req.user.username},function(err,user){
+  Profile.findOne({
+    username: req.user.username
+  }, function(err, user) {
     if (err) throw err;
 
     var profilename;
@@ -176,69 +191,83 @@ router.get('/editdata',ensureAuthenticated,function(req,res){
     var overview;
 
     if (user) {
-      profilename=user.profilename;
-      university=user.university;
-      registration=user.registration;
-      dept=user.dept;
-      dob=user.dob;
-      father=user.father;
-      mother=user.mother;
-      gender=user.gender;
-      maritalstatus=user.maritalstatus;
-      permanentaddress=user.permanentaddress;
-      temporaryaddress=user.temporaryaddress;
-      primaryoccupation=user.primaryoccupation;
-      secondaryoccupation=user.secondaryoccupation;
-      phonenumber=user.phonenumber;
-      email=user.email;
-      language=user.language;
-      workexperience=user.workexperience;
-      overview=user.overview;
+      profilename = user.profilename;
+      university = user.university;
+      registration = user.registration;
+      dept = user.dept;
+      dob = user.dob;
+      father = user.father;
+      mother = user.mother;
+      gender = user.gender;
+      maritalstatus = user.maritalstatus;
+      permanentaddress = user.permanentaddress;
+      temporaryaddress = user.temporaryaddress;
+      primaryoccupation = user.primaryoccupation;
+      secondaryoccupation = user.secondaryoccupation;
+      phonenumber = user.phonenumber;
+      email = user.email;
+      language = user.language;
+      workexperience = user.workexperience;
+      overview = user.overview;
 
 
 
     }
-    if(! user) {
-      profilename=fullname;
-      university=null;
-      registration=null;
-      dept=null;
-      dob=null;
-      father=null;
-      mother=null;
-      gender=null;
-      maritalstatus=null;
-      permanentaddress=null;
-      temporaryaddress=null;
-      primaryoccupation=null;
-      secondaryoccupation=null;
-      phonenumber=null;
-      email=null;
-      language=null;
-      workexperience=null;
-      overview=null;
+    if (!user) {
+      profilename = fullname;
+      university = null;
+      registration = null;
+      dept = null;
+      dob = null;
+      father = null;
+      mother = null;
+      gender = null;
+      maritalstatus = null;
+      permanentaddress = null;
+      temporaryaddress = null;
+      primaryoccupation = null;
+      secondaryoccupation = null;
+      phonenumber = null;
+      email = null;
+      language = null;
+      workexperience = null;
+      overview = null;
 
     }
 
     console.log('---------> in data route--------------------------->>>>>');
-    console.log('  ---------profilename->>> '+profilename+'  --regi- '+registration+'----dept- '+dept);
-    console.log('  ---------birth->>> '+dob+' -father-- '+father+'--mother--- '+mother);
-    console.log('  --------gender-->>> '+gender+' --marital status- '+maritalstatus+'---permanentaddress-- '+permanentaddress);
-    console.log('  -----temporaryaddress----->>> '+temporaryaddress+'-primaryoccupation-- '+primaryoccupation+'--secondaryoccupation--- '+secondaryoccupation);
-    console.log('  --------phonenumber-->>> '+phonenumber+' -email-- '+email+'---language-- '+language);
-    console.log('  ---------workexperience->>> '+workexperience+' -overview-- '+overview+'--university--- '+university);
+    console.log('  ---------profilename->>> ' + profilename + '  --regi- ' + registration + '----dept- ' + dept);
+    console.log('  ---------birth->>> ' + dob + ' -father-- ' + father + '--mother--- ' + mother);
+    console.log('  --------gender-->>> ' + gender + ' --marital status- ' + maritalstatus + '---permanentaddress-- ' + permanentaddress);
+    console.log('  -----temporaryaddress----->>> ' + temporaryaddress + '-primaryoccupation-- ' + primaryoccupation + '--secondaryoccupation--- ' + secondaryoccupation);
+    console.log('  --------phonenumber-->>> ' + phonenumber + ' -email-- ' + email + '---language-- ' + language);
+    console.log('  ---------workexperience->>> ' + workexperience + ' -overview-- ' + overview + '--university--- ' + university);
 
 
 
-        res.render('dataedit',{fullname:fullname,profilename:profilename,
-          university:university,registration:registration,
-          dept:dept,dob:dob,father:father,mother:mother,gender:gender,
-          maritalstatus:maritalstatus,permanentaddress:permanentaddress,
-          temporaryaddress:temporaryaddress,primaryoccupation:primaryoccupation,
-          secondaryoccupation:secondaryoccupation,phonenumber:phonenumber,
-          email:email,language:language,workexperience:workexperience,overview:overview});
+    res.render('dataedit', {
+      fullname: fullname,
+      profilename: profilename,
+      university: university,
+      registration: registration,
+      dept: dept,
+      dob: dob,
+      father: father,
+      mother: mother,
+      gender: gender,
+      maritalstatus: maritalstatus,
+      permanentaddress: permanentaddress,
+      temporaryaddress: temporaryaddress,
+      primaryoccupation: primaryoccupation,
+      secondaryoccupation: secondaryoccupation,
+      phonenumber: phonenumber,
+      email: email,
+      language: language,
+      workexperience: workexperience,
+      overview: overview
+    });
 
-          console.log('ok output---------------->');
+    console.log('ok output---------------->');
 
   });
 
@@ -249,121 +278,128 @@ router.get('/editdata',ensureAuthenticated,function(req,res){
 
 conn.once("open", function() {
   gfs = Grid(conn.db);
-  router.post('/editdata',ensureAuthenticated,upload.single('UploadPhoto'),function(req,res){
-    var username=req.user.username;
-    console.log('usename in editdata------------------'+username);
-    var profilename=req.body.profilename;
-    var university=req.body.university;
-    var registration=req.body.registration;
-    var dept=req.body.dept;
-    var dob=req.body.dob;
-    var father=req.body.father;
-    var mother=req.body.mother;
-    var gender=req.body.gender;
-    var maritalstatus=req.body.maritalstatus;
-    var permanentaddress=req.body.permanentaddress;
-    var temporaryaddress=req.body.temporaryaddress;
-    var primaryoccupation=req.body.primaryoccupation;
-    var secondaryoccupation=req.body.secondaryoccupation;
-    var phonenumber=req.body.phonenumber;
-    var email=req.body.email;
-    var language=req.body.language;
-    var workexperience=req.body.workexperience;
-    var overview=req.body.overview;
+  router.post('/editdata', ensureAuthenticated, upload.single('UploadPhoto'), function(req, res) {
+    var username = req.user.username;
+    console.log('usename in editdata------------------' + username);
+    var profilename = req.body.profilename;
+    var university = req.body.university;
+    var registration = req.body.registration;
+    var dept = req.body.dept;
+    var dob = req.body.dob;
+    var father = req.body.father;
+    var mother = req.body.mother;
+    var gender = req.body.gender;
+    var maritalstatus = req.body.maritalstatus;
+    var permanentaddress = req.body.permanentaddress;
+    var temporaryaddress = req.body.temporaryaddress;
+    var primaryoccupation = req.body.primaryoccupation;
+    var secondaryoccupation = req.body.secondaryoccupation;
+    var phonenumber = req.body.phonenumber;
+    var email = req.body.email;
+    var language = req.body.language;
+    var workexperience = req.body.workexperience;
+    var overview = req.body.overview;
 
 
 
-    console.log('  ---------profilename->>> '+profilename+' --regi- '+registration+'----dept- '+dept);
-    console.log('  ---------birth->>> '+dob+' -father-- '+father+'--mother--- '+mother);
-    console.log('  --------gender-->>> '+gender+' --marital status- '+maritalstatus+'---permanentaddress-- '+permanentaddress);
-    console.log('  -----temporaryaddress----->>> '+temporaryaddress+'-primaryoccupation-- '+primaryoccupation+'--secondaryoccupation--- '+secondaryoccupation);
-    console.log('  --------phonenumber-->>> '+phonenumber+' -email-- '+email+'---language-- '+language);
-    console.log('  ---------workexperience->>> '+workexperience+' -overview-- '+overview+'--dept--- '+dept);
+    console.log('  ---------profilename->>> ' + profilename + ' --regi- ' + registration + '----dept- ' + dept);
+    console.log('  ---------birth->>> ' + dob + ' -father-- ' + father + '--mother--- ' + mother);
+    console.log('  --------gender-->>> ' + gender + ' --marital status- ' + maritalstatus + '---permanentaddress-- ' + permanentaddress);
+    console.log('  -----temporaryaddress----->>> ' + temporaryaddress + '-primaryoccupation-- ' + primaryoccupation + '--secondaryoccupation--- ' + secondaryoccupation);
+    console.log('  --------phonenumber-->>> ' + phonenumber + ' -email-- ' + email + '---language-- ' + language);
+    console.log('  ---------workexperience->>> ' + workexperience + ' -overview-- ' + overview + '--dept--- ' + dept);
 
 
-      console.log('personal data ok');
-      var newProfile = new Profile({
+    console.log('personal data ok');
+    var newProfile = new Profile({
+      username: username,
+      profilename: profilename,
+      university: university,
+      registration: registration,
+      dept: dept,
+      dob: dob,
+      father: father,
+      mother: mother,
+      gender: gender,
+      maritalstatus: maritalstatus,
+      permanentaddress: permanentaddress,
+      temporaryaddress: temporaryaddress,
+      primaryoccupation: secondaryoccupation,
+      phonenumber: phonenumber,
+      email: email,
+      language: language,
+      workexperience: workexperience,
+      overview: overview
+
+    });
+
+    var query = {
+      'username': username
+    };
+    // Profile.findOneAndUpdate(query,newProfile,function(err,profile){
+    //   if (err) throw err;
+    //   console.log(profile);
+    //   console.log('------------>these datas are uploaded');
+    // });
+    Profile.findOneAndUpdate(query, {
+      $set: {
+
         username: username,
         profilename: profilename,
-        university:university,
+        university: university,
         registration: registration,
-        dept:dept,
+        dept: dept,
         dob: dob,
         father: father,
         mother: mother,
         gender: gender,
-        maritalstatus:maritalstatus,
+        maritalstatus: maritalstatus,
         permanentaddress: permanentaddress,
         temporaryaddress: temporaryaddress,
         primaryoccupation: secondaryoccupation,
         phonenumber: phonenumber,
-        email:email,
+        email: email,
         language: language,
-        workexperience:workexperience,
-        overview:overview
-
-      });
-
-      var query={'username':username};
-      // Profile.findOneAndUpdate(query,newProfile,function(err,profile){
-      //   if (err) throw err;
-      //   console.log(profile);
-      //   console.log('------------>these datas are uploaded');
-      // });
-      Profile.findOneAndUpdate(query, {$set:{
-
-          username: username,
-          profilename: profilename,
-          university:university,
-          registration: registration,
-          dept:dept,
-          dob: dob,
-          father: father,
-          mother: mother,
-          gender: gender,
-          maritalstatus:maritalstatus,
-          permanentaddress: permanentaddress,
-          temporaryaddress: temporaryaddress,
-          primaryoccupation: secondaryoccupation,
-          phonenumber: phonenumber,
-          email:email,
-          language: language,
-          workexperience:workexperience,
-          overview:overview
-      }}, {new: true,upsert:true}, function(err, doc){
-      if(err){
-          console.log("Something wrong when updating data!");
+        workexperience: workexperience,
+        overview: overview
       }
-      else{
+    }, {
+      new: true,
+      upsert: true
+    }, function(err, doc) {
+      if (err) {
+        console.log("Something wrong when updating data!");
+      } else {
         console.log("Data Uploaded");
+          if (req.file && req.file.originalname.length > 0) {
+            var writestream = gfs.createWriteStream({
+              filename: username
+            });
+            //
+            // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
 
 
-              var writestream = gfs.createWriteStream({
-                filename: username
-              });
-              //
-              // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
-
-
-              fs.createReadStream("./uploads/" + req.file.filename)
-                .on("end", function() {
-                  fs.unlink("./uploads/" + req.file.filename, function(err) {
+            fs.createReadStream("./uploads/" + req.file.filename)
+              .on("end", function() {
+                fs.unlink("./uploads/" + req.file.filename, function(err) {
                   console.log("success");
-                  });
-                })
-                .on("err", function() {
-                    console.log("Error uploading image");
-                })
-                .pipe(writestream);
+                });
+              })
+              .on("err", function() {
+                console.log("Error uploading image");
+              })
+              .pipe(writestream);
+          }
+
       }
 
       console.log(doc);
-  });
+    });
 
-      req.flash('success_msg','You are register and can now login');
-      sleep(300,function(){});
+    req.flash('success_msg', 'You are register and can now login');
+    sleep(300, function() {});
 
-      res.redirect('/profile/data');
+    res.redirect('/profile/data');
 
   });
 
