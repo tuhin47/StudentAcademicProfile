@@ -19,6 +19,7 @@ var crypto = require('crypto');
 var bcrypt = require('bcryptjs');
 var PDFDocument = require('pdfkit');
 var fs = require('fs');
+var PdfTable = require('voilab-pdf-table');
 
 // var xoauth2 = require('xoauth2');
 // var nodemailersmtptransport=require('nodemailer-smtp-transport');
@@ -97,6 +98,8 @@ router.post('/', function(req, res, next) {
   var query1 = {
     username: req.user.username
   };
+  var querySSC={username:req.user.username,examtype:'SSC'};
+  var queryHSC={username:req.user.username,examtype:'HSC'};
   console.log('inside post generatecvs');
   Profile.find(query1, function(err1, profile) {
     if (err1) throw err1;
@@ -108,7 +111,7 @@ router.post('/', function(req, res, next) {
           Graduation.find(query1, function(err3, graduation) {
             if (err3) throw err3;
             else {
-              SSCResult.find(query1, function(err4, sschscresult) {
+              SSCResult.find(query1, function(err4, sscresult) {
                 if (err4) throw err4;
                 else {
                   Project.find(query1, function(err5, project) {
@@ -123,21 +126,135 @@ router.post('/', function(req, res, next) {
                               Hobby.find(query1, function(err8, hobby) {
                                 if (err8) throw err8;
                                 else {
-                                  var cgpa = calculate(graduation);
-                                  console.log('your cgpa-------->' + cgpa);
+                                  //var cgpa = calculate(graduation);
+                                  //console.log('your cgpa-------->' + cgpa);
 
 
                                   var doc = new PDFDocument();
 
                                   doc.pipe(fs.createWriteStream(path + '' + fullname + '.pdf'));
+                                  var l = fullname.length;
+                                  doc.fontSize(18);
+                                  doc.font('Times-Roman')
+                                    .text('' + fullname, {
+                                      align: 'center'
+
+                                    });
+
+                                  doc.fontSize(9);
 
                                   doc.font('Times-Roman')
-                                    .fontSize(15)
-                                    .text('' + fullname, 100, 10);
+                                    .text('     Address:        ' + profile[0].temporaryaddress, {
+                                      align: 'center',
 
-                                  doc.moveTo(0, 100)
-                                    .lineTo(200, 100)
-                                    .stroke();
+
+                                    });
+
+                                  doc.font('Times-Roman')
+                                    .text('        Email:        ' + profile[0].email, {
+                                      align: 'center'
+
+                                    });
+
+                                  doc.font('Times-Roman')
+                                    .text('Contact No:        ' + profile[0].phonenumber, {
+                                      align: 'center'
+
+                                    });
+                                  doc.moveDown(1);
+                                  doc.fontSize(11);
+                                  doc.font('Times-Roman')
+                                    .text('Personal Profile', {
+                                      align: 'left',
+                                      bold: true
+                                    });
+
+                                  var overview = profile[0].overview;
+                                  doc.fontSize(9);
+                                  doc.font('Times-Roman')
+                                    .text('' + overview, {
+                                      align: 'left'
+
+                                    });
+
+                                    doc.moveDown(1);
+                                    doc.fontSize(11);
+                                    doc.font('Times-Roman')
+                                      .text('Education', {
+                                        align: 'left',
+                                        bold: true
+                                      });
+
+                                  // create a PDF from PDFKit, and a table from PDFTable
+
+                                  var table = new PdfTable(doc, {
+                                  });
+
+                                  table.addPlugin(new(require('voilab-pdf-table/plugins/fitcolumn'))({
+                                      column: 'description'
+                                    }))
+                                    // set defaults to your columns
+                                    .setColumnsDefaults({
+                                      headerBorder: 'B',
+                                      align: 'center'
+                                    })
+                                    // add table columns
+                                    .addColumns([{
+                                        id: 'exam',
+                                        header: 'Exam',
+                                        align: 'left'
+                                      },
+                                      {
+                                        id: 'institution',
+                                        header: 'Institution',
+                                        align:'justify'
+                                      },
+                                      {
+                                        id: 'passedyear',
+                                        header: 'Passed Year',
+                                        align:'justify'
+                                      },
+                                      {
+                                        id: 'result',
+                                        header: 'Result',
+                                        align:'right'
+
+                                      }
+                                    ]);
+                                    // add events (here, we draw headers on each new page)
+                                    // .onPageAdded(function(tb) {
+                                    //   tb.addHeader();
+                                    // });
+
+                                  // if no page already exists in your PDF, do not forget to add one
+
+                                  // draw content, by passing data to the addBody method
+
+                                  // table.addBody([{
+                                  //     exam: ''+sscresult[0].examtype,
+                                  //     institution: ''+sscresult[0].institution,
+                                  //     passedyear: ''+sscresult[0].passedyear,
+                                  //     result: ''+sscresult[0].gpa
+                                  //   }
+                                  // ]);
+
+
+
+
+
+
+
+
+
+
+                                  // doc.moveTo(0, 100)
+                                  //   .lineTo(200, 100)
+                                  //   .stroke();
+                                  //
+
+
+
+
 
                                   doc.end();
 
