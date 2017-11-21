@@ -335,11 +335,11 @@ conn.once("open", function() {
           console.log("Something wrong when updating data!");
       }
       else{
-        console.log("Picture Uploaded");
+        console.log("Data Uploaded");
 
 
               var writestream = gfs.createWriteStream({
-                filename: profilename
+                filename: username
               });
               //
               // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
