@@ -66,6 +66,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
       username = req.query.username;
       //console.log('--------------------->>>'+fullname);
 
+ 
       var cgpa = 0.00;
       var completed = 0.00;
       var drop = 0.00;
@@ -456,7 +457,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
                 })
                 .pipe(writestream);
             }
-          
+
 
           }
 
