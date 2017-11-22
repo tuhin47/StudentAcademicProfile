@@ -36,10 +36,15 @@ router.get('/', ensureAuthenticated, function(req, res) {
   console.log('---------------------------------->>>>>>  inside profile');
   var fullname = req.user.firstname + ' ' + req.user.lastname;
   username = req.query.username;
+  var photo = '/dist/img/avatar.jpg';
+  // if (req.user.photo);
+  // photo = req.user.photo;
+
   //console.log('--------------------->>>'+fullname);
 
   res.render('index', {
-    fullname: fullname
+    fullname: fullname,
+    photo: photo
   });
 });
 
@@ -300,7 +305,7 @@ conn.once("open", function() {
     var overview = req.body.overview;
     var photoname = null;
     if (req.file)
-      photoname = username+req.file.originalname;
+      photoname = username + req.file.originalname;
     var photo = '/photos/' + photoname;
 
 
