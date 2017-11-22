@@ -66,7 +66,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
       username = req.query.username;
       //console.log('--------------------->>>'+fullname);
 
- 
+
       var cgpa = 0.00;
       var completed = 0.00;
       var drop = 0.00;
@@ -78,7 +78,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
           if (err) throw err;
 
           else if (results) {
-            var cgpa = calculate(results);
+            cgpa = calculate(results);
             var precgpa=cgpa;
             for (i = 0; i < results.length; i++) {
               if (parseFloat(results[i].gradepoint) > 0.0) {
