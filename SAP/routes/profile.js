@@ -57,11 +57,11 @@ function sleep(time, callback) {
 
 
 
-router.get('/', ensureAuthenticated, function(req, res) {
+router.get('/:id', ensureAuthenticated, function(req, res) {
 
   console.log('---------------------------------->>>>>>  inside profile');
   var fullname = req.user.firstname + ' ' + req.user.lastname;
-  username = req.query.username;
+  username = req.params.id;
   //console.log('--------------------->>>'+fullname);
  var photo='dist/img/avatar.png';
 
