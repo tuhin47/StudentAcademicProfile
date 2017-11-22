@@ -66,10 +66,10 @@ router.get('/', ensureAuthenticated, function(req, res) {
       username = req.query.username;
       //console.log('--------------------->>>'+fullname);
 
-      var cgpa = 0;
-      var completed = 0;
-      var drop = 0;
-      var precgpa = 0;
+      var cgpa = 0.00;
+      var completed = 0.00;
+      var drop = 0.00;
+      var precgpa = 0.00;
       Graduations.find({
           username: username
         }, function(err, results) {
@@ -92,7 +92,6 @@ router.get('/', ensureAuthenticated, function(req, res) {
 
 
               cgpa=cgpa.toFixed(2);
-
 
               res.render('index', {
                 fullname: fullname,cgpa:cgpa,drop:drop,completed:completed,precgpa:cgpa
@@ -457,6 +456,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
                 })
                 .pipe(writestream);
             }
+          
 
           }
 
