@@ -21,6 +21,31 @@ var LocalStrategy = require('passport-local').Strategy;
 
 
 var Profile = require('../models/profilemodel');
+var Graduations = require('../models/graduation');
+
+function calculate(result) {
+  var cgpa = 0.0;
+  var credit = 0.0;
+  var total = 0.0;
+  for (i = 0; i < result.length; i++) {
+    if (parseFloat(result[i].gradepoint) > 0.0) {
+      var coursecredit = parseFloat(result[i].coursecredit);
+      var gradepoint = parseFloat(result[i].gradepoint);
+
+      console.log('-------coursecredit----->' + coursecredit);
+      console.log('-------coursecredit----->' + gradepoint);
+
+      credit = credit + coursecredit;
+      total = total + gradepoint * coursecredit;
+      console.log(credit);
+      console.log(total);
+    }
+  }
+  if (credit > 0)
+    cgpa = total / credit;
+  return cgpa;
+
+}
 
 
 function sleep(time, callback) {
@@ -41,12 +66,49 @@ router.get('/', ensureAuthenticated, function(req, res) {
   // photo = req.user.photo;
 
   //console.log('--------------------->>>'+fullname);
+var cgpa = 0.00;
+      var completed = 0.00;
+      var drop = 0.00;
+      var precgpa = 0.00;
+      Graduations.find({
+          username: username
+        }, function(err, results) {
 
-  res.render('index', {
-    fullname: fullname,
-    photo: photo
-  });
-});
+          if (err) throw err;
+
+          else if (results) {
+            var cgpa = calculate(results);
+            var precgpa=cgpa;
+            for (i = 0; i < results.length; i++) {
+              if (parseFloat(results[i].gradepoint) > 0.0) {
+                completed += parseFloat(results[i].gradepoint);
+                }
+                else {
+                  drop=+parseFloat(results[i].gradepoint);
+                }
+
+              }
+            }
+
+
+              cgpa=cgpa.toFixed(2);
+
+              res.render('index', {
+                fullname: fullname,cgpa:cgpa,drop:drop,completed:completed,precgpa:cgpa,photo: photo
+              });
+
+
+
+
+          });
+
+
+  
+
+
+
+
+      });
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -418,3 +480,5 @@ conn.once("open", function() {
 
 
 module.exports = router;
+
+

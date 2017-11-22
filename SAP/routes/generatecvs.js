@@ -299,7 +299,7 @@ router.post('/', function(req, res, next) {
                                     doc.moveDown(1);
 
                                     for (i = 0; i < award.length; i++) {
-                                      doc.fontSize(localheader);
+                                      doc.fontSize(localdata);
                                       doc.font('Times-Roman').text('' + award[i].awardtitle, {
                                         align: 'left',
                                         continued: true
