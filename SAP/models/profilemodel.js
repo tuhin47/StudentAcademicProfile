@@ -60,6 +60,9 @@ var ProfileSchema = mongoose.Schema({
 	},
 	overview: {
 		type: String
+	},
+	photo :{
+		type:String
 	}
 
 

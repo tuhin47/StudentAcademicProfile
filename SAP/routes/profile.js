@@ -3,7 +3,7 @@ var router = express.Router();
 var fs = require("fs");
 var multer = require("multer");
 var upload = multer({
-  dest: "./uploads"
+  dest: "./uploads",
 });
 //var mongodb=require('mongodb');
 
@@ -31,9 +31,6 @@ function sleep(time, callback) {
 
 
 
-router.get('/up', function(req, res, next) {
-  res.render('dataedit');
-});
 
 router.get('/', ensureAuthenticated, function(req, res) {
   console.log('---------------------------------->>>>>>  inside profile');
@@ -84,7 +81,7 @@ router.get('/data', ensureAuthenticated, function(req, res) {
     var language;
     var workexperience;
     var overview;
-
+    var photo;
     if (user) {
       profilename = user.profilename;
       university = user.university;
@@ -104,7 +101,7 @@ router.get('/data', ensureAuthenticated, function(req, res) {
       language = user.language;
       workexperience = user.workexperience;
       overview = user.overview;
-
+      photo = user.photo;
     } else if (!user) {
       profilename = fullname;
       university = null;
@@ -124,7 +121,7 @@ router.get('/data', ensureAuthenticated, function(req, res) {
       language = null;
       workexperience = null;
       overview = null;
-
+      photo = 'dist/img/avatar.jpg';
     }
 
 
@@ -156,7 +153,8 @@ router.get('/data', ensureAuthenticated, function(req, res) {
       email: email,
       language: language,
       workexperience: workexperience,
-      overview: overview
+      overview: overview,
+      photo: photo
     });
   });
 
@@ -189,7 +187,7 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
     var language;
     var workexperience;
     var overview;
-
+    var photo;
     if (user) {
       profilename = user.profilename;
       university = user.university;
@@ -209,7 +207,7 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
       language = user.language;
       workexperience = user.workexperience;
       overview = user.overview;
-
+      photo = user.photo;
 
 
     }
@@ -232,7 +230,7 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
       language = null;
       workexperience = null;
       overview = null;
-
+      photo = 'dist/img/avatar.jpg';
     }
 
     console.log('---------> in data route--------------------------->>>>>');
@@ -264,7 +262,8 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
       email: email,
       language: language,
       workexperience: workexperience,
-      overview: overview
+      overview: overview,
+      photo: photo
     });
 
     console.log('ok output---------------->');
@@ -299,7 +298,10 @@ conn.once("open", function() {
     var language = req.body.language;
     var workexperience = req.body.workexperience;
     var overview = req.body.overview;
-
+    var photoname = null;
+    if (req.file)
+      photoname = username+req.file.originalname;
+    var photo = '/photos/' + photoname;
 
 
     console.log('  ---------profilename->>> ' + profilename + ' --regi- ' + registration + '----dept- ' + dept);
@@ -329,8 +331,8 @@ conn.once("open", function() {
       email: email,
       language: language,
       workexperience: workexperience,
-      overview: overview
-
+      overview: overview,
+      photo: photo
     });
 
     var query = {
@@ -343,7 +345,6 @@ conn.once("open", function() {
     // });
     Profile.findOneAndUpdate(query, {
       $set: {
-
         username: username,
         profilename: profilename,
         university: university,
@@ -361,7 +362,8 @@ conn.once("open", function() {
         email: email,
         language: language,
         workexperience: workexperience,
-        overview: overview
+        overview: overview,
+        photo: photo
       }
     }, {
       new: true,
@@ -371,25 +373,28 @@ conn.once("open", function() {
         console.log("Something wrong when updating data!");
       } else {
         console.log("Data Uploaded");
-          if (req.file && req.file.originalname.length > 0) {
-            var writestream = gfs.createWriteStream({
-              filename: username
-            });
-            //
-            // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+        if (req.file && req.file.originalname.length > 0) {
+          var writestream = gfs.createWriteStream({
+            filename: photoname
+          });
+          //
+          // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
 
 
-            fs.createReadStream("./uploads/" + req.file.filename)
-              .on("end", function() {
-                fs.unlink("./uploads/" + req.file.filename, function(err) {
-                  console.log("success");
-                });
-              })
-              .on("err", function() {
-                console.log("Error uploading image");
-              })
-              .pipe(writestream);
-          }
+          fs.createReadStream("./uploads/" + req.file.filename)
+            .on("end", function() {
+              fs.unlink("./uploads/" + req.file.filename, function(err) {
+                if (err) throw err;
+                console.log("success");
+              });
+            })
+            .on("err", function() {
+              console.log("Error uploading image");
+            })
+            .pipe(writestream);
+        } else {
+          photo = 'dist/img/avatar.jpg';
+        }
 
       }
 
