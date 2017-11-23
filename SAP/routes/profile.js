@@ -8,7 +8,7 @@ var upload = multer({
 //var mongodb=require('mongodb');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/cseprojects');
+mongoose.connect('mongodb://localhost/NodeDemo');
 var conn = mongoose.connection;
 
 var gfs;
@@ -66,7 +66,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
   // photo = req.user.photo;
 
   //console.log('--------------------->>>'+fullname);
-var cgpa = 0.00;
+      var cgpa = 0.00;
       var completed = 0.00;
       var drop = 0.00;
       var precgpa = 0.00;
@@ -77,8 +77,8 @@ var cgpa = 0.00;
           if (err) throw err;
 
           else if (results) {
-            var cgpa = calculate(results);
-            var precgpa=cgpa;
+             cgpa = calculate(results);
+             precgpa=cgpa;
             for (i = 0; i < results.length; i++) {
               if (parseFloat(results[i].gradepoint) > 0.0) {
                 completed += parseFloat(results[i].gradepoint);
@@ -103,7 +103,7 @@ var cgpa = 0.00;
           });
 
 
-  
+
 
 
 
@@ -480,5 +480,3 @@ conn.once("open", function() {
 
 
 module.exports = router;
-
-

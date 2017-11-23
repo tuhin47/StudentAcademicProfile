@@ -1,18 +1,11 @@
-var express = require('express');
-var router = express.Router();
-
-
-router.get('/', function(req, res) {
-  res.render('startpage');
-});
-
-//Demo Routes Using for test
-
-
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/NodeDemo');
+var Graduations = require('../models/graduation');
+var Sync = require('sync');
+var sync = require('synchronize');
 function calculateData(username) {
   var username = 'tuhin47';
   var data = [];
-
   Graduations.find({
     username: username
   }, function(err, results) {
@@ -32,28 +25,12 @@ function calculateData(username) {
         }
       }
     }
-
+    mongoose.connection.close();
     //console.log(data);
     return data;
-
   });
-
 }
 
-router.get('/line', function(req, res) {
-
-   var data=calculateData('tuhin47');
-  console.log(data);
-  res.render('linechart');
-
-});
-
-
-
-
-
-
-
-
-
-module.exports = router;
+//
+ var data = calculateData('tuhin47');
+ console.log(data);
