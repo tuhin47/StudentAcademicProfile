@@ -108,10 +108,6 @@ router.get('/:id', ensureAuthenticated, function(req, res) {
 
 
 
-
-
-
-
 });
 
 function ensureAuthenticated(req, res, next) {
