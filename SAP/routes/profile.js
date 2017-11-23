@@ -57,58 +57,62 @@ function sleep(time, callback) {
 
 
 
-router.get('/', ensureAuthenticated, function(req, res) {
+router.get('/:id', ensureAuthenticated, function(req, res) {
+
   console.log('---------------------------------->>>>>>  inside profile');
   var fullname = req.user.firstname + ' ' + req.user.lastname;
-  username = req.query.username;
-  var photo = '/dist/img/avatar.jpg';
-  // if (req.user.photo);
-  // photo = req.user.photo;
-
+  username = req.params.id;
   //console.log('--------------------->>>'+fullname);
-var cgpa = 0.00;
-      var completed = 0.00;
-      var drop = 0.00;
-      var precgpa = 0.00;
-      Graduations.find({
-          username: username
-        }, function(err, results) {
+ var photo='dist/img/avatar.png';
 
-          if (err) throw err;
+  var cgpa = 0.00;
+  var completed = 0.00;
+  var drop = 0.00;
+  var precgpa = 0.00;
+  Graduations.find({
+    username: username
+  }, function(err, results) {
 
-          else if (results) {
-            var cgpa = calculate(results);
-            var precgpa=cgpa;
-            for (i = 0; i < results.length; i++) {
-              if (parseFloat(results[i].gradepoint) > 0.0) {
-                completed += parseFloat(results[i].gradepoint);
-                }
-                else {
-                  drop=+parseFloat(results[i].gradepoint);
-                }
+    if (err) throw err;
 
-              }
-            }
+    else if (results) {
+      cgpa = calculate(results);
 
+      for (i = 0; i < results.length; i++) {
+        if (parseFloat(results[i].gradepoint) > 0.0) {
+          completed += parseFloat(results[i].gradepoint);
+        } else {
+          drop = +parseFloat(results[i].gradepoint);
+        }
 
-              cgpa=cgpa.toFixed(2);
+      }
+    }
 
-              res.render('index', {
-                fullname: fullname,cgpa:cgpa,drop:drop,completed:completed,precgpa:cgpa,photo: photo
-              });
+    console.log('--------------------------------'+photo);
 
+    cgpa = cgpa.toFixed(2);
 
-
-
-          });
-
-
-  
-
+    res.render('index', {
+      fullname: fullname,
+      cgpa: cgpa,
+      drop: drop,
+      completed: completed,
+      precgpa: cgpa,
+      photo: photo
+    });
 
 
 
-      });
+
+  });
+
+
+
+
+
+
+
+});
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -454,6 +458,7 @@ conn.once("open", function() {
                 if (err) throw err;
                 console.log("success");
               });
+
             })
             .on("err", function() {
               console.log("Error uploading image");
@@ -462,6 +467,11 @@ conn.once("open", function() {
         } else {
           photo = 'dist/img/avatar.jpg';
         }
+        //
+        // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+
+
+
 
       }
 
@@ -480,5 +490,3 @@ conn.once("open", function() {
 
 
 module.exports = router;
-
-
