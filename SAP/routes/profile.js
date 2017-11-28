@@ -3,7 +3,7 @@ var router = express.Router();
 var fs = require("fs");
 var multer = require("multer");
 var upload = multer({
-  dest: "./uploads"
+  dest: "./uploads",
 });
 //var mongodb=require('mongodb');
 
@@ -21,6 +21,31 @@ var LocalStrategy = require('passport-local').Strategy;
 
 
 var Profile = require('../models/profilemodel');
+var Graduations = require('../models/graduation');
+
+function calculate(result) {
+  var cgpa = 0.0;
+  var credit = 0.0;
+  var total = 0.0;
+  for (i = 0; i < result.length; i++) {
+    if (parseFloat(result[i].gradepoint) > 0.0) {
+      var coursecredit = parseFloat(result[i].coursecredit);
+      var gradepoint = parseFloat(result[i].gradepoint);
+
+      console.log('-------coursecredit----->' + coursecredit);
+      console.log('-------coursecredit----->' + gradepoint);
+
+      credit = credit + coursecredit;
+      total = total + gradepoint * coursecredit;
+      console.log(credit);
+      console.log(total);
+    }
+  }
+  if (credit > 0)
+    cgpa = total / credit;
+  return cgpa;
+
+}
 
 
 function sleep(time, callback) {
@@ -31,19 +56,62 @@ function sleep(time, callback) {
 
 
 
-router.get('/up', function(req, res, next) {
-  res.render('dataedit');
-});
 
-router.get('/', ensureAuthenticated, function(req, res) {
+router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
+
   console.log('---------------------------------->>>>>>  inside profile');
   var fullname = req.user.firstname + ' ' + req.user.lastname;
-  username = req.query.username;
+  username = req.params.id;
   //console.log('--------------------->>>'+fullname);
+ var photo='dist/img/avatar.png';
 
-  res.render('index', {
-    fullname: fullname
+  var cgpa = 0.00;
+  var completed = 0.00;
+  var drop = 0.00;
+  var precgpa = 0.00;
+  Graduations.find({
+    username: username
+  }, function(err, results) {
+
+    if (err) throw err;
+
+    else if (results) {
+      cgpa = calculate(results);
+
+      for (i = 0; i < results.length; i++) {
+        if (parseFloat(results[i].gradepoint) > 0.0) {
+          completed += parseFloat(results[i].gradepoint);
+        } else {
+          drop = +parseFloat(results[i].gradepoint);
+        }
+
+      }
+    }
+
+    console.log('--------------------------------'+photo);
+
+    cgpa = cgpa.toFixed(2);
+
+    res.render('index', {
+      fullname: fullname,
+      cgpa: cgpa,
+      drop: drop,
+      completed: completed,
+      precgpa: cgpa,
+      photo: photo
+    });
+
+
+
+
   });
+
+
+
+
+
+
+
 });
 
 function ensureAuthenticated(req, res, next) {
@@ -84,7 +152,7 @@ router.get('/data', ensureAuthenticated, function(req, res) {
     var language;
     var workexperience;
     var overview;
-
+    var photo;
     if (user) {
       profilename = user.profilename;
       university = user.university;
@@ -104,7 +172,7 @@ router.get('/data', ensureAuthenticated, function(req, res) {
       language = user.language;
       workexperience = user.workexperience;
       overview = user.overview;
-
+      photo = user.photo;
     } else if (!user) {
       profilename = fullname;
       university = null;
@@ -124,7 +192,7 @@ router.get('/data', ensureAuthenticated, function(req, res) {
       language = null;
       workexperience = null;
       overview = null;
-
+      photo = 'dist/img/avatar.jpg';
     }
 
 
@@ -156,7 +224,8 @@ router.get('/data', ensureAuthenticated, function(req, res) {
       email: email,
       language: language,
       workexperience: workexperience,
-      overview: overview
+      overview: overview,
+      photo: photo
     });
   });
 
@@ -189,7 +258,7 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
     var language;
     var workexperience;
     var overview;
-
+    var photo;
     if (user) {
       profilename = user.profilename;
       university = user.university;
@@ -209,7 +278,7 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
       language = user.language;
       workexperience = user.workexperience;
       overview = user.overview;
-
+      photo = user.photo;
 
 
     }
@@ -232,7 +301,7 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
       language = null;
       workexperience = null;
       overview = null;
-
+      photo = 'dist/img/avatar.jpg';
     }
 
     console.log('---------> in data route--------------------------->>>>>');
@@ -264,7 +333,8 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
       email: email,
       language: language,
       workexperience: workexperience,
-      overview: overview
+      overview: overview,
+      photo: photo
     });
 
     console.log('ok output---------------->');
@@ -299,7 +369,10 @@ conn.once("open", function() {
     var language = req.body.language;
     var workexperience = req.body.workexperience;
     var overview = req.body.overview;
-
+    var photoname = null;
+    if (req.file)
+      photoname = username + req.file.originalname;
+    var photo = '/photos/' + photoname;
 
 
     console.log('  ---------profilename->>> ' + profilename + ' --regi- ' + registration + '----dept- ' + dept);
@@ -329,8 +402,8 @@ conn.once("open", function() {
       email: email,
       language: language,
       workexperience: workexperience,
-      overview: overview
-
+      overview: overview,
+      photo: photo
     });
 
     var query = {
@@ -343,7 +416,6 @@ conn.once("open", function() {
     // });
     Profile.findOneAndUpdate(query, {
       $set: {
-
         username: username,
         profilename: profilename,
         university: university,
@@ -361,7 +433,8 @@ conn.once("open", function() {
         email: email,
         language: language,
         workexperience: workexperience,
-        overview: overview
+        overview: overview,
+        photo: photo
       }
     }, {
       new: true,
@@ -371,25 +444,34 @@ conn.once("open", function() {
         console.log("Something wrong when updating data!");
       } else {
         console.log("Data Uploaded");
-          if (req.file && req.file.originalname.length > 0) {
-            var writestream = gfs.createWriteStream({
-              filename: username
-            });
-            //
-            // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+        if (req.file && req.file.originalname.length > 0) {
+          var writestream = gfs.createWriteStream({
+            filename: photoname
+          });
+          //
+          // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
 
 
-            fs.createReadStream("./uploads/" + req.file.filename)
-              .on("end", function() {
-                fs.unlink("./uploads/" + req.file.filename, function(err) {
-                  console.log("success");
-                });
-              })
-              .on("err", function() {
-                console.log("Error uploading image");
-              })
-              .pipe(writestream);
-          }
+          fs.createReadStream("./uploads/" + req.file.filename)
+            .on("end", function() {
+              fs.unlink("./uploads/" + req.file.filename, function(err) {
+                if (err) throw err;
+                console.log("success");
+              });
+
+            })
+            .on("err", function() {
+              console.log("Error uploading image");
+            })
+            .pipe(writestream);
+        } else {
+          photo = 'dist/img/avatar.jpg';
+        }
+        //
+        // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+
+
+
 
       }
 

@@ -74,7 +74,9 @@
                         <i class="fa fa-user">
         </i>
                       </div>
+
                       <input  id="Name (Full name)" name="profilename" type="text" value="<%=profilename%>" class="form-control input-md">
+
                     </div>
 
 
@@ -238,14 +240,16 @@
                 <div class="form-group">
                   <label class="col-md-4 control-label" for="radios">Marital Status:</label>
                   <div class="col-md-4">
-                    <label class="radio-inline" for="radios-0">
-      <input type="radio" name="maritalstatus" id="radios-0" value="married" checked="checked">
-      Married
-    </label>
                     <label class="radio-inline" for="radios-1">
-      <input type="radio" name="maritalstatus" id="radios-1" value="unmarried">
+      <input type="radio" name="maritalstatus" id="radios-1" value="unmarried" checked="checked" >
       Unmarried
     </label>
+
+                    <label class="radio-inline" for="radios-0">
+      <input type="radio" name="maritalstatus" id="radios-0" value="married" >
+      Married
+    </label>
+
                     <label class="radio-inline" for="radios-1">
       <input type="radio" name="maritalstatus" id="radios-1" value="other">
       Other
@@ -459,7 +463,7 @@
                 <div class="form-group">
                   <label class="col-md-4 control-label">Overview (max 500 words)</label>
                   <div class="col-md-4">
-                    <textarea class="form-control" rows="10" name="overview"></textarea>
+                    <textarea class="form-control" rows="10" name="overview"><%=overview%></textarea>
                   </div>
                 </div>
 
@@ -478,7 +482,7 @@
             </form>
           </div>
           <div class="col-md-4 ">
-            <img src="dist/img/avatar.jpg" class="img-responsive img-thumbnail ">
+            <img src="<%=photo%>" class="img-responsive img-thumbnail " style="margin-left: -200px">
           </div>
 
 
