@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var linedata = require('../controllers/linedata.js');
 
 router.get('/', function(req, res) {
   res.render('startpage');
@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 
 
 function calculateData(username) {
-  var username = 'tuhin47';
+   username = 'tuhin47';
   var data = [];
 
   Graduations.find({
@@ -26,7 +26,7 @@ function calculateData(username) {
           data.push({
             x: results[i].coursecode,
             y: parseFloat(results[i].gradepoint)
-          })
+          });
         } else {
           drop = +parseFloat(results[i].gradepoint);
         }
@@ -40,13 +40,7 @@ function calculateData(username) {
 
 }
 
-router.get('/line', function(req, res) {
-
-   var data=calculateData('tuhin47');
-  console.log(data);
-  res.render('linechart');
-
-});
+router.get('/line',linedata.linegraph);
 
 
 

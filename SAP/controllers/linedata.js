@@ -1,10 +1,28 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/NodeDemo');
 var Graduations = require('../models/graduation');
 var Sync = require('sync');
 var sync = require('synchronize');
+var data =[ { x: 'CSE 133', y: 4 },
+{ x: 'CSE 143', y: 3.5 },
+{ x: 'CSE 375', y: 4 },
+{ x: 'CSE 100', y: 4 },
+{ x: 'CSE 200', y: 4 },
+{ x: 'CSE 233', y: 3.75 },
+{ x: 'CSE 254', y: 4 },
+{ x: 'CSE 373', y: 3.75 },
+{ x: 'CSE 253', y: 3.5 },
+{ x: 'CSE 455', y: 4 } ];
+
+
+exports.linegraph = function(req, res) {
+
+ //data = calculateData('tuhin47');JSON.stringify()
+
+  res.render('linechart',{data:data});
+};
+
 function calculateData(username) {
-  var username = 'tuhin47';
+  username = 'tuhin47';
   var data = [];
   Graduations.find({
     username: username
@@ -19,18 +37,15 @@ function calculateData(username) {
           data.push({
             x: results[i].coursecode,
             y: parseFloat(results[i].gradepoint)
-          })
+          });
         } else {
           drop = +parseFloat(results[i].gradepoint);
         }
       }
     }
-    mongoose.connection.close();
-    //console.log(data);
+    console.log(data);
     return data;
   });
 }
 
 //
- var data = calculateData('tuhin47');
- console.log(data);
