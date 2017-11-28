@@ -135,9 +135,10 @@ router.post('/', function(req, res, next) {
                                   console.log(award);
 
 
-                                  var nameheader = 18;
-                                  var localheader = 11;
-                                  var localdata = 9;
+                                  var nameheader = 19;
+                                  var localheader = 12;
+                                  var height=11;
+                                  var localdata = 10;
                                   var i = 0;
                                   var doc = new PDFDocument();
 
@@ -165,9 +166,10 @@ router.post('/', function(req, res, next) {
                                     doc.moveDown(2);
                                     doc.fontSize(localheader);
                                     doc.font('Times-Roman')
+
                                       .text('Personal Profile', {
                                         align: 'left',
-                                        bold: true
+                                        underline: true
                                       });
 
                                     var overview = profile[0].overview;
@@ -187,7 +189,7 @@ router.post('/', function(req, res, next) {
                                     doc.font('Times-Roman')
                                       .text('Education', {
                                         align: 'left',
-                                        bold: true
+                                        underline: true
                                       });
 
                                     doc.fontSize(localdata);
@@ -228,7 +230,7 @@ router.post('/', function(req, res, next) {
                                     doc.font('Times-Roman')
                                       .text('Projects', {
                                         align: 'left',
-                                        bold: true
+                                        underline: true
                                       });
 
                                     doc.fontSize(localdata);
@@ -262,7 +264,7 @@ router.post('/', function(req, res, next) {
                                     doc.font('Times-Roman')
                                       .text('Publications', {
                                         align: 'left',
-                                        bold: true
+                                        underline: true
                                       });
 
                                     doc.fontSize(localdata);
@@ -291,7 +293,7 @@ router.post('/', function(req, res, next) {
                                     doc.font('Times-Roman')
                                       .text('Awards', {
                                         align: 'left',
-                                        bold: true
+                                        underline: true
                                       });
 
                                     doc.fontSize(localdata);
@@ -322,7 +324,7 @@ router.post('/', function(req, res, next) {
                                     doc.font('Times-Roman')
                                       .text('Interests', {
                                         align: 'left',
-                                        bold: true
+                                        underline: true
                                       });
 
                                     doc.fontSize(localdata);
@@ -337,7 +339,7 @@ router.post('/', function(req, res, next) {
                                       });
                                       doc.moveDown(1);
                                       doc.fontSize(localdata);
-                                      doc.font('Times-Roman').text('--' + interest[i].interestshortails + '--' + interest[i].interestnurl, {
+                                      doc.font('Times-Roman').text('--' + interest[i].interestshortails + '--' + interest[i].interesturl, {
                                         align: 'right'
                                       });
                                       doc.moveDown(1);
@@ -382,7 +384,7 @@ router.post('/', function(req, res, next) {
 
 
   console.log('----------->   pdf created');
-  req.flash('success_msg','Your CV is created on '+path);
+  req.flash('success_msg', 'Your CV is created on ' + path);
   res.redirect('/generatecvs');
 
 });
