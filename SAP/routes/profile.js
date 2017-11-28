@@ -56,6 +56,75 @@ function sleep(time, callback) {
 
 
 
+
+router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
+
+  console.log('---------------------------------->>>>>>  inside profile');
+  var fullname = req.user.firstname + ' ' + req.user.lastname;
+  username = req.params.id;
+  //console.log('--------------------->>>'+fullname);
+ var photo='dist/img/avatar.png';
+
+  var cgpa = 0.00;
+  var completed = 0.00;
+  var drop = 0.00;
+  var precgpa = 0.00;
+  Graduations.find({
+    username: username
+  }, function(err, results) {
+
+    if (err) throw err;
+
+    else if (results) {
+      cgpa = calculate(results);
+
+      for (i = 0; i < results.length; i++) {
+        if (parseFloat(results[i].gradepoint) > 0.0) {
+          completed += parseFloat(results[i].gradepoint);
+        } else {
+          drop = +parseFloat(results[i].gradepoint);
+        }
+
+      }
+    }
+
+    console.log('--------------------------------'+photo);
+
+    cgpa = cgpa.toFixed(2);
+
+    res.render('index', {
+      fullname: fullname,
+      cgpa: cgpa,
+      drop: drop,
+      completed: completed,
+      precgpa: cgpa,
+      photo: photo
+    });
+
+
+
+
+  });
+
+
+
+
+
+
+
+});
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    req.flash('error_msg', 'You are not logged in');
+    res.redirect('/users/login');
+    //return next();
+  }
+
+}
+
 router.get('/data', ensureAuthenticated, function(req, res) {
   var fullname = req.user.firstname + ' ' + req.user.lastname;
   var username = req.user.username;
@@ -161,74 +230,6 @@ router.get('/data', ensureAuthenticated, function(req, res) {
   });
 
 });
-
-
-
-router.get('/:id', ensureAuthenticated, function(req, res) {
-
-  console.log('---------------------------------->>>>>>  inside profile');
-  var fullname = req.user.firstname + ' ' + req.user.lastname;
-  username = req.params.id;
-  //console.log('--------------------->>>'+fullname);
- var photo='dist/img/avatar.png';
-
-  var cgpa = 0.00;
-  var completed = 0.00;
-  var drop = 0.00;
-  var precgpa = 0.00;
-  Graduations.find({
-    username: username
-  }, function(err, results) {
-
-    if (err) throw err;
-
-    else if (results) {
-      cgpa = calculate(results);
-
-      for (i = 0; i < results.length; i++) {
-        if (parseFloat(results[i].gradepoint) > 0.0) {
-          completed += parseFloat(results[i].gradepoint);
-        } else {
-          drop = +parseFloat(results[i].gradepoint);
-        }
-
-      }
-    }
-
-    console.log('--------------------------------'+photo);
-
-    cgpa = cgpa.toFixed(2);
-
-    res.render('index', {
-      fullname: fullname,
-      cgpa: cgpa,
-      drop: drop,
-      completed: completed,
-      precgpa: cgpa,
-      photo: photo
-    });
-
-
-
-
-  });
-
-
-
-});
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    req.flash('error_msg', 'You are not logged in');
-    res.redirect('/users/login');
-    //return next();
-  }
-
-}
-
-
 
 router.get('/editdata', ensureAuthenticated, function(req, res) {
   var fullname = req.user.firstname + ' ' + req.user.lastname;
