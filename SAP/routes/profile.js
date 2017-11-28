@@ -22,6 +22,18 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var Profile = require('../models/profilemodel');
 var Graduations = require('../models/graduation');
+var data = [ { x: 'CSE 133', y: 4 },
+ { x: 'CSE 143', y: 3.5 },
+ { x: 'CSE 375', y: 4 },
+ { x: 'CSE 100', y: 4 },
+ { x: 'CSE 200', y: 4 },
+ { x: 'CSE 233', y: 3.75 },
+ { x: 'CSE 254', y: 4 },
+ { x: 'CSE 373', y: 3.75 },
+ { x: 'CSE 253', y: 3.5 },
+ { x: 'CSE 455', y: 4 } ];
+
+var lebels = ['CSE 133', 'CSE 143', 'CSE 375', 'CSE 100','CSE 200','CSE 233','CSE 254','CSE 373','CSE 253','CSE 455'];
 
 function calculate(result) {
   var cgpa = 0.0;
@@ -66,49 +78,55 @@ router.get('/', ensureAuthenticated, function(req, res) {
   // photo = req.user.photo;
 
   //console.log('--------------------->>>'+fullname);
-      var cgpa = 0.00;
-      var completed = 0.00;
-      var drop = 0.00;
-      var precgpa = 0.00;
-      Graduations.find({
-          username: username
-        }, function(err, results) {
+  var cgpa = 0.00;
+  var completed = 0.00;
+  var drop = 0.00;
+  var precgpa = 0.00;
+  Graduations.find({
+    username: username
+  }, function(err, results) {
 
-          if (err) throw err;
+    if (err) throw err;
 
-          else if (results) {
-             cgpa = calculate(results);
-             precgpa=cgpa;
-            for (i = 0; i < results.length; i++) {
-              if (parseFloat(results[i].gradepoint) > 0.0) {
-                completed += parseFloat(results[i].gradepoint);
-                }
-                else {
-                  drop=+parseFloat(results[i].gradepoint);
-                }
+    else if (results) {
+      cgpa = calculate(results);
+      precgpa = cgpa;
+      for (i = 0; i < results.length; i++) {
+        if (parseFloat(results[i].gradepoint) > 0.0) {
+          completed += parseFloat(results[i].gradepoint);
+        } else {
+          drop = +parseFloat(results[i].gradepoint);
+        }
 
-              }
-            }
-
-
-              cgpa=cgpa.toFixed(2);
-
-              res.render('index', {
-                fullname: fullname,cgpa:cgpa,drop:drop,completed:completed,precgpa:cgpa,photo: photo
-              });
+      }
+    }
 
 
+    cgpa = cgpa.toFixed(2);
 
-
-          });
-
-
-
+    res.render('index', {
+      fullname: fullname,
+      cgpa: cgpa,
+      drop: drop,
+      completed: completed,
+      precgpa: cgpa,
+      photo: photo,
+      lebels: lebels,
+      data: data
+    });
 
 
 
 
-      });
+  });
+
+
+
+
+
+
+
+});
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
