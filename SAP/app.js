@@ -64,7 +64,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/profile', express.static(__dirname + '/public'));
+app.use('/profile/dashboard', express.static(__dirname + '/public'));
+
 app.use('/results', express.static(__dirname + '/public'));
+
 
 app.use('/projects', express.static(__dirname + '/public'));
 app.use('/projects/data/edit', express.static(__dirname + '/public'));

@@ -69,7 +69,12 @@ function sleep(time, callback) {
 
 
 
+<<<<<<< HEAD
 router.get('/', ensureAuthenticated, function(req, res) {
+=======
+router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
+
+>>>>>>> origin/master
   console.log('---------------------------------->>>>>>  inside profile');
   var fullname = req.user.firstname + ' ' + req.user.lastname;
   username = req.query.username;
