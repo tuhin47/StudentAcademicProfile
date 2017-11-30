@@ -82,7 +82,7 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
         if (parseFloat(results[i].gradepoint) > 0.0) {
           completed += parseFloat(results[i].gradepoint);
         } else {
-          drop = +parseFloat(results[i].gradepoint);
+          drop = +parseFloat(results[i].coursecredit);
         }
 
       }
