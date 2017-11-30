@@ -33,7 +33,7 @@ var graduations = require('./routes/graduations');
 var interests = require('./routes/interests');
 var hobbies=require('./routes/hobbies');
 var generatecvs=require('./routes/generatecvs');
-
+  
 
 var app = express();
 
