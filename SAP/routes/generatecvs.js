@@ -199,19 +199,19 @@ router.post('/', function(req, res, next) {
                                     for (i = 0; i < sschscresult.length; i++) {
                                       if (sschscresult[i].examtype == 'SSC') {
 
-                                        doc.font('Times-Roman').text('SSC    -' + sschscresult[i].institution + '    -' +
+                                        doc.font('Times-Roman').text('SSC               -' + sschscresult[i].institution + '                                             -' +
                                           sschscresult[i].passedyear + '    GPA:-' + sschscresult[i].gpa, {
-                                            align: 'center',
+                                            align: 'left',
                                           });
                                       } else if (sschscresult[i].examtype == 'HSC') {
-                                        doc.font('Times-Roman').text('HSC    -' + sschscresult[i].institution + '    -' +
+                                        doc.font('Times-Roman').text('HSC              -' + sschscresult[i].institution + '                      -' +
                                           sschscresult[i].passedyear + '    GPA:-' + sschscresult[i].gpa, {
-                                            align: 'center',
+                                            align: 'left',
                                           });
                                       } else if (sschscresult[i].examtype == 'Graduation') {
                                         doc.font('Times-Roman').text('Graduation    -' + sschscresult[i].institution + '    -' +
                                           sschscresult[i].passedyear + '    CGPA:-' + sschscresult[i].gpa, {
-                                            align: 'center',
+                                            align: 'left',
                                           });
                                       }
                                     }
