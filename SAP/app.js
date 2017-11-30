@@ -33,7 +33,6 @@ var graduations = require('./routes/graduations');
 var interests = require('./routes/interests');
 var hobbies=require('./routes/hobbies');
 var generatecvs=require('./routes/generatecvs');
-var photos=require('./routes/photos');
 
 
 var app = express();
@@ -64,7 +63,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/profile', express.static(__dirname + '/public'));
 app.use('/profile/dashboard', express.static(__dirname + '/public'));
 
@@ -97,9 +95,8 @@ app.use('/hobbies/data/edit', express.static(__dirname + '/public'));
 app.use('/hobbies/data/delete', express.static(__dirname + '/public'));
 
 app.use('/generatecvs', express.static(__dirname + '/public'));
-app.use('/photos', express.static(__dirname + '/public'));
 
-
+app.use('/photos',require('./routes/photos'));
 //express session
 
 app.use(session({
@@ -162,7 +159,6 @@ app.use('/graduations',graduations);
 app.use('/interests',interests);
 app.use('/hobbies',hobbies);
 app.use('/generatecvs',generatecvs);
-app.use('/photos',photos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
