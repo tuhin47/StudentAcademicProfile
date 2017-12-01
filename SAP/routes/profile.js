@@ -110,13 +110,7 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
   username = req.params.id;
   var photo = '/dist/img/avatar.jpg';
 
-  Profile.find({
-    username: username
-  }, function(err, results) {
-    if (results) req.session.photo = 'profile/'+results[0].photo;
-    else req.session.photo = 'dist/img/avatar.jpg';
-  });
-  console.log(req.session.photo);
+
   var cgpa = 0.00;
   var completed = 0.00;
   var drop = 0.00;
