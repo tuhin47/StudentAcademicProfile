@@ -110,6 +110,13 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
   username = req.params.id;
   var photo = '/dist/img/avatar.jpg';
 
+  Profile.find({
+    username: username
+  }, function(err, results) {
+    if (results) req.session.photo = 'profile/'+results[0].photo;
+    else req.session.photo = 'dist/img/avatar.jpg';
+  });
+  console.log(req.session.photo);
   var cgpa = 0.00;
   var completed = 0.00;
   var drop = 0.00;
@@ -119,10 +126,11 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
     username: username
   }, function(err, results) {
 
-    if (err) throw err;
-
-    else if (results) {
-      console.log(results);
+    if (err) {
+      console.error(err);
+      throw err;
+    } else if (results) {
+      //console.log(results);
 
       cgpa = calculate(results);
       precgpa = cgpa;
@@ -135,16 +143,16 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
 
       }
     }
-    console.log(completed + "====drop=============" + drop);
+    //  console.log(completed + "====drop=============" + drop);
 
 
     cgpa = cgpa.toFixed(2);
-    console.log(cgpa);
+    //console.log(cgpa);
     var data = [];
     var lebels = [];
 
     Sync(function() {
-      console.log(username);
+      //  console.log(username);
       data = asyncFunction.sync(null, username);
       lebels = [];
       for (var i = 0; i < data.length; i++) {
@@ -157,12 +165,12 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
         drop: drop,
         completed: completed,
         precgpa: cgpa,
-        photo: photo,
+        photo: req.session.photo,
         lebels: lebels,
         data: data
       });
-      console.log(lebels);
-      console.log(data);
+      // console.log(lebels);
+      // console.log(data);
     });
 
 
@@ -290,7 +298,7 @@ router.get('/data', ensureAuthenticated, function(req, res) {
       language: language,
       workexperience: workexperience,
       overview: overview,
-      photo: photo
+      photo: req.session.photo
     });
   });
 
@@ -399,7 +407,7 @@ router.get('/editdata', ensureAuthenticated, function(req, res) {
       language: language,
       workexperience: workexperience,
       overview: overview,
-      photo: photo
+      photo: req.session.photo
     });
 
     console.log('ok output---------------->');

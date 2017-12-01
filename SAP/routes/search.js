@@ -1,7 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
-var mongodb = require('mongodb');
+//var mongodb = require('mongodb');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var User = require('../models/user');
@@ -14,7 +14,7 @@ router.get('/',function (req,res) {
     if (err) throw err;
     if(!results) res.send('No result found');
     else {
-      
+
       res.render('search',{results:results});
     }
 
