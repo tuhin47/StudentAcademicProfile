@@ -2,31 +2,69 @@
 <html>
   <head>
     <title>Search</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="search/css/bootstrap.min.css">
-    <link rel="stylesheet" href="search/css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="search/css/uniform.css">
-    <link rel="stylesheet" href="search/css/select2.css">
-    <link rel="stylesheet" href="search/css/matrix-style.css">
-    <link rel="stylesheet" href="search/css/matrix-media.css">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet" type="text/css">
-
-
-    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all"> -->
-    <link rel="stylesheet" href="search/css/reset.css" type="text/css" media="all">
-    <link rel="stylesheet" href="search/css/style.css" type="text/css" media="all">
-
-    <script type="text/javascript" src="search/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="search/js/cufon-yui.js"></script>
-    <script type="text/javascript" src="search/js/cufon-replace.js"></script>
-    <script type="text/javascript" src="search/js/Myriad_Pro_300.font.js"></script>
-    <script type="text/javascript" src="search/js/Myriad_Pro_400.font.js"></script>
-    <script type="text/javascript" src="search/js/script.js"></script>
+    <%include partials/searchheader.ejs%>
   </head>
   <body>
-    <%include partials/searchpartials.ejs %>
 
+    <div class="widget-box">
+      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+        <h5>Profile Data</h5>
+      </div>
+      <div class="widget-content nopadding">
+        <table class="table table-bordered data-table">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>University</th>
+              <th>Department</th>
+              <th>Registration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0;i<results.length;i++){ %>
+              <tr>
+                <td>
+
+                  <a href="searchresult/<%= results[i]._id %>">
+              <%=results[i].profilename%>
+              </a>
+                </td>
+
+                <td>
+
+                  <%=results[i].university%>
+
+                </td>
+
+                <td>
+
+                  <%=results[i].dept%>
+
+                </td>
+                <td>
+
+                  <%=results[i].registration%>
+
+                </td>
+
+              </tr>
+
+              <%}%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="search/extra/jquery.min.js"></script>
+    <script src="search/extra/jquery.ui.custom.js"></script>
+    <script src="search/extra/bootstrap.min.js"></script>
+    <script src="search/extra/jquery.uniform.js"></script>
+    <script src="search/extra/select2.min.js"></script>
+    <script src="search/extra/jquery.dataTables.min.js"></script>
+    <script src="search/extra/matrix.js"></script>
+    <script src="search/extra/matrix.tables.js"></script>
+
+
+    <ul class="typeahead dropdown-menu"></ul>
   </body>
 </html>

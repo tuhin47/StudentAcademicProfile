@@ -97,6 +97,7 @@ app.use('/hobbies/data/edit', express.static(__dirname + '/public'));
 app.use('/hobbies/data/delete', express.static(__dirname + '/public'));
 
 app.use('/search', express.static(__dirname + '/public'));
+app.use('/search/searchresult', express.static(__dirname + '/public'));
 
 app.use('/generatecvs', express.static(__dirname + '/public'));
 

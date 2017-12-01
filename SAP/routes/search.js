@@ -10,18 +10,25 @@ var awards = require('../controllers/award_controllers');
 var Profiles = require('../models/profilemodel');
 
 router.get('/',function (req,res) {
+  var fullname=req.user.firstname+' '+req.user.lastname;
   Profiles.find({},function(err,results) {
     if (err) throw err;
     if(!results) res.send('No result found');
     else {
-      
-      res.render('search',{results:results});
+
+      res.render('search',{fullname:fullname,results});
     }
 
   });
 
 });
 
+router.get('/searchresult/:id',function(req,res){
+  var id=req.params.id;
+  console.log(id);
+  // use this id to fetch username then find all data
+  res.send('result will be shown here');
+});
 
 
 
