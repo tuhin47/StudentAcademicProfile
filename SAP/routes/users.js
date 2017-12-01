@@ -169,12 +169,7 @@ router.post('/login',
 
     //console.log('------------------->>>>'+fullname);
     //console.log('dhuru-------------------------->>>>>>>>'+req.user);
-    res.redirect(url.format({
-      pathname: "/profile",
-      query: {
-        username: username
-      }
-    }));
+    res.redirect('/profile/dashboard/'+username);
 
     //res.redirect('/profile?fullname='+fullname);
   });

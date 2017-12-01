@@ -22,6 +22,71 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var Profile = require('../models/profilemodel');
 var Graduations = require('../models/graduation');
+var Sync = require('sync');
+
+
+function asyncFunction(username, callback) {
+  process.nextTick(function() {
+
+    var data = [];
+    var drop =0;
+    Graduations.find({
+      username: username
+    }, function(err, results) {
+
+      if (err) throw err;
+
+      else if (results) {
+        // console.log(results);
+
+        for (var i = 0; i < results.length; i++) {
+            data.push({
+              x: results[i].coursecode,
+              y: parseFloat(results[i].gradepoint)
+            });
+
+        }
+      }
+      //console.log(data);
+
+
+      return callback(null, data);
+    });
+    //console.log(data);
+
+
+  });
+}
+
+// var data = [ { x: 'CSE 133', y: 4 },
+//  { x: 'CSE 143', y: 3.5 },
+//  {
+//    x: 'CSE 375',
+//    y: 4
+//  }, {
+//    x: 'CSE 100',
+//    y: 4
+//  }, {
+//    x: 'CSE 200',
+//    y: 4
+//  }, {
+//    x: 'CSE 233',
+//    y: 3.75
+//  }, {
+//    x: 'CSE 254',
+//    y: 4
+//  }, {
+//    x: 'CSE 373',
+//    y: 3.75
+//  }, {
+//    x: 'CSE 253',
+//    y: 3.5
+//  }, {
+//    x: 'CSE 455',
+//    y: 4
+//  }];
+//  var lebels = ['CSE 133', 'CSE 143', 'CSE 375', 'CSE 100','CSE 200','CSE 233','CSE 254','CSE 373','CSE 253','CSE 455'];
+
 
 function calculate(result) {
   var cgpa = 0.0;
@@ -57,58 +122,83 @@ function sleep(time, callback) {
 
 
 
-router.get('/', ensureAuthenticated, function(req, res) {
+
+router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
+
+
   console.log('---------------------------------->>>>>>  inside profile');
   var fullname = req.user.firstname + ' ' + req.user.lastname;
-  username = req.query.username;
+  username = req.params.id;
   var photo = '/dist/img/avatar.jpg';
-  // if (req.user.photo);
-  // photo = req.user.photo;
 
-  //console.log('--------------------->>>'+fullname);
-      var cgpa = 0.00;
-      var completed = 0.00;
-      var drop = 0.00;
-      var precgpa = 0.00;
-      Graduations.find({
-          username: username
-        }, function(err, results) {
+  var cgpa = 0.00;
+  var completed = 0.00;
+  var drop = 0.00;
+  var precgpa = 0.00;
+  console.log(username);
+  Graduations.find({
+    username: username
+  }, function(err, results) {
 
-          if (err) throw err;
+    if (err) throw err;
 
-          else if (results) {
-             cgpa = calculate(results);
-             precgpa=cgpa;
-            for (i = 0; i < results.length; i++) {
-              if (parseFloat(results[i].gradepoint) > 0.0) {
-                completed += parseFloat(results[i].gradepoint);
-                }
-                else {
-                  drop=+parseFloat(results[i].gradepoint);
-                }
+    else if (results) {
+      console.log(results);
 
-              }
-            }
+      cgpa = calculate(results);
+      precgpa = cgpa;
+      for (i = 0; i < results.length; i++) {
+        if (parseFloat(results[i].gradepoint) > 0.0) {
+          completed += parseFloat(results[i].coursecredit);
+        } else {
+          drop += parseFloat(results[i].coursecredit);
+        }
 
-
-              cgpa=cgpa.toFixed(2);
-
-              res.render('index', {
-                fullname: fullname,cgpa:cgpa,drop:drop,completed:completed,precgpa:cgpa,photo: photo
-              });
+      }
+    }
+    console.log(completed+"====drop============="+drop);
 
 
+    cgpa = cgpa.toFixed(2);
+    console.log(cgpa);
+    var data = [];
+    var lebels = [];
 
+    Sync(function() {
+      console.log(username);
+      data = asyncFunction.sync(null, username);
+      lebels = [];
+      for (var i = 0; i < data.length; i++) {
+        lebels.push(data[i].x);
+      }
 
-          });
-
-
-
-
-
-
-
+      res.render('index', {
+        fullname: fullname,
+        cgpa: cgpa,
+        drop: drop,
+        completed: completed,
+        precgpa: cgpa,
+        photo: photo,
+        lebels: lebels,
+        data: data
       });
+      console.log(lebels);
+      console.log(data);
+    });
+
+
+
+
+
+  });
+
+
+
+
+
+
+
+});
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
