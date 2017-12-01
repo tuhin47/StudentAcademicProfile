@@ -21,8 +21,8 @@ var bcrypt = require('bcryptjs');
 // var nodemailersmtptransport=require('nodemailer-smtp-transport');
 //var sleep=require('sleep');
 
-mongoose.connect('mongodb://localhost/NodeDemo');
-var db = mongoose.connection;
+//mongoose.connect('mongodb://localhost/NodeDemo');
+//var db = mongoose.connection;
 
 
 

@@ -25,8 +25,8 @@ var PdfTable = require('voilab-pdf-table');
 // var nodemailersmtptransport=require('nodemailer-smtp-transport');
 //var sleep=require('sleep');
 
-mongoose.connect('mongodb://localhost/NodeDemo');
-var db = mongoose.connection;
+//mongoose.connect('mongodb://localhost/NodeDemo');
+//var db = mongoose.connection;
 
 
 
