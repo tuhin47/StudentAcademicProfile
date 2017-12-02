@@ -21,6 +21,7 @@ var storage = multer.diskStorage({
 
     var imgname = req.user.username + path.extname(file.originalname);
     req.session.img = imgname;
+    req.session.photo ='profile/'+imgname;
     cb(null, imgname);
   }
 });
