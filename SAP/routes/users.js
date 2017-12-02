@@ -168,7 +168,7 @@ router.post('/login',
       username: username
     }, function(err, results) {
       //console.log(JSON.stringify(results).length);
-       if (JSON.stringify(results).length>2) req.session.photo = 'profile/' + results[0].photo;
+       if (JSON.stringify(results).length>2) req.session.photo = results[0].photo;
        else
       req.session.photo = 'dist/img/avatar.jpg';
       console.log(req.session.photo);

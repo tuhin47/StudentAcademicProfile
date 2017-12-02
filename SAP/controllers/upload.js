@@ -1,28 +1,5 @@
-var multer = require('multer');
-var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './public/profile');
-  },
-  filename: function(req, file, cb) {
 
-    var imgname = req.body.reg + '-' + new Date().getTime() + path.extname(file.originalname);
-    req.session.img = imgname;
-    cb(null, imgname);
-
-
-  }
-});
 var Profile = require('../models/profilemodel');
-var limits = {
-  fileSize: 1 * 1024 * 1024
-};
-
-var upload = multer({
-  storage: storage,
-  limits: limits
-});
-
-//router.post('/data', upload.single('propic'), datas.dataUpload);
 
 
 exports.dataUpload = function(req, res) {
@@ -47,8 +24,8 @@ exports.dataUpload = function(req, res) {
   var workexperience = req.body.workexperience;
   var overview = req.body.overview;
   if (req.file)
-    photo = req.session.img;
-  else photoname = '/dist/img/avatar.jpg';
+    photo = req.session.photo;
+  else photo = 'dist/img/avatar.jpg';
 
 
   console.log('personal data ok');
