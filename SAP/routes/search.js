@@ -1,12 +1,20 @@
 var express = require('express');
 var router = express.Router();
+
+var Sync = require('sync');
 //var mongodb = require('mongodb');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var User = require('../models/user');
 var Awards = require('../models/award');
+
 var awards = require('../controllers/award_controllers');
+var Data = require('../controllers/gettingData');
+
 var Profile = require('../models/profilemodel');
+var SSCResult = require('../models/sschscresult');
+var Projects = require('../models/project');
+
 
 router.get('/', function(req, res) {
   //var fullname = req.user.firstname + ' ' + req.user.lastname;
@@ -15,8 +23,8 @@ router.get('/', function(req, res) {
     if (!results) res.send('No result found');
     else {
       res.render('search', {
-        fullname : 'unknown',
-        photo : 'dist/img/avatar.jpg',
+        fullname: 'unknown',
+        photo: 'dist/img/avatar.jpg',
         results
       });
 
@@ -37,26 +45,28 @@ router.get('/searchresult/:id', function(req, res) {
       _id: id
     }, function(err, user) {
       if (err) throw err;
-      var profilename;
-      var university;
-      var registration;
-      var dept;
-      var dob;
-      var father;
-      var mother;
-      var gender;
-      var maritalstatus;
-      var permanentaddress;
-      var temporaryaddress;
-      var primaryoccupation;
-      var secondaryoccupation;
-      var phonenumber;
-      var email;
-      var language;
-      var workexperience;
-      var overview;
-      var photo;
+      var username = null;
+      var profilename = null;
+      var university = null;
+      var registration = null;
+      var dept = null;
+      var dob = null;
+      var father = null;
+      var mother = null;
+      var gender = null;
+      var maritalstatus = null;
+      var permanentaddress = null;
+      var temporaryaddress = null;
+      var primaryoccupation = null;
+      var secondaryoccupation = null;
+      var phonenumber = null;
+      var email = null;
+      var language = null;
+      var workexperience = null;
+      var overview = null;
+      var photo = 'dist/img/avatar.jpg';
       if (user) {
+        username = user.username;
         profilename = user.profilename;
         university = user.university;
         registration = user.registration;
@@ -76,56 +86,53 @@ router.get('/searchresult/:id', function(req, res) {
         workexperience = user.workexperience;
         overview = user.overview;
         photo = user.photo;
-
-
       }
-      if (!user) {
-        profilename = null;
-        university = null;
-        registration = null;
-        dept = null;
-        dob = null;
-        father = null;
-        mother = null;
-        gender = null;
-        maritalstatus = null;
-        permanentaddress = null;
-        temporaryaddress = null;
-        primaryoccupation = null;
-        secondaryoccupation = null;
-        phonenumber = null;
-        email = null;
-        language = null;
-        workexperience = null;
-        overview = null;
-        photo = 'dist/img/avatar.jpg';
-      }
-
 
       if (!user) res.send("Invalid User");
-      else
-        res.render('demoprofile', {
-          profilename: profilename,
-          university: university,
-          registration: registration,
-          dept: dept,
-          dob: dob,
-          father: father,
-          mother: mother,
-          gender: gender,
-          maritalstatus: maritalstatus,
-          permanentaddress: permanentaddress,
-          temporaryaddress: temporaryaddress,
-          primaryoccupation: primaryoccupation,
-          secondaryoccupation: secondaryoccupation,
-          phonenumber: phonenumber,
-          email: email,
-          language: language,
-          workexperience: workexperience,
-          overview: overview,
-          photo: photo
+      else {
+        var resultProject = null;
+        var resultSSC = null;
+        var resultAward = null;
+        var resultPublication = null;
+        Sync(function() {
+          //  console.log(username);
+          resultProject = Data.projectsData.sync(null, username);
+          //console.log(resultProject);
+          resultSSC = Data.SSCData.sync(null, username);
+          //console.log(resultProject);
+          resultAward = Data.awardData.sync(null, username);
+
+          resultPublication = Data.publicationData.sync(null, username);
+          res.render('demoprofile', {
+            username: username,
+            profilename: profilename,
+            university: university,
+            registration: registration,
+            dept: dept,
+            dob: dob,
+            father: father,
+            mother: mother,
+            gender: gender,
+            maritalstatus: maritalstatus,
+            permanentaddress: permanentaddress,
+            temporaryaddress: temporaryaddress,
+            primaryoccupation: primaryoccupation,
+            secondaryoccupation: secondaryoccupation,
+            phonenumber: phonenumber,
+            email: email,
+            language: language,
+            workexperience: workexperience,
+            overview: overview,
+            photo: photo,
+            resultProject: resultProject,
+            results: resultSSC,
+            resultAward: resultAward,
+            resultPublication: resultPublication
+          });
         });
 
+
+      }
       console.log('ok output---------------->');
 
     });

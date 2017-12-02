@@ -20,7 +20,7 @@ var storage = multer.diskStorage({
   filename: function(req, file, cb) {
 
     var imgname = req.user.username + path.extname(file.originalname);
-    req.session.photo ='profile/'+imgname;
+    req.session.photo = 'profile/' + imgname;
     cb(null, imgname);
   }
 });
@@ -151,8 +151,8 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
       lebels = [];
       for (var i = 0; i < data.length; i++) {
         lebels.push(data[i].x);
-      }
 
+      }
       res.render('index', {
         fullname: fullname,
         cgpa: cgpa,
@@ -163,6 +163,8 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
         lebels: lebels,
         data: data
       });
+
+
     });
   });
 });
