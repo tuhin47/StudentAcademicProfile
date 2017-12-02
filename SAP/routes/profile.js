@@ -163,22 +163,8 @@ router.get('/dashboard/:id', ensureAuthenticated, function(req, res) {
         lebels: lebels,
         data: data
       });
-      // console.log(lebels);
-      // console.log(data);
     });
-
-
-
-
-
   });
-
-
-
-
-
-
-
 });
 
 function ensureAuthenticated(req, res, next) {
@@ -261,16 +247,6 @@ router.get('/data', ensureAuthenticated, function(req, res) {
       overview = null;
       photo = 'dist/img/avatar.jpg';
     }
-
-
-
-    // console.log('---------> in data route--------------------------->>>>>');
-    // console.log('  ---------profilename->>> ' + profilename + '  --regi- ' + registration + '----dept- ' + dept);
-    // console.log('  ---------birth->>> ' + dob + ' -father-- ' + father + '--mother--- ' + mother);
-    // console.log('  --------gender-->>> ' + gender + ' --marital status- ' + maritalstatus + '---permanentaddress-- ' + permanentaddress);
-    // console.log('  -----temporaryaddress----->>> ' + temporaryaddress + '-primaryoccupation-- ' + primaryoccupation + '--secondaryoccupation--- ' + secondaryoccupation);
-    // console.log('  --------phonenumber-->>> ' + phonenumber + ' -email-- ' + email + '---language-- ' + language);
-    // console.log('  ---------workexperience->>> ' + workexperience + ' -overview-- ' + overview + '--university--- ' + university);
 
     res.render('profiledata', {
       fullname: fullname,

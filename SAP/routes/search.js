@@ -9,16 +9,14 @@ var awards = require('../controllers/award_controllers');
 var Profile = require('../models/profilemodel');
 
 router.get('/', function(req, res) {
-  var fullname = req.user.firstname + ' ' + req.user.lastname;
+  //var fullname = req.user.firstname + ' ' + req.user.lastname;
   Profile.find({}, function(err, results) {
     if (err) throw err;
     if (!results) res.send('No result found');
     else {
-
-
       res.render('search', {
-        fullname: fullname,
-        photo: req.session.photo,
+        fullname : 'unknown',
+        photo : 'dist/img/avatar.jpg',
         results
       });
 
