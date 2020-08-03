@@ -16,11 +16,13 @@ var nodemailer = require('nodemailer');
 var async = require('async');
 var crypto=require('crypto');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 //var sleep=require('sleep');
-
-mongoose.connect('mongodb://localhost/NodeDemo');
+console.log('Mongo =',`${process.env.SERVER}`);
+mongoose.connect(`mongodb+srv://${process.env.MONGO_CREDENTIAL}@${process.env.SERVER}?retryWrites=true&w=majority`);
 var db = mongoose.connection;
-
 
 var index = require('./routes/index');
 var users = require('./routes/users');
