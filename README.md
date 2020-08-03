@@ -1,5 +1,5 @@
 # StudentAcademicProfile
-This is an academic project based on **Nodejs** and **NoSQL** Database. The main moto of this project is to maintain one's academic information properly. Moreover pdf generation feature also include from the given data.
+This is an academic project based on **Nodejs** and **NoSQL** Database. The main moto of this project is to maintain one's academic information properly. Moreover pdf generation feature also includes from the given data.
 
 ## Environment
 - Nodejs(Express+ejs)
