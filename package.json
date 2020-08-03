@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npm install",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "npm install"
   },
   "dependencies": {
     "async": "^3.2.0",
