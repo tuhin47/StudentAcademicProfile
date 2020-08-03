@@ -19,7 +19,6 @@ var crypto = require('crypto');
 var bcrypt = require('bcryptjs');
 var PDFDocument = require('pdfkit');
 var fs = require('fs');
-var PdfTable = require('voilab-pdf-table');
 
 // var xoauth2 = require('xoauth2');
 // var nodemailersmtptransport=require('nodemailer-smtp-transport');

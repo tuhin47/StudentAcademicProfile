@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 var Graduations = require('../models/graduation');
-var Sync = require('sync');
-var sync = require('synchronize');
 var data =[ { x: 'CSE 133', y: 4 },
 { x: 'CSE 143', y: 3.5 },
 { x: 'CSE 375', y: 4 },
